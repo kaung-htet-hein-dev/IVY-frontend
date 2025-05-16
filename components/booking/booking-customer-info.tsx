@@ -11,7 +11,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -38,13 +38,13 @@ const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
   email: z.string().email({ message: "Please enter a valid email address" }),
   phone: z.string().min(10, { message: "Please enter a valid phone number" }),
-  notes: z.string().optional(),
+  notes: z.string().optional()
 });
 
 export default function BookingCustomerInfo({
   customerInfo,
   onSubmit,
-  onBack,
+  onBack
 }: BookingCustomerInfoProps) {
   // Initialize form with react-hook-form
   const form = useForm<z.infer<typeof formSchema>>({
@@ -53,19 +53,20 @@ export default function BookingCustomerInfo({
       name: customerInfo.name || "",
       email: customerInfo.email || "",
       phone: customerInfo.phone || "",
-      notes: customerInfo.notes || "",
-    },
+      notes: customerInfo.notes || ""
+    }
   });
 
   // Handle form submission
   const handleSubmit = form.handleSubmit((data) => {
-    onSubmit(data);
+    // onSubmit(data);
   });
 
   return (
     <div>
       <p className="text-gray-600 mb-6">
-        Please provide your contact information. We'll send your booking confirmation to the email you provide.
+        Please provide your contact information. We'll send your booking
+        confirmation to the email you provide.
       </p>
 
       <Form {...form}>
@@ -91,7 +92,11 @@ export default function BookingCustomerInfo({
               <FormItem>
                 <FormLabel>Email Address</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="john@example.com" {...field} />
+                  <Input
+                    type="email"
+                    placeholder="john@example.com"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
