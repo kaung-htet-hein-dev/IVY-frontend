@@ -1,25 +1,28 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { services } from "@/lib/data";
-import { Clock, ArrowRight } from "lucide-react";
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { services } from '@/lib/data';
+import { Clock, ArrowRight } from 'lucide-react';
 
 export default function ServicesPage() {
   // Group services by category
-  const categorizedServices = services.reduce((acc, service) => {
-    if (!acc[service.category]) {
-      acc[service.category] = [];
-    }
-    acc[service.category].push(service);
-    return acc;
-  }, {} as Record<string, typeof services>);
+  const categorizedServices = services.reduce(
+    (acc, service) => {
+      if (!acc[service.category]) {
+        acc[service.category] = [];
+      }
+      acc[service.category].push(service);
+      return acc;
+    },
+    {} as Record<string, typeof services>
+  );
 
   const categoryNames = {
-    haircut: "Haircuts",
-    styling: "Styling",
-    coloring: "Coloring",
-    treatment: "Treatments"
+    haircut: 'Haircuts',
+    styling: 'Styling',
+    coloring: 'Coloring',
+    treatment: 'Treatments',
   };
 
   return (
@@ -41,9 +44,9 @@ export default function ServicesPage() {
               {categoryNames[category as keyof typeof categoryNames]}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {categoryServices.map((service) => (
-                <Card 
-                  key={service.id} 
+              {categoryServices.map(service => (
+                <Card
+                  key={service.id}
                   className="overflow-hidden hover:shadow-lg transition-all duration-300"
                   id={service.id}
                 >
@@ -52,23 +55,21 @@ export default function ServicesPage() {
                       src={service.image}
                       alt={service.name}
                       fill
-                      style={{ objectFit: "cover" }}
+                      style={{ objectFit: 'cover' }}
                     />
                   </div>
                   <CardContent className="p-6">
                     <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
                     <p className="text-gray-600 mb-4">{service.description}</p>
-                    
+
                     <div className="flex justify-between items-center mb-6">
-                      <span className="text-xl font-bold text-rose-600">
-                        ${service.price}
-                      </span>
+                      <span className="text-xl font-bold text-rose-600">${service.price}</span>
                       <div className="flex items-center text-gray-500">
                         <Clock className="h-4 w-4 mr-1" />
                         <span>{service.duration} min</span>
                       </div>
                     </div>
-                    
+
                     <Link href={`/booking?service=${service.id}`} passHref>
                       <Button className="w-full bg-rose-500 hover:bg-rose-600">
                         Book This Service <ArrowRight className="ml-2 h-4 w-4" />
@@ -85,8 +86,8 @@ export default function ServicesPage() {
         <div className="bg-rose-50 rounded-lg p-8 mt-8 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to transform your look?</h2>
           <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
-            Our professional stylists are ready to help you achieve the perfect style.
-            Book your appointment today and experience the IVY difference.
+            Our professional stylists are ready to help you achieve the perfect style. Book your
+            appointment today and experience the IVY difference.
           </p>
           <Link href="/booking" passHref>
             <Button size="lg" className="bg-rose-500 hover:bg-rose-600">

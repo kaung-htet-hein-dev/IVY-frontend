@@ -1,15 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { 
-  ArrowLeft, 
-  Calendar, 
-  Clock, 
-  User, 
-  Mail, 
-  Phone, 
-  FileText 
-} from "lucide-react";
-import { Service } from "@/lib/data";
-import { format } from "date-fns";
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Calendar, Clock, User, Mail, Phone, FileText } from 'lucide-react';
+import { Service } from '@/lib/data';
+import { format } from 'date-fns';
 
 interface BookingConfirmationProps {
   service: Service;
@@ -33,12 +25,13 @@ export default function BookingConfirmation({
   onConfirm,
   onBack,
 }: BookingConfirmationProps) {
-  const formattedDate = format(date, "MMMM d, yyyy");
-  
+  const formattedDate = format(date, 'MMMM d, yyyy');
+
   return (
     <div>
       <p className="text-gray-600 mb-6">
-        Please review your booking details below. If everything looks correct, click "Confirm Booking" to finalize your appointment.
+        Please review your booking details below. If everything looks correct, click "Confirm
+        Booking" to finalize your appointment.
       </p>
 
       <div className="space-y-6">
@@ -103,9 +96,7 @@ export default function BookingConfirmation({
 
         {/* Terms & Conditions */}
         <div className="text-sm text-gray-500">
-          <p className="mb-2">
-            By confirming this booking, you agree to our cancellation policy:
-          </p>
+          <p className="mb-2">By confirming this booking, you agree to our cancellation policy:</p>
           <ul className="list-disc list-inside space-y-1">
             <li>Free cancellation up to 24 hours before your appointment</li>
             <li>Cancellations within 24 hours may incur a fee</li>
@@ -115,17 +106,10 @@ export default function BookingConfirmation({
 
         {/* Navigation Buttons */}
         <div className="flex justify-between pt-2">
-          <Button
-            variant="ghost"
-            onClick={onBack}
-            className="flex items-center gap-2"
-          >
+          <Button variant="ghost" onClick={onBack} className="flex items-center gap-2">
             <ArrowLeft className="h-4 w-4" /> Back
           </Button>
-          <Button 
-            onClick={onConfirm}
-            className="bg-rose-500 hover:bg-rose-600"
-          >
+          <Button onClick={onConfirm} className="bg-rose-500 hover:bg-rose-600">
             Confirm Booking
           </Button>
         </div>

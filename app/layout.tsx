@@ -6,12 +6,12 @@ import { ThemeProvider } from '@/components/providers/theme-provider';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
 });
 
-const playfair = Playfair_Display({ 
+const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
 });
@@ -21,11 +21,7 @@ export const metadata: Metadata = {
   description: 'Book your next haircut, styling, or color service at IVY Hair Studio',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${playfair.variable} font-sans`}>

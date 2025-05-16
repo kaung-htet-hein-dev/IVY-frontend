@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { MapPin, Clock, Phone, Mail, Instagram, Facebook, Twitter } from "lucide-react";
-import { locations, socialLinks } from "@/lib/data";
-import LocationCard from "./location-card";
+import Link from 'next/link';
+import { MapPin, Clock, Phone, Mail, Instagram, Facebook, Twitter } from 'lucide-react';
+import { locations, socialLinks } from '@/lib/data';
+import LocationCard from './location-card';
 
 export default function Footer() {
   return (
@@ -12,25 +12,25 @@ export default function Footer() {
           <div>
             <h3 className="font-playfair text-xl font-semibold mb-4">IVY Hair Studio</h3>
             <p className="text-gray-300 mb-4">
-              Dedicated to bringing out your natural beauty with our expert styling, 
-              cutting, and coloring services. Your satisfaction is our top priority.
+              Dedicated to bringing out your natural beauty with our expert styling, cutting, and
+              coloring services. Your satisfaction is our top priority.
             </p>
             <div className="flex space-x-4">
-              <a 
+              <a
                 href={socialLinks.facebook}
                 target="_blank"
-                rel="noopener noreferrer" 
+                rel="noopener noreferrer"
                 className="text-white hover:text-rose-400 transition-colors"
               >
                 <Facebook size={20} />
               </a>
-              <a 
+              <a
                 href={`mailto:${socialLinks.email}`}
                 className="text-white hover:text-rose-400 transition-colors"
               >
                 <Mail size={20} />
               </a>
-              <a 
+              <a
                 href={`tel:${socialLinks.phone}`}
                 className="text-white hover:text-rose-400 transition-colors"
               >
@@ -40,7 +40,7 @@ export default function Footer() {
           </div>
 
           {/* Locations */}
-          {locations.map((location) => (
+          {locations.map(location => (
             <div key={location.id}>
               <LocationCard
                 name={location.name}
@@ -69,9 +69,15 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400">
           <div className="mb-4">
-            <Link href="/services" className="hover:text-rose-400 transition-colors mx-3">Services</Link>
-            <Link href="/booking" className="hover:text-rose-400 transition-colors mx-3">Book Appointment</Link>
-            <Link href="/my-bookings" className="hover:text-rose-400 transition-colors mx-3">My Bookings</Link>
+            <Link href="/services" className="hover:text-rose-400 transition-colors mx-3">
+              Services
+            </Link>
+            <Link href="/booking" className="hover:text-rose-400 transition-colors mx-3">
+              Book Appointment
+            </Link>
+            <Link href="/my-bookings" className="hover:text-rose-400 transition-colors mx-3">
+              My Bookings
+            </Link>
           </div>
           <p>© {new Date().getFullYear()} IVY Hair Studio. All rights reserved.</p>
         </div>

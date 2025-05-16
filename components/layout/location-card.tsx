@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import { MapPin, Phone } from 'lucide-react';
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 interface LocationCardProps {
   name: string;
@@ -22,7 +22,7 @@ export default function LocationCard({ name, address, phone, mapUrl }: LocationC
       <Card className="overflow-hidden hover:shadow-lg transition-shadow">
         <CardContent className="p-6">
           <h3 className="text-xl font-semibold mb-4">{name}</h3>
-          
+
           <div className="space-y-3">
             <div className="flex items-start space-x-3">
               <MapPin className="w-5 h-5 text-rose-500 mt-1" />
@@ -38,7 +38,7 @@ export default function LocationCard({ name, address, phone, mapUrl }: LocationC
                 </a>
               </div>
             </div>
-            
+
             <div className="flex items-center space-x-3">
               <Phone className="w-5 h-5 text-rose-500" />
               <a

@@ -1,9 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Clock, ArrowRight } from "lucide-react";
-import { Service } from "@/lib/data";
+import Image from 'next/image';
+import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Clock, ArrowRight } from 'lucide-react';
+import { Service } from '@/lib/data';
 
 interface ServiceHighlightProps {
   service: Service;
@@ -13,12 +13,7 @@ export default function ServiceHighlight({ service }: ServiceHighlightProps) {
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
       <div className="relative h-48 w-full">
-        <Image
-          src={service.image}
-          alt={service.name}
-          fill
-          style={{ objectFit: "cover" }}
-        />
+        <Image src={service.image} alt={service.name} fill style={{ objectFit: 'cover' }} />
       </div>
       <CardContent className="p-6">
         <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
@@ -32,7 +27,9 @@ export default function ServiceHighlight({ service }: ServiceHighlightProps) {
         </div>
         <div className="flex justify-between gap-2">
           <Link href={`/services#${service.id}`} passHref className="flex-1">
-            <Button variant="outline" className="w-full">Details</Button>
+            <Button variant="outline" className="w-full">
+              Details
+            </Button>
           </Link>
           <Link href={`/booking?service=${service.id}`} passHref className="flex-1">
             <Button className="w-full bg-rose-500 hover:bg-rose-600">Book</Button>

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useRouter } from 'next/navigation';
 import {
@@ -6,13 +6,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
 import { Languages } from 'lucide-react';
 
 const languages = [
   { code: 'en', name: 'English' },
-  { code: 'my', name: 'Myanmar' }
+  { code: 'my', name: 'Myanmar' },
 ];
 
 export default function LanguageSwitcher() {
@@ -31,11 +31,8 @@ export default function LanguageSwitcher() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {languages.map((lang) => (
-          <DropdownMenuItem
-            key={lang.code}
-            onClick={() => switchLanguage(lang.code)}
-          >
+        {languages.map(lang => (
+          <DropdownMenuItem key={lang.code} onClick={() => switchLanguage(lang.code)}>
             {lang.name}
           </DropdownMenuItem>
         ))}

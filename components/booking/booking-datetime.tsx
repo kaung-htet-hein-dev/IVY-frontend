@@ -1,16 +1,12 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Calendar } from "@/components/ui/calendar";
-import { Button } from "@/components/ui/button";
-import { 
-  ArrowLeft, 
-  Clock, 
-  CalendarDays 
-} from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Service, generateTimeSlots, TimeSlot } from "@/lib/data";
-import { addDays, format, isToday, isBefore, startOfDay } from "date-fns";
+import { useState, useEffect } from 'react';
+import { Calendar } from '@/components/ui/calendar';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Clock, CalendarDays } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Service, generateTimeSlots, TimeSlot } from '@/lib/data';
+import { addDays, format, isToday, isBefore, startOfDay } from 'date-fns';
 
 interface BookingDateTimeProps {
   service: Service;
@@ -41,7 +37,7 @@ export default function BookingDateTime({
   // Update available time slots when date changes
   useEffect(() => {
     if (date) {
-      const formattedDate = format(date, "yyyy-MM-dd");
+      const formattedDate = format(date, 'yyyy-MM-dd');
       const slots = generateTimeSlots(formattedDate);
       setAvailableTimeSlots(slots);
 
@@ -55,11 +51,11 @@ export default function BookingDateTime({
   // Filter past times for today
   const filteredTimeSlots = availableTimeSlots.filter(slot => {
     if (!date || !isToday(date)) return true;
-    
+
     const [hours, minutes] = slot.time.split(':').map(Number);
     const slotDate = new Date(date);
     slotDate.setHours(hours, minutes);
-    
+
     return isBefore(new Date(), slotDate);
   });
 
@@ -116,18 +112,18 @@ export default function BookingDateTime({
             <Clock className="h-5 w-5 text-rose-500" />
             <h3 className="font-semibold text-lg">Select Time</h3>
           </div>
-          
+
           <div className="grid grid-cols-3 gap-2">
             {filteredTimeSlots.length > 0 ? (
-              filteredTimeSlots.map((slot) => (
+              filteredTimeSlots.map(slot => (
                 <Button
                   key={slot.id}
                   variant="outline"
                   disabled={!slot.available}
                   className={cn(
-                    "h-10 hover:bg-rose-50",
-                    time === slot.time && "bg-rose-100 border-rose-500 text-rose-700",
-                    !slot.available && "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    'h-10 hover:bg-rose-50',
+                    time === slot.time && 'bg-rose-100 border-rose-500 text-rose-700',
+                    !slot.available && 'bg-gray-100 text-gray-400 cursor-not-allowed'
                   )}
                   onClick={() => setTime(slot.time)}
                 >
@@ -145,15 +141,11 @@ export default function BookingDateTime({
 
       {/* Navigation Buttons */}
       <div className="flex justify-between mt-8">
-        <Button 
-          variant="ghost" 
-          onClick={onBack} 
-          className="flex items-center gap-2"
-        >
+        <Button variant="ghost" onClick={onBack} className="flex items-center gap-2">
           <ArrowLeft className="h-4 w-4" /> Back
         </Button>
-        <Button 
-          onClick={handleSubmit} 
+        <Button
+          onClick={handleSubmit}
           disabled={!date || !time}
           className="bg-rose-500 hover:bg-rose-600"
         >

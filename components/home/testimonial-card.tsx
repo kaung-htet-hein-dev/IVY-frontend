@@ -1,7 +1,7 @@
-import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
-import { Star } from "lucide-react";
-import { Testimonial } from "@/lib/data";
+import Image from 'next/image';
+import { Card, CardContent } from '@/components/ui/card';
+import { Star } from 'lucide-react';
+import { Testimonial } from '@/lib/data';
 
 interface TestimonialCardProps {
   testimonial: Testimonial;
@@ -18,7 +18,7 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
                 src={testimonial.image}
                 alt={testimonial.customerName}
                 fill
-                style={{ objectFit: "cover" }}
+                style={{ objectFit: 'cover' }}
               />
             ) : (
               <div className="bg-rose-100 h-full w-full flex items-center justify-center text-rose-500 font-semibold">
@@ -37,9 +37,7 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
             <Star
               key={index}
               className={`h-4 w-4 ${
-                index < testimonial.rating 
-                  ? "text-yellow-400 fill-yellow-400" 
-                  : "text-gray-300"
+                index < testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'
               }`}
             />
           ))}
