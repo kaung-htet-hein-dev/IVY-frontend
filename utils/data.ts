@@ -1,13 +1,6 @@
 // Service types
-export type Service = {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  duration: number; // in minutes
-  category: 'haircut' | 'styling' | 'coloring' | 'treatment';
-  image: string;
-};
+
+import { Service } from '@/store/api/service/types';
 
 // Booking types
 export type TimeSlot = {
@@ -43,87 +36,111 @@ export type Testimonial = {
 // Mock data for services
 export const services: Service[] = [
   {
-    id: 'haircut-mens',
+    id: '1',
     name: "Men's Haircut",
     description:
       "Professional men's haircut tailored to your style and preference, including a consultation.",
     price: 30,
-    duration: 30,
-    category: 'haircut',
+    durationMinute: 30,
+    categoryId: 'haircut',
+    categoryName: 'haircut',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/1319461/pexels-photo-1319461.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
-    id: 'haircut-womens',
+    id: '2',
     name: "Women's Haircut",
     description:
       "Professional women's haircut tailored to your style, including consultation and styling.",
     price: 45,
-    duration: 45,
-    category: 'haircut',
+    durationMinute: 45,
+    categoryId: 'haircut',
+    categoryName: 'haircut',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
-    id: 'hair-wash',
+    id: '3',
     name: 'Hair Wash & Style',
     description:
       'Rejuvenating hair wash with premium products followed by professional blow-dry styling.',
     price: 25,
-    duration: 30,
-    category: 'styling',
+    durationMinute: 30,
+    categoryId: 'styling',
+    categoryName: 'styling',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3993324/pexels-photo-3993324.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
-    id: 'hair-rebonding',
+    id: '4',
     name: 'Hair Rebonding',
     description:
       'Chemical straightening process to transform curly or wavy hair into perfectly straight hair.',
     price: 150,
-    duration: 180,
-    category: 'treatment',
+    durationMinute: 180,
+    categoryId: 'treatment',
+    categoryName: 'treatment',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3992874/pexels-photo-3992874.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
-    id: 'curl-hair',
+    id: '5',
     name: 'Curl & Perm',
     description: 'Professional perming service to add beautiful, long-lasting curls to your hair.',
     price: 120,
-    duration: 150,
-    category: 'treatment',
+    durationMinute: 150,
+    categoryId: 'treatment',
+    categoryName: 'treatment',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3993302/pexels-photo-3993302.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
-    id: 'hair-dye',
+    id: '6',
     name: 'Hair Coloring',
     description:
       'Professional hair coloring service using premium products for vibrant, long-lasting results.',
     price: 85,
-    duration: 120,
-    category: 'coloring',
+    durationMinute: 120,
+    categoryId: 'coloring',
+    categoryName: 'coloring',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3993333/pexels-photo-3993333.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
-    id: 'highlights',
+    id: '7',
     name: 'Highlights',
     description: 'Add dimension and depth to your hair with custom highlight application.',
     price: 95,
-    duration: 120,
-    category: 'coloring',
+    durationMinute: 120,
+    categoryId: 'coloring',
+    categoryName: 'coloring',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3992870/pexels-photo-3992870.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
-    id: 'deep-conditioning',
+    id: '8',
     name: 'Deep Conditioning Treatment',
     description: 'Intensive hair treatment to restore moisture, shine, and health to damaged hair.',
     price: 40,
-    duration: 45,
-    category: 'treatment',
+    durationMinute: 45,
+    categoryId: 'treatment',
+    categoryName: 'treatment',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3993083/pexels-photo-3993083.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },

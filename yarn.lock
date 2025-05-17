@@ -19,7 +19,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emnapi/core@npm:^1.4.0":
+"@emnapi/core@npm:^1.4.3":
   version: 1.4.3
   resolution: "@emnapi/core@npm:1.4.3"
   dependencies:
@@ -29,7 +29,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emnapi/runtime@npm:^1.4.0":
+"@emnapi/runtime@npm:^1.4.3":
   version: 1.4.3
   resolution: "@emnapi/runtime@npm:1.4.3"
   dependencies:
@@ -234,13 +234,13 @@ __metadata:
   linkType: hard
 
 "@napi-rs/wasm-runtime@npm:^0.2.9":
-  version: 0.2.9
-  resolution: "@napi-rs/wasm-runtime@npm:0.2.9"
+  version: 0.2.10
+  resolution: "@napi-rs/wasm-runtime@npm:0.2.10"
   dependencies:
-    "@emnapi/core": ^1.4.0
-    "@emnapi/runtime": ^1.4.0
+    "@emnapi/core": ^1.4.3
+    "@emnapi/runtime": ^1.4.3
     "@tybys/wasm-util": ^0.9.0
-  checksum: bffa375d960ebe5f0e98583f46a14bf4aaa086c2cce45582229b36eb0f5987d9dae1c184ebc218df504ffdd92a7169f73ac60697e6e2a2fc064277e3150a3764
+  checksum: e061701989eebecc004702a18a6913a574a7890899c0d2bc83162088e8cad48ecd596ed9106c7cc42f26fb80b403b7c4c418c8403c288de4c00460378d3963c2
   languageName: node
   linkType: hard
 
@@ -4456,6 +4456,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lottie-react@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "lottie-react@npm:2.4.1"
+  dependencies:
+    lottie-web: ^5.10.2
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: ac79931d98ea38fd3a9139139fb976d24a3e4e0ede86c74d69c5571b971122ee7e98432949f0f4af33f48b736fe8448918f124d48548dd46925bab484c09e73f
+  languageName: node
+  linkType: hard
+
+"lottie-web@npm:^5.10.2":
+  version: 5.12.2
+  resolution: "lottie-web@npm:5.12.2"
+  checksum: af5bc3bc405fd760de8b17a36158d5a8c3e8c586c711d0c63681ddf056b65bc6b54ea36b1fcad782fb02dbe12e696a40e0ba72daf41b8f10ab5b5d1113793636
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^10.0.1, lru-cache@npm:^10.2.0":
   version: 10.4.3
   resolution: "lru-cache@npm:10.4.3"
@@ -4861,6 +4880,7 @@ __metadata:
     framer-motion: ^11.0.14
     i18next: ^23.10.1
     input-otp: ^1.2.4
+    lottie-react: ^2.4.1
     lucide-react: ^0.446.0
     miragejs: ^0.1.48
     next: 13.5.1
@@ -5392,11 +5412,11 @@ __metadata:
   linkType: hard
 
 "react-hook-form@npm:^7.53.0":
-  version: 7.56.3
-  resolution: "react-hook-form@npm:7.56.3"
+  version: 7.56.4
+  resolution: "react-hook-form@npm:7.56.4"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18 || ^19
-  checksum: 5b5ebf1b61754a5c2e5785a6f3039eac89028d0613e9f7da23c132129e9685c166077b338db05430292d16b9532a21ebd2abd8785de497c54cb70fbccf774572
+  checksum: d0b865b75d1bb3927bc9fa1a778dac1e67d4d32a1e8e9b741a85db787f789d87511674c2dbd0572b010cae671a9b1d31d64370b850e2e44daf2b9b45c75f012a
   languageName: node
   linkType: hard
 

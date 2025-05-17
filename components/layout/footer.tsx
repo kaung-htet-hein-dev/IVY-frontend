@@ -69,13 +69,25 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-8 pt-6 text-center text-gray-400">
           <div className="mb-4">
-            <Link href="/services" className="hover:text-rose-400 transition-colors mx-3">
+            <Link
+              href="/services"
+              className="hover:text-rose-400 transition-colors mx-3"
+              prefetch={true}
+            >
               Services
             </Link>
-            <Link href="/booking" className="hover:text-rose-400 transition-colors mx-3">
+            <Link
+              href="/booking"
+              className="hover:text-rose-400 transition-colors mx-3"
+              prefetch={true}
+            >
               Book Appointment
             </Link>
-            <Link href="/my-bookings" className="hover:text-rose-400 transition-colors mx-3">
+            <Link
+              href="/my-bookings"
+              className="hover:text-rose-400 transition-colors mx-3"
+              prefetch={true}
+            >
               My Bookings
             </Link>
           </div>

@@ -5,9 +5,10 @@ import { Calendar } from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Clock, CalendarDays } from 'lucide-react';
 import { cn } from '@/utils/helpers';
-import { Service, generateTimeSlots, TimeSlot } from '@/utils/data';
+import { generateTimeSlots, TimeSlot } from '@/utils/data';
 import { addDays, format, isToday, isBefore, startOfDay } from 'date-fns';
 import { useRouter } from 'next/navigation';
+import { Service } from '@/store/api/service/types';
 
 interface BookingDateTimeProps {
   service: Service;
@@ -87,7 +88,7 @@ export default function BookingDateTime({
             <div className="font-medium text-rose-600">${service.price}</div>
             <div className="text-sm text-gray-500 flex items-center">
               <Clock className="h-3 w-3 mr-1" />
-              {service.duration} min
+              {service.durationMinute} min
             </div>
           </div>
         </div>

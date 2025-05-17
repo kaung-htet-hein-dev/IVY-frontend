@@ -1,16 +1,21 @@
-import ServiceHighlight from '@/components/home/service-highlight';
-import TestimonialCard from '@/components/home/testimonial-card';
+import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
 import CTA from '@/components/ui/cta';
-import { services, testimonials } from '@/utils/data';
+import { testimonials } from '@/utils/data';
 import { ArrowRight, Brush, Scissors, Sparkles, Timer } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Home() {
-  // Display only selected services for highlights
-  const highlightServices = services.slice(0, 5);
+// Dynamically import components with loading states
+const ServiceHighlight = dynamic(() => import('@/components/home/service-highlight'), {
+  loading: () => <div className="h-64 animate-pulse bg-gray-100 rounded-lg" />,
+});
 
+const TestimonialCard = dynamic(() => import('@/components/home/testimonial-card'), {
+  loading: () => <div className="h-48 animate-pulse bg-gray-100 rounded-lg" />,
+});
+
+export default function Home() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -119,11 +124,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {highlightServices.map(service => (
-              <ServiceHighlight key={service.id} service={service} />
-            ))}
-          </div>
+          <ServiceHighlight />
 
           <div className="text-center mt-12">
             <Link href="/services" passHref>

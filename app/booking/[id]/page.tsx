@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Service, services } from '@/utils/data';
+import { services } from '@/utils/data';
 import BookingDateTime from '@/components/booking/booking-datetime';
 import BookingCustomerInfo from '@/components/booking/booking-customer-info';
 import BookingConfirmation from '@/components/booking/booking-confirmation';
 import AuthDialog from '@/components/auth/auth-dialog';
-import { useAuth } from '@/store/auth/useAuth';
+import { useAuth } from '@/store/auth/use-auth';
 
 // Define booking steps
 const STEPS = {
@@ -22,7 +22,7 @@ export default function BookingPage() {
   const { isLoggedIn } = useAuth();
 
   // State
-  const [service, setService] = useState<Service | null>(null);
+  const [service, setService] = useState<any | null>(null);
   const [step, setStep] = useState(STEPS.DATETIME);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${playfair.variable} font-sans`}>
+      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`}>
         <ReduxProvider>
           <ThemeProvider
             attribute="class"

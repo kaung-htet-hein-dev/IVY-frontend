@@ -43,7 +43,7 @@ export default function Header() {
       )}
     >
       <div className="container px-4 mx-auto flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2" prefetch={true}>
           <Scissors className="h-6 w-6 text-primary" />
           <span
             className={cn(
@@ -61,6 +61,8 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
+              prefetch={true}
+              scroll={true}
               className={cn(
                 'transition-colors hover:text-primary',
                 pathname === link.href

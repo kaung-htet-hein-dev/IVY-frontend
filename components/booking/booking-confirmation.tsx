@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, Clock, User, Mail, Phone, FileText } from 'lucide-react';
-import { Service } from '@/utils/data';
 import { format } from 'date-fns';
+import { Service } from '@/store/api/service/types';
 
 interface BookingConfirmationProps {
   service: Service;
@@ -49,7 +49,7 @@ export default function BookingConfirmation({
             </div>
             <div>
               <p className="text-sm text-gray-500">Duration:</p>
-              <p className="font-medium">{service.duration} minutes</p>
+              <p className="font-medium">{service.durationMinute} minutes</p>
             </div>
           </div>
         </div>

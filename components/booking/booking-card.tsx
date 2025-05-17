@@ -14,11 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-
-interface Service {
-  name: string;
-  duration: number;
-}
+import { Service } from '@/store/api/service/types';
 
 interface BookingCardProps {
   booking: {
@@ -60,7 +56,7 @@ export function BookingCard({
           <div className="p-4 md:p-6 md:flex-1">
             <h3 className="font-semibold text-lg mb-1">{service?.name || 'Service'}</h3>
             <p className="text-gray-500 text-sm mb-4">
-              Duration: {service?.duration || 'N/A'} minutes
+              Duration: {service?.durationMinute || 'N/A'} minutes
             </p>
 
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
