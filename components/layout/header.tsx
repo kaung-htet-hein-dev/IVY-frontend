@@ -33,12 +33,13 @@ export default function Header() {
 
   return (
     <motion.header
-      initial={{ y: -100 }}
+      // initial={{ y: -90 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled || isMobileMenuOpen ? 'bg-background shadow-md py-2' : 'bg-transparent py-4'
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-2',
+        isScrolled || isMobileMenuOpen ? 'bg-background' : 'bg-transparent',
+        isScrolled && !isMobileMenuOpen && 'shadow-md'
       )}
     >
       <div className="container px-4 mx-auto flex justify-between items-center">
@@ -98,9 +99,9 @@ export default function Header() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="md:hidden bg-background shadow-lg py-4"
+          className="md:hidden bg-background border-t"
         >
-          <div className="container px-4 mx-auto flex flex-col space-y-4">
+          <div className="container px-4 mx-auto flex flex-col space-y-2 py-2">
             {navLinks.map(link => (
               <Link
                 key={link.href}
