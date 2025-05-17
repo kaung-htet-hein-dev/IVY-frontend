@@ -4,6 +4,7 @@ import BookingServiceSelection from '@/components/booking/booking-service-select
 import { Service, services } from '@/utils/data';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
+import axios from 'axios';
 
 export default function BookingPage() {
   const router = useRouter();
@@ -11,6 +12,10 @@ export default function BookingPage() {
 
   // Redirect to service page if service is in URL parameters
   useEffect(() => {
+    axios.get('/api/movies').then(res => {
+      console.log(res.data);
+    });
+
     const serviceId = searchParams.get('service');
     if (serviceId) {
       router.push(`/booking/${serviceId}`);

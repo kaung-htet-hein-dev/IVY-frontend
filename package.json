@@ -57,6 +57,7 @@
     "i18next": "^23.10.1",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.446.0",
+    "miragejs": "^0.1.48",
     "next": "13.5.1",
     "next-i18next": "^15.2.0",
     "next-themes": "^0.3.0",
@@ -81,7 +82,6 @@
   },
   "packageManager": "yarn@3.6.4+sha512.e70835d4d6d62c07be76b3c1529cb640c7443f0fe434ef4b6478a5a399218cbaf1511b396b3c56eb03bc86424cff2320f6167ad2fde273aa0df6e60b7754029f",
   "devDependencies": {
-    "miragejs": "^0.1.48",
     "prettier": "^3.5.3"
   }
 }
