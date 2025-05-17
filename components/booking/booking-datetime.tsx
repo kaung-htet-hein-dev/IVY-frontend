@@ -7,13 +7,13 @@ import { ArrowLeft, Clock, CalendarDays } from 'lucide-react';
 import { cn } from '@/utils/helpers';
 import { Service, generateTimeSlots, TimeSlot } from '@/utils/data';
 import { addDays, format, isToday, isBefore, startOfDay } from 'date-fns';
+import { useRouter } from 'next/navigation';
 
 interface BookingDateTimeProps {
   service: Service;
   selectedDate: Date | undefined;
   selectedTime: string | null;
   onDateTimeSelect: (date: Date | undefined, time: string | null) => void;
-  onBack: () => void;
 }
 
 export default function BookingDateTime({
@@ -21,11 +21,12 @@ export default function BookingDateTime({
   selectedDate,
   selectedTime,
   onDateTimeSelect,
-  onBack,
 }: BookingDateTimeProps) {
   const [date, setDate] = useState<Date | undefined>(selectedDate);
   const [time, setTime] = useState<string | null>(selectedTime);
   const [availableTimeSlots, setAvailableTimeSlots] = useState<TimeSlot[]>([]);
+
+  const router = useRouter();
 
   // Set a default date (today) if none is selected
   useEffect(() => {
@@ -69,6 +70,10 @@ export default function BookingDateTime({
     if (date && time) {
       onDateTimeSelect(date, time);
     }
+  };
+
+  const onBack = () => {
+    router.back();
   };
 
   return (

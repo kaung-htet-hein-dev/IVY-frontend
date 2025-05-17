@@ -63,7 +63,10 @@ export default function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] rounded-xl">
+      <DialogContent
+        className="sm:max-w-[425px] rounded-xl"
+        onOpenAutoFocus={e => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle className="text-center">Welcome to IVY</DialogTitle>
         </DialogHeader>

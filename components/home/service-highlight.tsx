@@ -31,7 +31,7 @@ export default function ServiceHighlight({ service }: ServiceHighlightProps) {
               Details
             </Button>
           </Link>
-          <Link href={`/booking?service=${service.id}`} passHref className="flex-1">
+          <Link href={`/services/${service.id}`} passHref className="flex-1">
             <Button className="w-full bg-rose-500 hover:bg-rose-600">Book</Button>
           </Link>
         </div>
