@@ -13,13 +13,13 @@ export default function BookingPage() {
   useEffect(() => {
     const serviceId = searchParams.get('service');
     if (serviceId) {
-      router.push(`/services/${serviceId}`);
+      router.push(`/booking/${serviceId}`);
     }
   }, [searchParams, router]);
 
   // Handle service selection
   const handleServiceSelect = (service: Service) => {
-    router.push(`/services/${service.id}`);
+    router.push(`/booking/${service.id}`);
   };
 
   return (

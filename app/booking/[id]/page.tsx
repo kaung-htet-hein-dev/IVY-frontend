@@ -16,7 +16,7 @@ const STEPS = {
   CONFIRMATION: 2,
 };
 
-export default function ServiceBookingPage() {
+export default function BookingPage() {
   const params = useParams();
   const router = useRouter();
   const { isLoggedIn } = useAuth();

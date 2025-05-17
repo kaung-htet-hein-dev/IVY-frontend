@@ -71,7 +71,7 @@ export default function ServicesPage() {
                       </div>
                     </div>
 
-                    <Link href={`/services/${service.id}`} passHref>
+                    <Link href={`/booking/${service.id}`} passHref>
                       <Button className="w-full bg-rose-500 hover:bg-rose-600">
                         Book This Service <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
