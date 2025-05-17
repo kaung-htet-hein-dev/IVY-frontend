@@ -1,91 +1,105 @@
 'use client';
 
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Moon, Sun } from 'lucide-react';
 
-export default function PlaygroundPage() {
+export default function ThemingPlayground() {
+  // To avoid hydration mismatch, we need to wait for the component to mount
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Don't render anything until the component is mounted
+  if (!mounted) return null;
+
   return (
-    <div className="container mx-auto p-8">
-      {/* Main heading using custom font variable */}
-      <h1 className="font-playfair text-4xl text-foreground mb-8">Tailwind CSS Playground</h1>
+    <div className="container mx-auto p-8 space-y-8">
+      <h1 className="text-4xl font-bold mb-6">Theme Switching Playground</h1>
 
-      {/* Colors Section */}
-      <section className="space-y-8 mb-12">
-        <h2 className="text-2xl font-bold mb-4">Colors & Backgrounds</h2>
-
-        {/* Primary Colors */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {/* Base colors using CSS variables */}
-          <Card className="p-4 bg-[var(--primary)] text-[var(--primary-foreground)]">
-            Primary Color
-          </Card>
-          <Card className="p-4 bg-[var(--secondary)] text-[var(--secondary-foreground)]">
-            Secondary Color
-          </Card>
-          <Card className="p-4 bg-[var(--accent)] text-[var(--accent-foreground)]">
-            Accent Color
-          </Card>
+      {/* Basic Theme Controls */}
+      <Card className="p-6">
+        <h2 className="text-2xl font-semibold mb-4">Basic Theme Controls</h2>
+        <div className="flex flex-wrap gap-4">
+          <Button
+            variant="outline"
+            onClick={() => setTheme('light')}
+            className="flex items-center gap-2"
+          >
+            <Sun className="h-4 w-4" />
+            Light Mode
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => setTheme('dark')}
+            className="flex items-center gap-2"
+          >
+            <Moon className="h-4 w-4" />
+            Dark Mode
+          </Button>
+          <Button variant="outline" onClick={() => setTheme('system')}>
+            System
+          </Button>
         </div>
+      </Card>
 
-        {/* Text Colors */}
-        <div className="space-y-2">
-          <p className="text-[var(--foreground)]">Default Text</p>
-          <p className="text-[var(--muted-foreground)]">Muted Text</p>
-          <p className="text-[var(--primary)]">Primary Colored Text</p>
-        </div>
-      </section>
+      {/* Theme Status */}
+      <Card className="p-6">
+        <h2 className="text-2xl font-semibold mb-4">Current Theme Status</h2>
+        <p className="text-lg">
+          Current theme: <span className="font-bold">{theme}</span>
+        </p>
+      </Card>
 
-      {/* Components Section */}
-      <section className="space-y-8 mb-12">
-        <h2 className="text-2xl font-bold mb-4">Component Examples</h2>
-
-        {/* Buttons with different styles */}
-        <div className="space-x-4">
-          <Button variant="default">Default Button</Button>
-          <Button variant="secondary">Secondary Button</Button>
-          <Button variant="destructive">Destructive Button</Button>
-          <Button variant="outline">Outline Button</Button>
-          <Button variant="ghost">Ghost Button</Button>
-        </div>
-
-        {/* Cards with different styles */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Default Card */}
-          <Card className="p-6">
-            <h3 className="text-lg font-bold mb-2">Default Card</h3>
-            <p className="text-[var(--muted-foreground)]">
-              Uses default background and border colors
-            </p>
-          </Card>
-
-          {/* Custom Styled Card */}
-          <Card className="p-6 border-[var(--primary)] border-2">
-            <h3 className="text-lg font-bold mb-2 text-[var(--primary)]">Custom Card</h3>
-            <p className="text-[var(--muted-foreground)]">Uses primary color for borders</p>
-          </Card>
-        </div>
-      </section>
-
-      {/* Utility Classes Section */}
-      <section className="space-y-8">
-        <h2 className="text-2xl font-bold mb-4">Utility Classes</h2>
-
-        {/* Animations */}
+      {/* Theme Demo Elements */}
+      <Card className="p-6">
+        <h2 className="text-2xl font-semibold mb-4">Theme Demo Elements</h2>
         <div className="space-y-4">
-          <div className="animate-fade-in p-4 bg-[var(--accent)]">Fade In Animation</div>
-          <div className="animate-slide-up p-4 bg-[var(--secondary)]">Slide Up Animation</div>
-          <div className="animate-slide-in-right p-4 bg-[var(--primary)]">
-            Slide In Right Animation
+          {/* Primary Colors */}
+          <div className="p-4 bg-primary text-primary-foreground rounded-lg">
+            Primary Color Block
           </div>
-        </div>
 
-        {/* Border Radius */}
-        <div className="grid grid-cols-3 gap-4">
-          <div className="rounded-sm p-4 bg-[var(--muted)]">Small Radius</div>
-          <div className="rounded-md p-4 bg-[var(--muted)]">Medium Radius</div>
-          <div className="rounded-lg p-4 bg-[var(--muted)]">Large Radius</div>
+          {/* Secondary Colors */}
+          <div className="p-4 bg-secondary text-secondary-foreground rounded-lg">
+            Secondary Color Block
+          </div>
+
+          {/* Accent Colors */}
+          <div className="p-4 bg-accent text-accent-foreground rounded-lg">Accent Color Block</div>
+
+          {/* Muted Colors */}
+          <div className="p-4 bg-muted text-muted-foreground rounded-lg">Muted Color Block</div>
         </div>
-      </section>
+      </Card>
+
+      {/* Theme Implementation Notes */}
+      <Card className="p-6">
+        <h2 className="text-2xl font-semibold mb-4">How It Works</h2>
+        <div className="space-y-4 text-sm">
+          <p>
+            1. Tailwind is configured to use CSS variables defined in globals.css with the darkMode:
+            ['class'] setting in tailwind.config.ts
+          </p>
+          <p>
+            2. next-themes provides the ThemeProvider component and useTheme hook to manage theme
+            state
+          </p>
+          <p>
+            3. CSS variables in :root and .dark selectors define the actual color values for each
+            theme
+          </p>
+          <p>
+            4. Components use Tailwind classes that reference these CSS variables (e.g.,
+            bg-background, text-foreground)
+          </p>
+        </div>
+      </Card>
     </div>
   );
 }

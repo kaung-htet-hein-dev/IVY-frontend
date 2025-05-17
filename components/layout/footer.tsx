@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { MapPin, Clock, Phone, Mail, Instagram, Facebook, Twitter } from 'lucide-react';
-import { locations, socialLinks } from '@/lib/data';
+import { locations, socialLinks } from '@/utils/data';
 import LocationCard from './location-card';
 
 export default function Footer() {

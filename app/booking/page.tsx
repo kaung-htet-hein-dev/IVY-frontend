@@ -1,14 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import BookingServiceSelection from '@/components/booking/booking-service-selection';
-import BookingDateTime from '@/components/booking/booking-datetime';
-import BookingCustomerInfo from '@/components/booking/booking-customer-info';
-import BookingConfirmation from '@/components/booking/booking-confirmation';
 import AuthDialog from '@/components/auth/auth-dialog';
-import { services, Service, generateTimeSlots } from '@/lib/data';
-import { format } from 'date-fns';
+import BookingConfirmation from '@/components/booking/booking-confirmation';
+import BookingCustomerInfo from '@/components/booking/booking-customer-info';
+import BookingDateTime from '@/components/booking/booking-datetime';
+import BookingServiceSelection from '@/components/booking/booking-service-selection';
+import { useAuth } from '@/store/auth/useAuth';
+import { Service, services } from '@/utils/data';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 // Define booking steps
 const STEPS = {
@@ -34,7 +34,7 @@ export default function BookingPage() {
     notes: '',
   });
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isLoggedIn } = useAuth();
 
   // Check for service in URL parameters
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function BookingPage() {
 
   // Handle moving to next step
   const nextStep = () => {
-    if (!isAuthenticated && step === STEPS.SERVICE) {
+    if (!isLoggedIn && step === STEPS.SERVICE) {
       setIsAuthDialogOpen(true);
       return;
     }
@@ -65,7 +65,7 @@ export default function BookingPage() {
   // Handle service selection
   const handleServiceSelect = (service: Service) => {
     setSelectedService(service);
-    if (!isAuthenticated) {
+    if (!isLoggedIn) {
       setIsAuthDialogOpen(true);
       return;
     }

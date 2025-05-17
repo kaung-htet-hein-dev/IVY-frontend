@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
-import { Service } from '@/lib/data';
+import { Service } from '@/utils/data';
 import { Clock } from 'lucide-react';
 
 interface BookingServiceSelectionProps {

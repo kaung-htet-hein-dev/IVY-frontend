@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Clock, ArrowRight } from 'lucide-react';
-import { Service } from '@/lib/data';
+import { Service } from '@/utils/data';
 
 interface ServiceHighlightProps {
   service: Service;

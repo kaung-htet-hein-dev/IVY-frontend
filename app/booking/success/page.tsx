@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, CheckCircle, Calendar, Clock, User } from 'lucide-react';
-import { getServiceById } from '@/lib/data';
+import { getServiceById } from '@/utils/data';
 
 export default function BookingSuccessPage() {
   const searchParams = useSearchParams();

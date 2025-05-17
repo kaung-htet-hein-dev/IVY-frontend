@@ -2,9 +2,10 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import { Toaster } from '@/components/ui/toaster';
-import { ThemeProvider } from '@/components/providers/theme-provider';
+import { ThemeProvider } from '@/providers/theme-provider';
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
+import { ReduxProvider } from '@/providers/redux-provider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -25,19 +26,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${playfair.variable} font-sans`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-          <Toaster />
-        </ThemeProvider>
+        <ReduxProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+            <Toaster />
+          </ThemeProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

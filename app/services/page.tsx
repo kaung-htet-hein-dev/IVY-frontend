@@ -2,8 +2,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { services } from '@/lib/data';
+import { services } from '@/utils/data';
 import { Clock, ArrowRight } from 'lucide-react';
+import CTA from '@/components/ui/cta';
 
 export default function ServicesPage() {
   // Group services by category
@@ -83,18 +84,7 @@ export default function ServicesPage() {
         ))}
 
         {/* CTA Section */}
-        <div className="bg-rose-50 rounded-lg p-8 mt-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to transform your look?</h2>
-          <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
-            Our professional stylists are ready to help you achieve the perfect style. Book your
-            appointment today and experience the IVY difference.
-          </p>
-          <Link href="/booking" passHref>
-            <Button size="lg" className="bg-rose-500 hover:bg-rose-600">
-              Book an Appointment <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </Link>
-        </div>
+        <CTA />
       </div>
     </div>
   );

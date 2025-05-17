@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, Clock, User, Mail, Phone, FileText } from 'lucide-react';
-import { Service } from '@/lib/data';
+import { Service } from '@/utils/data';
 import { format } from 'date-fns';
 
 interface BookingConfirmationProps {

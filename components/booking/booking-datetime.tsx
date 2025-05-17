@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { Calendar } from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Clock, CalendarDays } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { Service, generateTimeSlots, TimeSlot } from '@/lib/data';
+import { cn } from '@/utils/helpers';
+import { Service, generateTimeSlots, TimeSlot } from '@/utils/data';
 import { addDays, format, isToday, isBefore, startOfDay } from 'date-fns';
 
 interface BookingDateTimeProps {
