@@ -19,7 +19,7 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: 'IVY Hair Studio',
-  description: 'Book your next haircut, styling, or color service at IVY Hair Studio',
+  description: 'Book your next haircut, styling, or color service at IVY Hair Studio'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

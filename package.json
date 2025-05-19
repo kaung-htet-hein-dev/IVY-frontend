@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack -p 5000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -42,8 +42,8 @@
     "@radix-ui/react-tooltip": "^1.1.2",
     "@reduxjs/toolkit": "^2.8.2",
     "@types/node": "20.6.2",
-    "@types/react": "18.2.22",
-    "@types/react-dom": "18.2.7",
+    "@types/react": "19.1.4",
+    "@types/react-dom": "19.1.5",
     "autoprefixer": "10.4.15",
     "axios": "^1.9.0",
     "class-variance-authority": "^0.7.0",
@@ -52,20 +52,20 @@
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
     "eslint": "8.49.0",
-    "eslint-config-next": "13.5.1",
+    "eslint-config-next": "15.3.2",
     "framer-motion": "^11.0.14",
     "i18next": "^23.10.1",
     "input-otp": "^1.2.4",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.446.0",
     "miragejs": "^0.1.48",
-    "next": "13.5.1",
+    "next": "15.3.2",
     "next-i18next": "^15.2.0",
     "next-themes": "^0.3.0",
     "postcss": "8.4.30",
-    "react": "18.2.0",
+    "react": "19.1.0",
     "react-day-picker": "^8.10.1",
-    "react-dom": "18.2.0",
+    "react-dom": "19.1.0",
     "react-hook-form": "^7.53.0",
     "react-i18next": "^14.1.0",
     "react-redux": "^9.2.0",
@@ -84,5 +84,9 @@
   "packageManager": "yarn@3.6.4+sha512.e70835d4d6d62c07be76b3c1529cb640c7443f0fe434ef4b6478a5a399218cbaf1511b396b3c56eb03bc86424cff2320f6167ad2fde273aa0df6e60b7754029f",
   "devDependencies": {
     "prettier": "^3.5.3"
+  },
+  "resolutions": {
+    "@types/react": "19.1.4",
+    "@types/react-dom": "19.1.5"
   }
 }
