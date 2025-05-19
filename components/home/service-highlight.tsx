@@ -14,7 +14,10 @@ export default function ServiceHighlight() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
       {highlightServices.map(service => (
-        <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
+        <Card
+          className="overflow-hidden transition-all duration-300 hover:shadow-lg"
+          key={service.id}
+        >
           <div className="relative h-48 w-full">
             <Image src={service.image} alt={service.name} fill style={{ objectFit: 'cover' }} />
           </div>
