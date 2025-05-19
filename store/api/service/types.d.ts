@@ -4,9 +4,16 @@ export interface Service {
   description: string;
   durationMinute: number;
   price: number;
-  categoryId: string;
-  categoryName: string;
+  category: Partial<ServiceCategory>;
   image: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+  isActive: boolean;
+}
+
+export interface ServiceCategory {
+  id: string;
+  name: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

@@ -15,15 +15,10 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Service } from '@/store/api/service/types';
+import { Booking, BookingStatus } from '@/store/api/booking/types';
 
 interface BookingCardProps {
-  booking: {
-    id: string;
-    date: string;
-    timeSlot: string;
-    serviceId: string;
-    status: string;
-  };
+  booking: Booking;
   service: Service | undefined;
   isPast?: boolean;
   onCancelBooking?: (bookingId: string) => void;
@@ -50,7 +45,7 @@ export function BookingCard({
             </div>
             <div className="flex items-center">
               <Clock className="h-5 w-5 mr-2" />
-              <span>{booking.timeSlot}</span>
+              <span>{booking.date}</span>
             </div>
           </div>
           <div className="p-4 md:p-6 md:flex-1">
@@ -66,7 +61,11 @@ export function BookingCard({
                     isPast ? 'bg-gray-100 text-gray-800' : 'bg-green-100 text-green-800'
                   } text-xs px-2 py-1 rounded-full`}
                 >
-                  {isPast ? (booking.status === 'completed' ? 'Completed' : 'Past') : 'Confirmed'}
+                  {isPast
+                    ? booking.status === BookingStatus.COMPLETED
+                      ? 'Completed'
+                      : 'Past'
+                    : 'Confirmed'}
                 </span>
               </div>
               <div className="flex gap-2 w-full sm:w-auto">
@@ -99,7 +98,7 @@ export function BookingCard({
                     </AlertDialog>
 
                     <Link
-                      href={`/booking?service=${booking.serviceId}`}
+                      href={`/booking?service=${booking.service.id}`}
                       passHref
                       className="flex-1 sm:flex-none"
                     >
@@ -109,7 +108,7 @@ export function BookingCard({
                     </Link>
                   </>
                 ) : (
-                  <Link href={`/booking?service=${booking.serviceId}`} passHref>
+                  <Link href={`/booking?service=${booking.service.id}`} passHref>
                     <Button variant="outline" size="sm">
                       Book Again
                     </Button>

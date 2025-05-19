@@ -1,25 +1,13 @@
 // Service types
 
-import { Service } from '@/store/api/service/types';
+import { BookingStatus, type Booking } from '@/store/api/booking/types';
+import { type Service } from '@/store/api/service/types';
 
 // Booking types
 export type TimeSlot = {
   id: string;
   time: string;
   available: boolean;
-};
-
-export type Booking = {
-  id: string;
-  serviceId: string;
-  date: string;
-  timeSlot: string;
-  customerName: string;
-  customerPhone: string;
-  customerEmail: string;
-  notes?: string;
-  status: 'confirmed' | 'completed' | 'cancelled';
-  createdAt: string;
 };
 
 // Testimonial types
@@ -42,12 +30,12 @@ export const services: Service[] = [
       "Professional men's haircut tailored to your style and preference, including a consultation.",
     price: 30,
     durationMinute: 30,
-    categoryId: 'haircut',
-    categoryName: 'haircut',
+    category: { id: 'haircut', name: 'haircut' },
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/1319461/pexels-photo-1319461.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    isActive: true,
   },
   {
     id: '2',
@@ -56,12 +44,12 @@ export const services: Service[] = [
       "Professional women's haircut tailored to your style, including consultation and styling.",
     price: 45,
     durationMinute: 45,
-    categoryId: 'haircut',
-    categoryName: 'haircut',
+    category: { id: 'haircut', name: 'haircut' },
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    isActive: true,
   },
   {
     id: '3',
@@ -70,12 +58,12 @@ export const services: Service[] = [
       'Rejuvenating hair wash with premium products followed by professional blow-dry styling.',
     price: 25,
     durationMinute: 30,
-    categoryId: 'styling',
-    categoryName: 'styling',
+    category: { id: 'haircut', name: 'haircut' },
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3993324/pexels-photo-3993324.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    isActive: true,
   },
   {
     id: '4',
@@ -84,12 +72,12 @@ export const services: Service[] = [
       'Chemical straightening process to transform curly or wavy hair into perfectly straight hair.',
     price: 150,
     durationMinute: 180,
-    categoryId: 'treatment',
-    categoryName: 'treatment',
+    category: { id: 'haircut', name: 'haircut' },
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3992874/pexels-photo-3992874.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    isActive: true,
   },
   {
     id: '5',
@@ -97,12 +85,12 @@ export const services: Service[] = [
     description: 'Professional perming service to add beautiful, long-lasting curls to your hair.',
     price: 120,
     durationMinute: 150,
-    categoryId: 'treatment',
-    categoryName: 'treatment',
+    category: { id: 'haircut', name: 'haircut' },
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3993302/pexels-photo-3993302.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    isActive: true,
   },
   {
     id: '6',
@@ -111,12 +99,12 @@ export const services: Service[] = [
       'Professional hair coloring service using premium products for vibrant, long-lasting results.',
     price: 85,
     durationMinute: 120,
-    categoryId: 'coloring',
-    categoryName: 'coloring',
+    category: { id: 'haircut', name: 'haircut' },
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3993333/pexels-photo-3993333.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    isActive: true,
   },
   {
     id: '7',
@@ -124,12 +112,12 @@ export const services: Service[] = [
     description: 'Add dimension and depth to your hair with custom highlight application.',
     price: 95,
     durationMinute: 120,
-    categoryId: 'coloring',
-    categoryName: 'coloring',
+    category: { id: 'haircut', name: 'haircut' },
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3992870/pexels-photo-3992870.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    isActive: true,
   },
   {
     id: '8',
@@ -137,12 +125,12 @@ export const services: Service[] = [
     description: 'Intensive hair treatment to restore moisture, shine, and health to damaged hair.',
     price: 40,
     durationMinute: 45,
-    categoryId: 'treatment',
-    categoryName: 'treatment',
+    category: { id: 'haircut', name: 'haircut' },
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     image:
       'https://images.pexels.com/photos/3993083/pexels-photo-3993083.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    isActive: true,
   },
 ];
 
@@ -252,37 +240,39 @@ export function generateTimeSlots(date: string): TimeSlot[] {
 export const userBookings: Booking[] = [
   {
     id: 'booking-1',
-    serviceId: 'haircut-womens',
     date: '2023-09-15',
-    timeSlot: '10:00',
-    customerName: 'Jane Doe',
-    customerPhone: '555-123-4567',
-    customerEmail: 'jane@example.com',
-    notes: 'First time visit',
-    status: 'confirmed',
+    status: BookingStatus.COMPLETED,
     createdAt: '2023-09-01T12:00:00Z',
+    service: {
+      id: '1',
+    },
+    user: {
+      id: 'user-1',
+    },
   },
   {
     id: 'booking-2',
-    serviceId: 'hair-dye',
     date: '2023-08-20',
-    timeSlot: '14:30',
-    customerName: 'Jane Doe',
-    customerPhone: '555-123-4567',
-    customerEmail: 'jane@example.com',
-    status: 'completed',
+    status: BookingStatus.COMPLETED,
     createdAt: '2023-08-01T15:30:00Z',
+    service: {
+      id: '1',
+    },
+    user: {
+      id: 'user-1',
+    },
   },
   {
     id: 'booking-3',
-    serviceId: 'hair-wash',
     date: '2023-09-28',
-    timeSlot: '16:00',
-    customerName: 'Jane Doe',
-    customerPhone: '555-123-4567',
-    customerEmail: 'jane@example.com',
-    status: 'confirmed',
+    status: BookingStatus.COMPLETED,
     createdAt: '2023-09-05T09:15:00Z',
+    service: {
+      id: '1',
+    },
+    user: {
+      id: 'user-1',
+    },
   },
 ];
 

@@ -2,14 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BookingCard } from './booking-card';
 import { EmptyBookingState } from './empty-booking-state';
 import { getServiceById } from '@/utils/data';
-
-interface Booking {
-  id: string;
-  date: string;
-  timeSlot: string;
-  serviceId: string;
-  status: string;
-}
+import { Booking } from '@/store/api/booking/types';
 
 interface BookingsTabProps {
   upcomingBookings: Booking[];
@@ -32,7 +25,7 @@ export function BookingsTab({ upcomingBookings, pastBookings, onCancelBooking }:
               <BookingCard
                 key={booking.id}
                 booking={booking}
-                service={getServiceById(booking.serviceId)}
+                service={getServiceById(booking.service.id!)}
                 onCancelBooking={onCancelBooking}
               />
             ))}
@@ -49,7 +42,7 @@ export function BookingsTab({ upcomingBookings, pastBookings, onCancelBooking }:
               <BookingCard
                 key={booking.id}
                 booking={booking}
-                service={getServiceById(booking.serviceId)}
+                service={getServiceById(booking.service.id!)}
                 isPast={true}
               />
             ))}

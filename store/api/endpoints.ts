@@ -6,4 +6,10 @@ export const endpoints = {
   createService: `${API_PREFIX}/services`,
   updateService: (id: string) => `${API_PREFIX}/services/${id}`,
   deleteService: (id: string) => `${API_PREFIX}/services/${id}`,
+
+  // Booking endpoints
+  getBookings: `${API_PREFIX}/bookings`,
+  getBookingById: (id: string) => `${API_PREFIX}/bookings/${id}`,
+  createBooking: `${API_PREFIX}/bookings`,
+  updateBooking: (id: string) => `${API_PREFIX}/bookings/${id}`,
 };

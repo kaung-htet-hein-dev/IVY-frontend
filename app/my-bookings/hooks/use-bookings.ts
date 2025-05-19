@@ -1,41 +1,41 @@
-import { useState } from 'react';
 import { isAfter } from 'date-fns';
-import { userBookings } from '@/utils/data';
-
-interface Booking {
-  id: string;
-  date: string;
-  timeSlot: string;
-  serviceId: string;
-  status: string;
-}
+import { BookingStatus } from '@/store/api/booking/types';
+import { useGetBookingsQuery, useUpdateBookingMutation } from '@/store/api/booking';
 
 export function useBookings() {
-  const [bookings, setBookings] = useState<Booking[]>(userBookings);
+  const { data: response, isLoading } = useGetBookingsQuery();
+  const [updateBooking] = useUpdateBookingMutation();
 
   // Filter bookings by status
-  const upcomingBookings = bookings.filter(
-    booking => booking.status === 'confirmed' && isAfter(new Date(booking.date), new Date())
-  );
+  const upcomingBookings =
+    response?.data?.filter(
+      booking =>
+        booking.status === BookingStatus.CONFIRMED && isAfter(new Date(booking.date), new Date())
+    ) ?? [];
 
-  const pastBookings = bookings.filter(
-    booking =>
-      booking.status === 'completed' ||
-      (booking.status === 'confirmed' && !isAfter(new Date(booking.date), new Date()))
-  );
+  const pastBookings =
+    response?.data?.filter(
+      booking =>
+        booking.status === BookingStatus.COMPLETED ||
+        (booking.status === BookingStatus.CONFIRMED && !isAfter(new Date(booking.date), new Date()))
+    ) ?? [];
 
   // Handle booking cancellation
-  const handleCancelBooking = (bookingId: string) => {
-    setBookings(
-      bookings.map(booking =>
-        booking.id === bookingId ? { ...booking, status: 'cancelled' } : booking
-      )
-    );
+  const handleCancelBooking = async (bookingId: string) => {
+    try {
+      await updateBooking({
+        id: bookingId,
+        data: { status: BookingStatus.CANCELLED },
+      });
+    } catch (error) {
+      console.error('Failed to cancel booking:', error);
+    }
   };
 
   return {
     upcomingBookings,
     pastBookings,
     handleCancelBooking,
+    isLoading,
   };
 }
