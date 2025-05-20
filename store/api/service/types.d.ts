@@ -17,3 +17,8 @@ export interface ServiceCategory {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface AvailableTimeSlotsRequest {
+  date: string;
+  serviceId: string;
+}

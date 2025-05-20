@@ -1,14 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { Calendar } from '@/components/ui/calendar';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Clock, CalendarDays } from 'lucide-react';
+import { ArrowLeft, Clock, CalendarDays, Loader2 } from 'lucide-react';
 import { cn } from '@/utils/helpers';
-import { generateTimeSlots, TimeSlot } from '@/utils/data';
-import { addDays, format, isToday, isBefore, startOfDay } from 'date-fns';
+import { addDays, isBefore, startOfDay } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { Service } from '@/store/api/service/types';
+import { useTimeSlot } from './hooks/use-time-slot';
 
 interface BookingDateTimeProps {
   service: Service;
@@ -23,55 +22,30 @@ export default function BookingDateTime({
   selectedTime,
   onDateTimeSelect,
 }: BookingDateTimeProps) {
-  const [date, setDate] = useState<Date | undefined>(selectedDate);
-  const [time, setTime] = useState<string | undefined>(selectedTime);
-  const [availableTimeSlots, setAvailableTimeSlots] = useState<TimeSlot[]>([]);
+  const { date, setDate, time, setTime, availableTimeSlots, isLoading } = useTimeSlot({
+    service,
+    initialDate: selectedDate,
+    initialTime: selectedTime,
+  });
 
   const router = useRouter();
 
-  // Set a default date (today) if none is selected
-  useEffect(() => {
-    if (!date) {
-      setDate(new Date());
-    }
-  }, [date]);
-
-  // Update available time slots when date changes
-  useEffect(() => {
-    if (date) {
-      const formattedDate = format(date, 'yyyy-MM-dd');
-      const slots = generateTimeSlots(formattedDate);
-      setAvailableTimeSlots(slots);
-
-      // Reset selected time when date changes
-      setTime(undefined);
-    }
-  }, [date]);
-
-  // Filter past times for today
-  const filteredTimeSlots = availableTimeSlots.filter(slot => {
-    if (!date || !isToday(date)) return true;
-
-    const [hours, minutes] = slot.time.split(':').map(Number);
-    const slotDate = new Date(date);
-    slotDate.setHours(hours, minutes);
-
-    return isBefore(new Date(), slotDate);
-  });
-
   // Disable past dates
-  const disableDate = (date: Date) => {
+  const disableDate = (date: Date): boolean => {
     return isBefore(date, startOfDay(new Date()));
   };
 
-  // Handle form submission
-  const handleSubmit = () => {
+  const handleSubmit = (): void => {
     if (date && time) {
       onDateTimeSelect(date, time);
     }
   };
 
-  const onBack = () => {
+  const handleTimeSelect = (selectedTime: string): void => {
+    setTime(selectedTime);
+  };
+
+  const onBack = (): void => {
     router.back();
   };
 
@@ -117,9 +91,13 @@ export default function BookingDateTime({
             <h3 className="font-semibold text-lg">Select Time</h3>
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
-            {filteredTimeSlots.length > 0 ? (
-              filteredTimeSlots.map(slot => (
+          <div className="grid grid-cols-3 gap-2 min-h-[200px]">
+            {isLoading ? (
+              <div className="col-span-3 flex items-center justify-center">
+                <Loader2 className="h-6 w-6 animate-spin text-rose-500" />
+              </div>
+            ) : availableTimeSlots.length > 0 ? (
+              availableTimeSlots.map(slot => (
                 <Button
                   key={slot.id}
                   variant="outline"
@@ -129,7 +107,7 @@ export default function BookingDateTime({
                     time === slot.time && 'bg-rose-100 border-rose-500 text-rose-700',
                     !slot.available && 'bg-gray-100 text-gray-400 cursor-not-allowed'
                   )}
-                  onClick={() => setTime(slot.time)}
+                  onClick={() => handleTimeSelect(slot.time)}
                 >
                   {slot.time}
                 </Button>
@@ -150,7 +128,7 @@ export default function BookingDateTime({
         </Button>
         <Button
           onClick={handleSubmit}
-          disabled={!date || !time}
+          disabled={!date || !time || isLoading}
           className="bg-rose-500 hover:bg-rose-600"
         >
           Continue

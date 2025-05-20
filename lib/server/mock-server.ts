@@ -90,6 +90,14 @@ export function startMockServer() {
         message: 'Bookings retrieved successfully',
       }));
 
+      // Get available time slots
+      this.post('/services/availiable-time-slot', (schema, request) => {
+        const { date, serviceId } = JSON.parse(request.requestBody);
+        // For mock purposes, return fixed time slots
+        const mockTimeSlots = ['1:00', '1:30', '2:00'];
+        return { data: mockTimeSlots };
+      });
+
       // Get booking by ID
       this.get('/bookings/:id', (schema, request) => {
         const booking = bookings.find(b => b.id === request.params.id);

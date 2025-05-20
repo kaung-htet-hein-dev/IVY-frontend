@@ -1,7 +1,7 @@
 import { apiReducer } from '../base-api';
 import { endpoints } from '../endpoints';
 import { ApiResponseType } from '../types';
-import { Service } from './types';
+import { Service, AvailableTimeSlotsRequest } from './types';
 
 export const serviceApi = apiReducer.injectEndpoints({
   endpoints: builder => ({
@@ -44,6 +44,14 @@ export const serviceApi = apiReducer.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+
+    getAvailableTimeSlots: builder.mutation<ApiResponseType<string[]>, AvailableTimeSlotsRequest>({
+      query: request => ({
+        url: endpoints.getAvailableTimeSlots,
+        method: 'POST',
+        data: request,
+      }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -54,4 +62,5 @@ export const {
   useCreateServiceMutation,
   useUpdateServiceMutation,
   useDeleteServiceMutation,
+  useGetAvailableTimeSlotsMutation,
 } = serviceApi;
