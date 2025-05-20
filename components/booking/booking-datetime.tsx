@@ -8,28 +8,20 @@ import { cn } from '@/utils/helpers';
 import { addDays, format, isBefore, startOfDay } from 'date-fns';
 import BookingBranchSelection from './booking-branch-selection';
 import { useRouter } from 'next/navigation';
-import { Service } from '@/store/api/service/types';
 import { useTimeSlot } from './hooks/use-time-slot';
 import { useGetBranchesQuery } from '@/store/api/branch';
 import { Branch } from '@/store/api/branch/types';
+import { useBooking } from '@/store/booking/booking-context';
 
-interface BookingDateTimeProps {
-  service: Service;
-  selectedDate: Date | undefined;
-  selectedTime: string | undefined;
-  selectedBranchId: string | undefined;
-  onDateTimeSelect: (date: Date | undefined, time: string | undefined) => void;
-  onBranchSelect: (branchId: string) => void;
-}
-
-export default function BookingDateTime({
-  service,
-  selectedDate,
-  selectedTime,
-  selectedBranchId,
-  onDateTimeSelect,
-  onBranchSelect,
-}: BookingDateTimeProps) {
+export default function BookingDateTime() {
+  const {
+    service,
+    selectedDate,
+    selectedTime,
+    selectedBranchId,
+    handleDateTimeSelect,
+    setSelectedBranchId,
+  } = useBooking();
   const { date, setDate, time, setTime, availableTimeSlots, isLoading } = useTimeSlot({
     service,
     branchId: selectedBranchId,
@@ -48,7 +40,7 @@ export default function BookingDateTime({
 
   const handleSubmit = (): void => {
     if (date && time) {
-      onDateTimeSelect(date, time);
+      handleDateTimeSelect(date, time);
     }
   };
 
@@ -67,17 +59,17 @@ export default function BookingDateTime({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="space-y-1">
             <h3 className="text-sm font-medium text-gray-500">Selected Service</h3>
-            <p className="text-lg font-semibold text-gray-900">{service.name}</p>
+            <p className="text-lg font-semibold text-gray-900">{service?.name}</p>
           </div>
           <div className="flex items-center gap-4 text-right">
             <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
               <Clock className="h-4 w-4 text-gray-400" />
               <span className="text-sm font-medium text-gray-600">
-                {service.durationMinute} min
+                {service?.durationMinute} min
               </span>
             </div>
             <div className="bg-rose-50 px-3 py-2 rounded-lg">
-              <div className="font-semibold text-rose-600">${service.price}</div>
+              <div className="font-semibold text-rose-600">${service?.price}</div>
             </div>
           </div>
         </div>
@@ -87,7 +79,7 @@ export default function BookingDateTime({
       <div className="mb-6">
         <BookingBranchSelection
           selectedBranchId={selectedBranchId}
-          onBranchSelect={onBranchSelect}
+          onBranchSelect={setSelectedBranchId}
         />
       </div>
 

@@ -1,31 +1,21 @@
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, Clock, User, Mail, Phone, FileText, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
-import { Service } from '@/store/api/service/types';
+import { useBooking } from '@/store/booking/booking-context';
 import { useState } from 'react';
 
-interface BookingConfirmationProps {
-  service: Service;
-  date: Date;
-  time: string;
-  customerInfo: {
-    name: string;
-    email: string;
-    phone: string;
-    notes?: string;
-  };
-  onConfirm: () => Promise<void>;
-  onBack: () => void;
-}
+export default function BookingConfirmation() {
+  const {
+    service,
+    selectedDate: date,
+    selectedTime: time,
+    customerInfo,
+    handleConfirmBooking: onConfirm,
+    goBack: onBack,
+  } = useBooking();
 
-export default function BookingConfirmation({
-  service,
-  date,
-  time,
-  customerInfo,
-  onConfirm,
-  onBack,
-}: BookingConfirmationProps) {
+  // If any required data is missing, we shouldn't show the confirmation screen
+  if (!service || !date || !time) return null;
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formattedDate = format(date, 'MMMM d, yyyy');
 

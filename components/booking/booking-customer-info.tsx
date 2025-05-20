@@ -16,19 +16,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeft, Loader2 } from 'lucide-react';
+import { useBooking } from '@/store/booking/booking-context';
 
-interface BookingCustomerInfoProps {
-  customerInfo: CustomerInfo;
-  onSubmit: (info: CustomerInfo) => void;
-  onBack: () => void;
-}
-
-export default function BookingCustomerInfo({
-  customerInfo,
-  onSubmit,
-  onBack,
-}: BookingCustomerInfoProps) {
+export default function BookingCustomerInfo() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { customerInfo, handleCustomerInfoSubmit: onSubmit, goBack: onBack } = useBooking();
 
   const form = useForm<CustomerInfo>({
     defaultValues: {
