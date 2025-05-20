@@ -11,7 +11,12 @@ import { LoadingLottie } from '../ui/lottie';
 export default function ServiceList() {
   const { categorizedServices, isLoading } = useServices();
 
-  if (isLoading) return <LoadingLottie />;
+  if (isLoading)
+    return (
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <LoadingLottie />
+      </div>
+    );
 
   return (
     <>

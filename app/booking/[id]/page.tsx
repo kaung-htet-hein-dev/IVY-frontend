@@ -1,17 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { useGetServiceByIdQuery } from '@/store/api/service';
-import BookingDateTime from '@/components/booking/booking-datetime';
-import BookingCustomerInfo from '@/components/booking/booking-customer-info';
-import BookingConfirmation from '@/components/booking/booking-confirmation';
 import AuthDialog from '@/components/auth/auth-dialog';
-import { BookingStep } from '../types';
-import { useAuth } from '@/store/auth/use-auth';
-import { useToast } from '@/hooks/use-toast';
+import BookingConfirmation from '@/components/booking/booking-confirmation';
+import BookingCustomerInfo from '@/components/booking/booking-customer-info';
+import BookingDateTime from '@/components/booking/booking-datetime';
+import { LoadingLottie, NotFoundLottie } from '@/components/ui/lottie';
 import { StepCounter } from '@/components/ui/step-counter';
+import { useToast } from '@/hooks/use-toast';
 import { BookingProvider, useBooking } from '@/providers/booking-context';
+import { useGetServiceByIdQuery } from '@/store/api/service';
+import { useAuth } from '@/store/auth/use-auth';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { BookingStep } from '../types';
 
 function BookingPageContent() {
   const params = useParams();
@@ -54,20 +55,16 @@ function BookingPageContent() {
 
   if (isLoadingService) {
     return (
-      <div className="pt-24 pb-16 min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-2xl font-bold">Loading service...</h1>
-        </div>
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <LoadingLottie />
       </div>
     );
   }
 
   if (!serviceResponse?.data) {
     return (
-      <div className="pt-24 pb-16 min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-2xl font-bold">Service not found</h1>
-        </div>
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <NotFoundLottie />
       </div>
     );
   }

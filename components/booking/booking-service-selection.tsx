@@ -1,11 +1,10 @@
-import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
-import { Clock } from 'lucide-react';
-import Lottie from 'lottie-react';
-import LoadingJson from '@/assets/lottie/loading.json';
-import { Service } from '@/store/api/service/types';
-import { useRouter } from 'next/navigation';
 import { useServices } from '@/hooks/use-services';
+import { Service } from '@/store/api/service/types';
+import { Clock } from 'lucide-react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { LoadingLottie } from '../ui/lottie';
 
 export default function BookingServiceSelection() {
   const { categorizedServices, isLoading } = useServices();
@@ -18,8 +17,8 @@ export default function BookingServiceSelection() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center">
-        <Lottie animationData={LoadingJson} />
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <LoadingLottie />
       </div>
     );
   }
