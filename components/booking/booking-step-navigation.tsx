@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Loader2 } from 'lucide-react';
-import { cn } from '@/utils/helpers';
+import { cn, scrollToTop } from '@/utils/helpers';
+import { BookingStatus } from '@/store/api/booking/types';
+import { BookingStep } from '@/app/booking/types';
 
 interface BookingStepNavigationProps {
   onBack: () => void;
@@ -10,6 +12,7 @@ interface BookingStepNavigationProps {
   loadingLabel?: string;
   disabled?: boolean;
   submitType?: boolean;
+  stepCount?: BookingStep;
 }
 
 export function BookingStepNavigation({
@@ -20,17 +23,29 @@ export function BookingStepNavigation({
   loadingLabel = 'Saving...',
   disabled = false,
   submitType = false,
+  stepCount,
 }: BookingStepNavigationProps) {
+  const handleBack = () => {
+    scrollToTop();
+    onBack();
+  };
+
+  const handleNext = () => {
+    if (submitType || !onNext) return;
+    if (stepCount !== BookingStep.CONFIRMATION) scrollToTop();
+    onNext();
+  };
+
   const buttonProps = submitType
     ? { type: 'submit' as const }
-    : { type: 'button' as const, onClick: onNext };
+    : { type: 'button' as const, onClick: handleNext };
 
   return (
     <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 mt-8 sticky bottom-0 bg-white p-4 -mx-4 -mb-4 border-t md:border-none md:p-0 md:mx-0 md:mb-0">
       <Button
         type="button"
         variant="outline"
-        onClick={onBack}
+        onClick={handleBack}
         className="w-full sm:w-auto flex items-center justify-center gap-2"
         disabled={isLoading}
       >

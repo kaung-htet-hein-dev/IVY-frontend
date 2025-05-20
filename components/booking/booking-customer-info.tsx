@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useBooking } from '@/providers/booking-context';
 import { BookingStepNavigation } from './booking-step-navigation';
+import { scrollToTop } from '@/utils/helpers';
 
 export default function BookingCustomerInfo() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -47,6 +48,7 @@ export default function BookingCustomerInfo() {
     setIsSubmitting(true);
     try {
       await onSubmit(data);
+      scrollToTop();
     } finally {
       setIsSubmitting(false);
     }
