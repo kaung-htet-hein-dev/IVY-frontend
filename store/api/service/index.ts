@@ -45,7 +45,7 @@ export const serviceApi = apiReducer.injectEndpoints({
       }),
     }),
 
-    getAvailableTimeSlots: builder.mutation<
+    getAvailableTimeSlots: builder.query<
       ApiResponseType<AvailableTimeSlotsResponse>,
       AvailableTimeSlotsRequest
     >({
@@ -65,5 +65,5 @@ export const {
   useCreateServiceMutation,
   useUpdateServiceMutation,
   useDeleteServiceMutation,
-  useGetAvailableTimeSlotsMutation,
+  useGetAvailableTimeSlotsQuery,
 } = serviceApi;
