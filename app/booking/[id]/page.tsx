@@ -30,6 +30,7 @@ export default function BookingPage() {
   const [step, setStep] = useState(BookingStep.DATETIME);
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState<string>();
+  const [selectedBranchId, setSelectedBranchId] = useState<string>();
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
     name: '',
     email: '',
@@ -47,10 +48,10 @@ export default function BookingPage() {
 
   // Form handlers
   const handleDateTimeSelect = (date: Date | undefined, time: string | undefined) => {
-    if (!date || !time) {
+    if (!date || !time || !selectedBranchId) {
       toast({
         title: 'Error',
-        description: 'Please select both date and time.',
+        description: 'Please select a branch, date, and time.',
         variant: 'destructive',
       });
       return;
@@ -79,6 +80,7 @@ export default function BookingPage() {
     try {
       const bookingData: BookingForm = {
         service: { id: serviceResponse.data.id },
+        branchId: selectedBranchId!,
         date: `${selectedDate.toISOString().split('T')[0]}T${selectedTime}:00.000Z`,
         status: BookingStatus.PENDING,
         customerInfo,
@@ -169,7 +171,9 @@ export default function BookingPage() {
                 service={service}
                 selectedDate={selectedDate}
                 selectedTime={selectedTime}
+                selectedBranchId={selectedBranchId}
                 onDateTimeSelect={handleDateTimeSelect}
+                onBranchSelect={setSelectedBranchId}
               />
             )}
 

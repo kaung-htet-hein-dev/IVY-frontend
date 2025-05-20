@@ -1,7 +1,31 @@
 import { createServer } from 'miragejs';
 import { Service } from '@/store/api/service/types';
 import { BookingStatus } from '@/store/api/booking/types';
+import { Branch } from '@/store/api/branch/types';
 import { services, userBookings } from '@/utils/data';
+
+const branches: Branch[] = [
+  {
+    id: '1',
+    name: 'Downtown Branch',
+    address: '123 Main Street, Downtown',
+    phone: '+1 234-567-8900',
+    isActive: true,
+    openingHours: '9:00 AM - 7:00 PM',
+    createdAt: '2024-01-01T00:00:00Z',
+    updatedAt: '2024-01-01T00:00:00Z',
+  },
+  {
+    id: '2',
+    name: 'Uptown Branch',
+    address: '456 High Street, Uptown',
+    phone: '+1 234-567-8901',
+    isActive: true,
+    openingHours: '9:00 AM - 8:00 PM',
+    createdAt: '2024-01-01T00:00:00Z',
+    updatedAt: '2024-01-01T00:00:00Z',
+  },
+];
 
 let isServerStarted = false;
 
@@ -84,6 +108,20 @@ export function startMockServer() {
         return { data: null, message: 'Service deleted successfully' };
       });
 
+      // Get all branches
+      this.get('/branches', () => ({
+        data: branches,
+        message: 'Branches retrieved successfully',
+      }));
+
+      // Get branch by ID
+      this.get('/branches/:id', (schema, request) => {
+        const branch = branches.find(b => b.id === request.params.id);
+        return branch
+          ? { data: branch, message: 'Branch found' }
+          : { data: null, message: 'Branch not found', status: 404 };
+      });
+
       // Get all bookings
       this.get('/bookings', () => ({
         data: bookings,
@@ -92,15 +130,24 @@ export function startMockServer() {
 
       // Get available time slots
       this.post('/services/availiable-time-slot', (schema, request) => {
-        const { date, serviceId } = JSON.parse(request.requestBody);
-        // For mock purposes, return fixed time slots
-        const mockTimeSlots = [
-          { slot: '1:00', isAvailable: true },
-          { slot: '1:30', isAvailable: false },
-          { slot: '2:00', isAvailable: true },
-          { slot: '2:30', isAvailable: true },
-          { slot: '3:00', isAvailable: false },
-        ];
+        const { date, serviceId, branchId } = JSON.parse(request.requestBody);
+        // For mock purposes, return different time slots for different branches
+        const mockTimeSlots =
+          branchId === '1'
+            ? [
+                { slot: '9:00', isAvailable: true },
+                { slot: '9:30', isAvailable: false },
+                { slot: '10:00', isAvailable: true },
+                { slot: '10:30', isAvailable: true },
+                { slot: '11:00', isAvailable: false },
+              ]
+            : [
+                { slot: '14:00', isAvailable: true },
+                { slot: '14:30', isAvailable: true },
+                { slot: '15:00', isAvailable: false },
+                { slot: '15:30', isAvailable: true },
+                { slot: '16:00', isAvailable: true },
+              ];
         return { data: mockTimeSlots };
       });
 

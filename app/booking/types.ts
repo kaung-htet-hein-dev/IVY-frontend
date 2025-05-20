@@ -17,6 +17,7 @@ export interface BookingForm {
   service: {
     id: string;
   };
+  branchId: string;
   date: string;
   status: BookingStatus;
   user?: {

@@ -8,6 +8,10 @@ export const endpoints = {
   deleteService: (id: string) => `${API_PREFIX}/services/${id}`,
   getAvailableTimeSlots: `${API_PREFIX}/services/availiable-time-slot`,
 
+  // Branch endpoints
+  getBranches: `${API_PREFIX}/branches`,
+  getBranchById: (id: string) => `${API_PREFIX}/branches/${id}`,
+
   // Booking endpoints
   getBookings: `${API_PREFIX}/bookings`,
   getBookingById: (id: string) => `${API_PREFIX}/bookings/${id}`,

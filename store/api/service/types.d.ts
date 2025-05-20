@@ -21,6 +21,7 @@ export interface ServiceCategory {
 export interface AvailableTimeSlotsRequest {
   date: string;
   serviceId: string;
+  branchId: string;
 }
 
 export type AvailableTimeSlotsResponse = Array<{ slot: string; isAvailable: boolean }>;

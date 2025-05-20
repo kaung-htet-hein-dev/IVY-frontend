@@ -13,18 +13,24 @@ export function useTimeSlot({
   service,
   initialDate,
   initialTime,
+  branchId,
 }: {
   service: Service | undefined;
   initialDate?: Date;
   initialTime?: string;
+  branchId?: string;
 }) {
   const [date, setDate] = useState<Date | undefined>(initialDate);
   const [time, setTime] = useState<string | undefined>(initialTime);
   const [availableTimeSlots, setAvailableTimeSlots] = useState<TimeSlot[]>([]);
 
   const { data: timeSlotsResponse, isFetching: isLoading } = useGetAvailableTimeSlotsQuery(
-    { date: date ? format(date, 'yyyy-MM-dd') : '', serviceId: service?.id || '' },
-    { skip: !date || !service?.id }
+    {
+      date: date ? format(date, 'yyyy-MM-dd') : '',
+      serviceId: service?.id || '',
+      branchId: branchId || '',
+    },
+    { skip: !date || !service?.id || !branchId }
   );
 
   const transformTimeSlots = (data: { slot: string; isAvailable: boolean }[]): TimeSlot[] => {
@@ -41,6 +47,15 @@ export function useTimeSlot({
       setDate(new Date());
     }
   }, [date]);
+
+  // Reset selections when branch changes
+  useEffect(() => {
+    if (branchId) {
+      setDate(undefined);
+      setTime(undefined);
+      setAvailableTimeSlots([]);
+    }
+  }, [branchId]);
 
   // Update available time slots when response changes
   useEffect(() => {
