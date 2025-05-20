@@ -1,9 +1,8 @@
 'use client';
 
 import { Calendar } from '@/components/ui/calendar';
-import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { ArrowLeft, Clock, CalendarDays, Loader2, MapPin } from 'lucide-react';
+import { Clock, CalendarDays, MapPin, Loader2 } from 'lucide-react';
 import { cn } from '@/utils/helpers';
 import { addDays, format, isBefore, startOfDay } from 'date-fns';
 import BookingBranchSelection from './booking-branch-selection';
@@ -12,6 +11,8 @@ import { useTimeSlot } from './hooks/use-time-slot';
 import { useGetBranchesQuery } from '@/store/api/branch';
 import { Branch } from '@/store/api/branch/types';
 import { useBooking } from '@/providers/booking-context';
+import { BookingStepNavigation } from './booking-step-navigation';
+import { Button } from '../ui/button';
 
 export default function BookingDateTime() {
   const {
@@ -205,26 +206,13 @@ export default function BookingDateTime() {
         </div>
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 mt-8 sticky bottom-0 bg-white p-4 -mx-4 -mb-4 border-t md:border-none md:p-0 md:mx-0 md:mb-0">
-        <Button
-          variant="outline"
-          onClick={onBack}
-          className="w-full sm:w-auto flex items-center justify-center gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" /> Back
-        </Button>
-        <Button
-          onClick={handleSubmit}
-          disabled={!date || !time || isLoading}
-          className={cn(
-            'w-full sm:w-auto bg-rose-500 hover:bg-rose-600 transition-all duration-200',
-            'disabled:bg-gray-100 disabled:border-gray-200 disabled:text-gray-400'
-          )}
-        >
-          Continue to Customer Information
-        </Button>
-      </div>
+      <BookingStepNavigation
+        onBack={onBack}
+        onNext={handleSubmit}
+        nextLabel="Continue to Customer Information"
+        disabled={!date || !time || isLoading}
+        isLoading={isLoading}
+      />
     </div>
   );
 }

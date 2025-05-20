@@ -1,8 +1,10 @@
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Calendar, Clock, User, Mail, Phone, FileText, Loader2 } from 'lucide-react';
+'use client';
+
+import { Calendar, Clock, User, Mail, Phone, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 import { useBooking } from '@/providers/booking-context';
 import { useState } from 'react';
+import { BookingStepNavigation } from './booking-step-navigation';
 
 export default function BookingConfirmation() {
   const {
@@ -39,8 +41,8 @@ export default function BookingConfirmation() {
 
       <div className="space-y-6">
         {/* Service Details */}
-        <div className="bg-rose-50 p-4 rounded-lg border border-rose-100">
-          <h3 className="font-semibold text-lg text-rose-700 mb-2">Service Details</h3>
+        <div className="bg-green-50 p-4 rounded-lg border border-rose-100">
+          <h3 className="font-semibold text-lg text-green-700 mb-2">Service Details</h3>
           <div className="grid grid-cols-2 gap-3">
             <div>
               <p className="text-sm text-gray-500">Service:</p>
@@ -108,30 +110,13 @@ export default function BookingConfirmation() {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between pt-2">
-          <Button
-            variant="ghost"
-            onClick={onBack}
-            className="flex items-center gap-2"
-            disabled={isSubmitting}
-          >
-            <ArrowLeft className="h-4 w-4" /> Back
-          </Button>
-          <Button
-            onClick={handleConfirm}
-            className="bg-rose-500 hover:bg-rose-600"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Confirming...
-              </>
-            ) : (
-              'Confirm Booking'
-            )}
-          </Button>
-        </div>
+        <BookingStepNavigation
+          onBack={onBack}
+          onNext={handleConfirm}
+          nextLabel="Confirm Booking"
+          isLoading={isSubmitting}
+          loadingLabel="Confirming..."
+        />
       </div>
     </div>
   );

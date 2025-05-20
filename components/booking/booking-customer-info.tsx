@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { CustomerInfo, customerInfoSchema } from '@/app/booking/types';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -15,8 +14,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowLeft, Loader2 } from 'lucide-react';
 import { useBooking } from '@/providers/booking-context';
+import { BookingStepNavigation } from './booking-step-navigation';
 
 export default function BookingCustomerInfo() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -141,27 +140,12 @@ export default function BookingCustomerInfo() {
             )}
           />
 
-          <div className="flex justify-between pt-2">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={onBack}
-              className="flex items-center gap-2"
-              disabled={isSubmitting}
-            >
-              <ArrowLeft className="h-4 w-4" /> Back
-            </Button>
-            <Button type="submit" className="bg-rose-500 hover:bg-rose-600" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                'Continue'
-              )}
-            </Button>
-          </div>
+          <BookingStepNavigation
+            onBack={onBack}
+            nextLabel="Continue to Confirmation"
+            isLoading={isSubmitting}
+            submitType
+          />
         </form>
       </Form>
     </div>
