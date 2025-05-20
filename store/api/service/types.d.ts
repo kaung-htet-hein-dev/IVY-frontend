@@ -22,3 +22,5 @@ export interface AvailableTimeSlotsRequest {
   date: string;
   serviceId: string;
 }
+
+export type AvailableTimeSlotsResponse = Array<{ slot: string; isAvailable: boolean }>;

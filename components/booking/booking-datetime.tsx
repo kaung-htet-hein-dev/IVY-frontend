@@ -91,7 +91,7 @@ export default function BookingDateTime({
             <h3 className="font-semibold text-lg">Select Time</h3>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 min-h-[200px]">
+          <div className="grid grid-cols-3 gap-2">
             {isLoading ? (
               <div className="col-span-3 flex items-center justify-center">
                 <Loader2 className="h-6 w-6 animate-spin text-rose-500" />
@@ -101,15 +101,15 @@ export default function BookingDateTime({
                 <Button
                   key={slot.id}
                   variant="outline"
-                  disabled={!slot.available}
+                  disabled={!slot.isAvailable}
                   className={cn(
                     'h-10 hover:bg-rose-50',
-                    time === slot.time && 'bg-rose-100 border-rose-500 text-rose-700',
-                    !slot.available && 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    time === slot.slot && 'bg-rose-100 border-rose-500 text-rose-700',
+                    !slot.isAvailable && 'bg-gray-100 text-gray-400 cursor-not-allowed'
                   )}
-                  onClick={() => handleTimeSelect(slot.time)}
+                  onClick={() => handleTimeSelect(slot.slot)}
                 >
-                  {slot.time}
+                  {slot.slot}
                 </Button>
               ))
             ) : (

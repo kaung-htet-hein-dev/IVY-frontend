@@ -94,7 +94,13 @@ export function startMockServer() {
       this.post('/services/availiable-time-slot', (schema, request) => {
         const { date, serviceId } = JSON.parse(request.requestBody);
         // For mock purposes, return fixed time slots
-        const mockTimeSlots = ['1:00', '1:30', '2:00'];
+        const mockTimeSlots = [
+          { slot: '1:00', isAvailable: true },
+          { slot: '1:30', isAvailable: false },
+          { slot: '2:00', isAvailable: true },
+          { slot: '2:30', isAvailable: true },
+          { slot: '3:00', isAvailable: false },
+        ];
         return { data: mockTimeSlots };
       });
 

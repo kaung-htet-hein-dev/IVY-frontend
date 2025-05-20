@@ -1,7 +1,7 @@
 import { apiReducer } from '../base-api';
 import { endpoints } from '../endpoints';
 import { ApiResponseType } from '../types';
-import { Service, AvailableTimeSlotsRequest } from './types';
+import { Service, AvailableTimeSlotsRequest, AvailableTimeSlotsResponse } from './types';
 
 export const serviceApi = apiReducer.injectEndpoints({
   endpoints: builder => ({
@@ -45,7 +45,10 @@ export const serviceApi = apiReducer.injectEndpoints({
       }),
     }),
 
-    getAvailableTimeSlots: builder.mutation<ApiResponseType<string[]>, AvailableTimeSlotsRequest>({
+    getAvailableTimeSlots: builder.mutation<
+      ApiResponseType<AvailableTimeSlotsResponse>,
+      AvailableTimeSlotsRequest
+    >({
       query: request => ({
         url: endpoints.getAvailableTimeSlots,
         method: 'POST',

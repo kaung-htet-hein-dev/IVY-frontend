@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react';
 import { useGetAvailableTimeSlotsMutation } from '@/store/api/service';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
-import { Service } from '@/store/api/service/types';
+import { AvailableTimeSlotsResponse, Service } from '@/store/api/service/types';
 
 interface TimeSlot {
   id: string;
-  time: string;
-  available: boolean;
+  slot: string;
+  isAvailable: boolean;
 }
 
 export function useTimeSlot({
@@ -25,11 +25,11 @@ export function useTimeSlot({
   const [getAvailableTimeSlots, { isLoading }] = useGetAvailableTimeSlotsMutation();
   const { toast } = useToast();
 
-  const transformTimeSlots = (data: string[]): TimeSlot[] => {
-    return data.map((time, index) => ({
+  const transformTimeSlots = (data: AvailableTimeSlotsResponse): TimeSlot[] => {
+    return data.map((item, index) => ({
       id: index.toString(),
-      time,
-      available: true,
+      slot: item.slot,
+      isAvailable: item.isAvailable,
     }));
   };
 
@@ -56,7 +56,7 @@ export function useTimeSlot({
           const slots = transformTimeSlots(response.data.data);
           setAvailableTimeSlots(slots);
           // Only reset time if it's not in the new available slots
-          if (time && !response.data.data.includes(time)) {
+          if (time && !response.data.data.some(item => item.slot === time)) {
             setTime(undefined);
           }
         }
@@ -71,7 +71,7 @@ export function useTimeSlot({
     };
 
     fetchTimeSlots();
-  }, [date, service?.id, getAvailableTimeSlots, toast, time]);
+  }, [date, service?.id]);
 
   return {
     date,
