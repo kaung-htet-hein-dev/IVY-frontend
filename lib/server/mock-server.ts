@@ -132,22 +132,29 @@ export function startMockServer() {
       this.post('/services/availiable-time-slot', (schema, request) => {
         const { date, serviceId, branchId } = JSON.parse(request.requestBody);
         // For mock purposes, return different time slots for different branches
-        const mockTimeSlots =
-          branchId === '1'
-            ? [
-                { slot: '9:00', isAvailable: true },
-                { slot: '9:30', isAvailable: false },
-                { slot: '10:00', isAvailable: true },
-                { slot: '10:30', isAvailable: true },
-                { slot: '11:00', isAvailable: false },
-              ]
-            : [
-                { slot: '14:00', isAvailable: true },
-                { slot: '14:30', isAvailable: true },
-                { slot: '15:00', isAvailable: false },
-                { slot: '15:30', isAvailable: true },
-                { slot: '16:00', isAvailable: true },
-              ];
+        const mockTimeSlots = [
+          { slot: '9:00', isAvailable: true },
+          { slot: '9:30', isAvailable: false },
+          { slot: '10:00', isAvailable: true },
+          { slot: '10:30', isAvailable: true },
+          { slot: '10:00', isAvailable: true },
+          { slot: '10:30', isAvailable: true },
+          { slot: '10:00', isAvailable: true },
+          { slot: '10:30', isAvailable: true },
+          { slot: '10:00', isAvailable: true },
+          { slot: '10:30', isAvailable: true },
+          { slot: '10:00', isAvailable: true },
+          { slot: '10:30', isAvailable: true },
+          { slot: '10:00', isAvailable: true },
+          { slot: '10:30', isAvailable: true },
+          { slot: '10:00', isAvailable: true },
+          { slot: '10:30', isAvailable: true },
+          { slot: '10:00', isAvailable: true },
+          { slot: '10:30', isAvailable: true },
+          { slot: '10:00', isAvailable: true },
+          { slot: '10:30', isAvailable: true },
+        ];
+
         return { data: mockTimeSlots };
       });
 

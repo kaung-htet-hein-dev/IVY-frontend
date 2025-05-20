@@ -116,7 +116,7 @@ export default function BookingDateTime() {
 
           <div className="relative max-w-3xl">
             <ScrollArea className="h-[400px] px-1">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-3 gap-3">
                 {isLoading ? (
                   <div className="col-span-full min-h-[200px] flex items-center justify-center">
                     <div className="text-center space-y-3">
@@ -154,7 +154,6 @@ export default function BookingDateTime() {
                 )}
               </div>
             </ScrollArea>
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-white to-transparent" />
           </div>
         </div>
       </div>

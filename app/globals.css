@@ -160,6 +160,47 @@
   }
 }
 
+/* Neon animations */
+@keyframes neon-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 7px #22c55e,
+      0 0 10px #22c55e,
+      0 0 21px #22c55e,
+      inset 0 0 7px #22c55e;
+  }
+  50% {
+    box-shadow: 0 0 14px #22c55e,
+      0 0 20px #22c55e,
+      0 0 42px #22c55e,
+      inset 0 0 14px #22c55e;
+  }
+}
+
+@keyframes neon-pulse-red {
+  0%,
+  100% {
+    box-shadow: 0 0 7px #ef4444,
+      0 0 10px #ef4444,
+      0 0 21px #ef4444,
+      inset 0 0 7px #ef4444;
+  }
+  50% {
+    box-shadow: 0 0 14px #ef4444,
+      0 0 20px #ef4444,
+      0 0 42px #ef4444,
+      inset 0 0 14px #ef4444;
+  }
+}
+
+.neon-open {
+  animation: neon-pulse 1.5s ease-in-out infinite;
+}
+
+.neon-closed {
+  animation: neon-pulse-red 1.5s ease-in-out infinite;
+}
+
 /* Hero section styles */
 .hero-section {
   position: relative;
