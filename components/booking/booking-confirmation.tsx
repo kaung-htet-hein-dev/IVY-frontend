@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, Clock, User, Mail, Phone, FileText, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
-import { useBooking } from '@/store/booking/booking-context';
+import { useBooking } from '@/providers/booking-context';
 import { useState } from 'react';
 
 export default function BookingConfirmation() {

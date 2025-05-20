@@ -11,7 +11,7 @@ import { BookingStep } from '../types';
 import { useAuth } from '@/store/auth/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import { StepCounter } from '@/components/ui/step-counter';
-import { BookingProvider, useBooking } from '@/store/booking/booking-context';
+import { BookingProvider, useBooking } from '@/providers/booking-context';
 
 function BookingPageContent() {
   const params = useParams();

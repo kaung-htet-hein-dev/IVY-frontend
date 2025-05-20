@@ -1,24 +1,17 @@
 'use client';
 
-import Link from 'next/link';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Clock, ArrowRight } from 'lucide-react';
-import Lottie from 'lottie-react';
-import LoadingJson from '@/assets/lottie/loading.json';
 import { useServices } from '@/hooks/use-services';
+import { ArrowRight, Clock } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { LoadingLottie } from '../ui/lottie';
 
 export default function ServiceList() {
   const { categorizedServices, isLoading } = useServices();
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center">
-        <Lottie animationData={LoadingJson} />
-      </div>
-    );
-  }
+  if (isLoading) return <LoadingLottie />;
 
   return (
     <>

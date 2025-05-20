@@ -16,7 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeft, Loader2 } from 'lucide-react';
-import { useBooking } from '@/store/booking/booking-context';
+import { useBooking } from '@/providers/booking-context';
 
 export default function BookingCustomerInfo() {
   const [isSubmitting, setIsSubmitting] = useState(false);

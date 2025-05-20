@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useTimeSlot } from './hooks/use-time-slot';
 import { useGetBranchesQuery } from '@/store/api/branch';
 import { Branch } from '@/store/api/branch/types';
-import { useBooking } from '@/store/booking/booking-context';
+import { useBooking } from '@/providers/booking-context';
 
 export default function BookingDateTime() {
   const {
