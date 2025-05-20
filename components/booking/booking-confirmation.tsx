@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Calendar, Clock, User, Mail, Phone, FileText } from 'lucide-react';
+import { ArrowLeft, Calendar, Clock, User, Mail, Phone, FileText, Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { Service } from '@/store/api/service/types';
+import { useState } from 'react';
 
 interface BookingConfirmationProps {
   service: Service;
@@ -13,7 +14,7 @@ interface BookingConfirmationProps {
     phone: string;
     notes?: string;
   };
-  onConfirm: () => void;
+  onConfirm: () => Promise<void>;
   onBack: () => void;
 }
 
@@ -25,7 +26,19 @@ export default function BookingConfirmation({
   onConfirm,
   onBack,
 }: BookingConfirmationProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const formattedDate = format(date, 'MMMM d, yyyy');
+
+  const handleConfirm = async () => {
+    setIsSubmitting(true);
+    try {
+      await onConfirm();
+    } catch (error) {
+      // Error will be handled by the parent component
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div>
@@ -106,11 +119,27 @@ export default function BookingConfirmation({
 
         {/* Navigation Buttons */}
         <div className="flex justify-between pt-2">
-          <Button variant="ghost" onClick={onBack} className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            onClick={onBack}
+            className="flex items-center gap-2"
+            disabled={isSubmitting}
+          >
             <ArrowLeft className="h-4 w-4" /> Back
           </Button>
-          <Button onClick={onConfirm} className="bg-rose-500 hover:bg-rose-600">
-            Confirm Booking
+          <Button
+            onClick={handleConfirm}
+            className="bg-rose-500 hover:bg-rose-600"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Confirming...
+              </>
+            ) : (
+              'Confirm Booking'
+            )}
           </Button>
         </div>
       </div>

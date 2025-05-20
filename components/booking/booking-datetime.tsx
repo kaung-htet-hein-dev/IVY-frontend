@@ -13,8 +13,8 @@ import { Service } from '@/store/api/service/types';
 interface BookingDateTimeProps {
   service: Service;
   selectedDate: Date | undefined;
-  selectedTime: string | null;
-  onDateTimeSelect: (date: Date | undefined, time: string | null) => void;
+  selectedTime: string | undefined;
+  onDateTimeSelect: (date: Date | undefined, time: string | undefined) => void;
 }
 
 export default function BookingDateTime({
@@ -24,7 +24,7 @@ export default function BookingDateTime({
   onDateTimeSelect,
 }: BookingDateTimeProps) {
   const [date, setDate] = useState<Date | undefined>(selectedDate);
-  const [time, setTime] = useState<string | null>(selectedTime);
+  const [time, setTime] = useState<string | undefined>(selectedTime);
   const [availableTimeSlots, setAvailableTimeSlots] = useState<TimeSlot[]>([]);
 
   const router = useRouter();
@@ -44,9 +44,7 @@ export default function BookingDateTime({
       setAvailableTimeSlots(slots);
 
       // Reset selected time when date changes
-      if (time) {
-        setTime(null);
-      }
+      setTime(undefined);
     }
   }, [date]);
 

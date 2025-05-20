@@ -2,31 +2,35 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { services } from '@/utils/data';
+import { useGetServiceByIdQuery } from '@/store/api/service';
 import BookingDateTime from '@/components/booking/booking-datetime';
 import BookingCustomerInfo from '@/components/booking/booking-customer-info';
 import BookingConfirmation from '@/components/booking/booking-confirmation';
 import AuthDialog from '@/components/auth/auth-dialog';
+import { BookingStep, CustomerInfo, BookingForm } from '../types';
 import { useAuth } from '@/store/auth/use-auth';
-
-// Define booking steps
-const STEPS = {
-  DATETIME: 0,
-  CUSTOMER_INFO: 1,
-  CONFIRMATION: 2,
-};
+import { useCreateBookingMutation } from '@/store/api/booking';
+import { BookingStatus } from '@/store/api/booking/types';
+import { useToast } from '@/hooks/use-toast';
+import { StepCounter } from '@/components/ui/step-counter';
 
 export default function BookingPage() {
   const params = useParams();
   const router = useRouter();
   const { isLoggedIn } = useAuth();
+  const { toast } = useToast();
+
+  // API hooks
+  const { data: serviceResponse, isLoading: isLoadingService } = useGetServiceByIdQuery(
+    params.id as string
+  );
+  const [createBooking] = useCreateBookingMutation();
 
   // State
-  const [service, setService] = useState<any | null>(null);
-  const [step, setStep] = useState(STEPS.DATETIME);
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [customerInfo, setCustomerInfo] = useState({
+  const [step, setStep] = useState(BookingStep.DATETIME);
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [selectedTime, setSelectedTime] = useState<string>();
+  const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
     name: '',
     email: '',
     phone: '',
@@ -34,60 +38,94 @@ export default function BookingPage() {
   });
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
 
-  // Load service data
-  useEffect(() => {
-    const serviceId = params.id as string;
-    const foundService = services.find(s => s.id === serviceId);
-    if (foundService) {
-      setService(foundService);
-    }
-  }, [params.id]);
-
-  // Check authentication when component mounts
+  // Show auth dialog for non-logged in users
   useEffect(() => {
     if (!isLoggedIn) {
       setIsAuthDialogOpen(true);
     }
   }, [isLoggedIn]);
 
-  // Handle moving to next step
-  const nextStep = () => {
+  // Form handlers
+  const handleDateTimeSelect = (date: Date | undefined, time: string | undefined) => {
+    if (!date || !time) {
+      toast({
+        title: 'Error',
+        description: 'Please select both date and time.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setSelectedDate(date);
+    setSelectedTime(time);
     setStep(prev => prev + 1);
   };
 
-  // Handle moving to previous step
-  const prevStep = () => {
-    setStep(prev => prev - 1);
-  };
-
-  // Handle date and time selection
-  const handleDateTimeSelect = (date: Date | undefined, time: string | null) => {
-    setSelectedDate(date);
-    setSelectedTime(time);
-    nextStep();
-  };
-
-  // Handle customer info submission
-  const handleCustomerInfoSubmit = (info: typeof customerInfo) => {
+  const handleCustomerInfoSubmit = (info: CustomerInfo) => {
     setCustomerInfo(info);
-    nextStep();
+    setStep(prev => prev + 1);
   };
 
-  // Calculate the page title based on current step
+  const handleConfirmBooking = async () => {
+    if (!selectedDate || !selectedTime || !serviceResponse?.data) {
+      toast({
+        title: 'Error',
+        description: 'Invalid booking details. Please try again.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    try {
+      const bookingData: BookingForm = {
+        service: { id: serviceResponse.data.id },
+        date: `${selectedDate.toISOString().split('T')[0]}T${selectedTime}:00.000Z`,
+        status: BookingStatus.PENDING,
+        customerInfo,
+      };
+
+      await createBooking(bookingData).unwrap();
+
+      toast({
+        title: 'Success',
+        description: 'Your booking has been confirmed!',
+      });
+
+      router.push('/booking/success');
+    } catch (error) {
+      console.error('Failed to create booking:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to create booking. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const getStepTitle = () => {
     switch (step) {
-      case STEPS.DATETIME:
+      case BookingStep.DATETIME:
         return 'Choose Date & Time';
-      case STEPS.CUSTOMER_INFO:
+      case BookingStep.CUSTOMER_INFO:
         return 'Your Information';
-      case STEPS.CONFIRMATION:
+      case BookingStep.CONFIRMATION:
         return 'Confirm Your Booking';
       default:
         return 'Book Your Appointment';
     }
   };
 
-  if (!service) {
+  if (isLoadingService) {
+    return (
+      <div className="pt-24 pb-16 min-h-screen bg-gray-50">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-2xl font-bold">Loading service...</h1>
+        </div>
+      </div>
+    );
+  }
+
+  if (!serviceResponse?.data) {
     return (
       <div className="pt-24 pb-16 min-h-screen bg-gray-50">
         <div className="container mx-auto px-4 text-center">
@@ -96,6 +134,8 @@ export default function BookingPage() {
       </div>
     );
   }
+
+  const service = serviceResponse.data;
 
   return (
     <div className="pt-24 pb-16 min-h-screen bg-gray-50">
@@ -106,55 +146,25 @@ export default function BookingPage() {
             <h1 className="text-3xl md:text-4xl font-bold mb-2">{getStepTitle()}</h1>
             <p className="text-xl font-semibold text-rose-600 mb-2">{service.name}</p>
             <p className="text-gray-600">
-              {step < STEPS.CONFIRMATION
+              {step < BookingStep.CONFIRMATION
                 ? 'Complete the form below to book your appointment'
                 : 'Review and confirm your appointment details'}
             </p>
           </div>
 
-          {/* Progress Indicator */}
-          <div className="mb-8">
-            <div className="flex justify-between">
-              {Object.keys(STEPS)
-                .filter(key => !isNaN(Number(key)))
-                .map((_, index) => (
-                  <div key={index} className="flex flex-col items-center">
-                    <div
-                      className={`rounded-full h-10 w-10 flex items-center justify-center border-2 
-                      ${
-                        Number(index) < step
-                          ? 'bg-rose-500 border-rose-500 text-white'
-                          : Number(index) === step
-                            ? 'border-rose-500 text-rose-500'
-                            : 'border-gray-300 text-gray-400'
-                      }`}
-                    >
-                      {Number(index) < step ? '✓' : index + 1}
-                    </div>
-                    <div className="text-xs mt-1 text-gray-500">
-                      {index === 0 ? 'Date & Time' : index === 1 ? 'Details' : 'Confirm'}
-                    </div>
-                  </div>
-                ))}
-            </div>
-            <div className="relative mt-2">
-              <div className="absolute inset-0 flex items-center">
-                <div className="h-1 w-full bg-gray-200 rounded"></div>
-              </div>
-              <div className="absolute inset-0 flex items-center">
-                <div
-                  className="h-1 bg-rose-500 rounded transition-all"
-                  style={{
-                    width: `${(step / (Object.keys(STEPS).length - 1)) * 100}%`,
-                  }}
-                ></div>
-              </div>
-            </div>
-          </div>
+          {/* Progress Steps */}
+          <StepCounter
+            currentStep={step}
+            steps={[
+              { label: 'Date & Time', value: BookingStep.DATETIME },
+              { label: 'Details', value: BookingStep.CUSTOMER_INFO },
+              { label: 'Confirm', value: BookingStep.CONFIRMATION },
+            ]}
+          />
 
           {/* Step Content */}
           <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
-            {step === STEPS.DATETIME && (
+            {step === BookingStep.DATETIME && (
               <BookingDateTime
                 service={service}
                 selectedDate={selectedDate}
@@ -163,22 +173,22 @@ export default function BookingPage() {
               />
             )}
 
-            {step === STEPS.CUSTOMER_INFO && (
+            {step === BookingStep.CUSTOMER_INFO && (
               <BookingCustomerInfo
                 customerInfo={customerInfo}
                 onSubmit={handleCustomerInfoSubmit}
-                onBack={prevStep}
+                onBack={() => setStep(prev => prev - 1)}
               />
             )}
 
-            {step === STEPS.CONFIRMATION && selectedDate && selectedTime && (
+            {step === BookingStep.CONFIRMATION && selectedDate && selectedTime && (
               <BookingConfirmation
                 service={service}
                 date={selectedDate}
                 time={selectedTime}
                 customerInfo={customerInfo}
-                onConfirm={() => {}}
-                onBack={prevStep}
+                onConfirm={handleConfirmBooking}
+                onBack={() => setStep(prev => prev - 1)}
               />
             )}
           </div>
