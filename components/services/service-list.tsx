@@ -27,7 +27,7 @@ export default function ServiceList() {
             {services.map(service => (
               <Card
                 key={service.id}
-                className="overflow-hidden hover:shadow-lg transition-all duration-300"
+                className="overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col"
                 id={service.id}
               >
                 <div className="relative h-56 w-full">
@@ -38,23 +38,27 @@ export default function ServiceList() {
                     style={{ objectFit: 'cover' }}
                   />
                 </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
-                  <p className="text-gray-600 mb-4">{service.description}</p>
-
-                  <div className="flex justify-between items-center mb-6">
-                    <span className="text-xl font-bold text-rose-600">${service.price}</span>
-                    <div className="flex items-center text-gray-500">
-                      <Clock className="h-4 w-4 mr-1" />
-                      <span>{service.durationMinute} min</span>
-                    </div>
+                <CardContent className="p-6 flex flex-col flex-1">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
+                    <p className="text-gray-600 min-h-[48px]">{service.description}</p>
                   </div>
 
-                  <Link href={`/booking/${service.id}`} passHref>
-                    <Button className="w-full bg-rose-500 hover:bg-rose-600">
-                      Book This Service <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
+                  <div className="space-y-6 mt-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xl font-bold text-rose-600">${service.price}</span>
+                      <div className="flex items-center text-gray-500">
+                        <Clock className="h-4 w-4 mr-1" />
+                        <span>{service.durationMinute} min</span>
+                      </div>
+                    </div>
+
+                    <Link href={`/booking/${service.id}`} passHref className="block">
+                      <Button className="w-full bg-rose-500 hover:bg-rose-600">
+                        Book This Service <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </div>
                 </CardContent>
               </Card>
             ))}
