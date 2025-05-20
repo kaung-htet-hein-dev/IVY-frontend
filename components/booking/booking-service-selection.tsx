@@ -17,7 +17,7 @@ export default function BookingServiceSelection() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[100vh]">
+      <div className="flex items-center justify-center h-[100dvh]">
         <LoadingLottie />
       </div>
     );

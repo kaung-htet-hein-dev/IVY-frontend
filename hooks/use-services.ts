@@ -7,7 +7,7 @@ export function useServices() {
   // Group services by category
   const categorizedServices =
     response?.data?.reduce<Record<string, Service[]>>((acc, service) => {
-      const category = service.categoryName || 'other';
+      const category = service.category.name || 'other';
       if (!acc[category]) {
         acc[category] = [];
       }

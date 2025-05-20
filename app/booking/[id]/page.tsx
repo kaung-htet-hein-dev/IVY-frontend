@@ -55,7 +55,7 @@ function BookingPageContent() {
 
   if (isLoadingService) {
     return (
-      <div className="flex items-center justify-center min-h-[100vh]">
+      <div className="flex items-center justify-center h-[100dvh]">
         <LoadingLottie />
       </div>
     );
@@ -63,7 +63,7 @@ function BookingPageContent() {
 
   if (!serviceResponse?.data) {
     return (
-      <div className="flex items-center justify-center min-h-[100vh]">
+      <div className="flex items-center justify-center h-[100dvh]">
         <NotFoundLottie />
       </div>
     );
