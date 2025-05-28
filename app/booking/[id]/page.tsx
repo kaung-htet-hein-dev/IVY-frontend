@@ -4,7 +4,7 @@ import AuthDialog from '@/components/auth/auth-dialog';
 import BookingConfirmation from '@/components/booking/booking-confirmation';
 import BookingCustomerInfo from '@/components/booking/booking-customer-info';
 import BookingDateTime from '@/components/booking/booking-datetime';
-import { LoadingLottie, NotFoundLottie } from '@/components/ui/lottie';
+import { LoadingState, NotFoundState } from '@/components/ui/ui-state';
 import { StepCounter } from '@/components/ui/step-counter';
 import { useToast } from '@/hooks/use-toast';
 import { BookingProvider, useBooking } from '@/providers/booking-context';
@@ -56,7 +56,7 @@ function BookingPageContent() {
   if (isLoadingService) {
     return (
       <div className="flex items-center justify-center h-[100dvh]">
-        <LoadingLottie />
+        <LoadingState />
       </div>
     );
   }
@@ -64,7 +64,7 @@ function BookingPageContent() {
   if (!serviceResponse?.data) {
     return (
       <div className="flex items-center justify-center h-[100dvh]">
-        <NotFoundLottie />
+        <NotFoundState />
       </div>
     );
   }

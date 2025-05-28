@@ -1,15 +1,14 @@
 import BookingServiceSelection from '@/components/booking/booking-service-selection';
 import { redirect } from 'next/navigation';
 
-export default async function BookingPage({
-  searchParams,
-}: {
-  searchParams: { service?: string };
-}) {
-  // Redirect to service page if service is in URL parameters
-  if (searchParams.service) {
-    redirect(`/booking/${searchParams.service}`);
-  }
+type Params = Promise<{ slug: string }>;
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+
+export default async function BookingPage(props: { params: Params; searchParams: SearchParams }) {
+  // const params = await props.searchParams;
+  // if (params.service) {
+  //   redirect(`/booking/${params.service}`);
+  // }
 
   return (
     <div className="pt-24 pb-16 bg-gray-50">

@@ -6,7 +6,7 @@ import { Service } from '@/store/api/service/types';
 import { Clock } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { LoadingLottie } from '../ui/lottie';
+import { LoadingState } from '../ui/ui-state';
 
 export default function BookingServiceSelection() {
   const { categorizedServices, isLoading } = useServices();
@@ -20,7 +20,7 @@ export default function BookingServiceSelection() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-[100dvh]">
-        <LoadingLottie />
+        <LoadingState />
       </div>
     );
   }

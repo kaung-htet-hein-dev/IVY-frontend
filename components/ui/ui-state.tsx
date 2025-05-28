@@ -1,29 +1,30 @@
-'use client';
-
-import { NotFoundState } from '@/components/ui/ui-state';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft, Home } from 'lucide-react';
+import React from 'react';
+import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft, Home, XCircle } from 'lucide-react';
 
-export default function Custom404() {
-  const router = useRouter();
+function LoadingState() {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm z-50">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+    </div>
+  );
+}
 
+function NotFoundState() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full px-4 py-8">
         <div className="text-center">
-          <div className="w-64 h-64 mx-auto mb-8">
-            <NotFoundState />
+          <div className="mx-auto mb-8">
+            <XCircle className="h-24 w-24 mx-auto text-rose-500" />
           </div>
-          <h1 className="text-3xl font-bold mb-4">Page Not Found</h1>
-          <p className="text-gray-600 mb-8">
-            The page you're looking for doesn't exist or has been moved.
-          </p>
+          <p className="text-gray-600 mb-8"></p>
           <div className="flex gap-4 justify-center">
             <Button
               variant="outline"
-              onClick={() => router.back()}
+              onClick={() => window.history.back()}
               className="flex items-center gap-2"
             >
               <ArrowLeft className="h-4 w-4" />
@@ -41,3 +42,5 @@ export default function Custom404() {
     </div>
   );
 }
+
+export { LoadingState, NotFoundState };

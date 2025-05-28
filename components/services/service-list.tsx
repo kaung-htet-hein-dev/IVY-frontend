@@ -6,7 +6,7 @@ import { useServices } from '@/hooks/use-services';
 import { ArrowRight, Clock } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { LoadingLottie } from '../ui/lottie';
+import { LoadingState } from '../ui/ui-state';
 
 export default function ServiceList() {
   const { categorizedServices, isLoading } = useServices();
@@ -14,7 +14,7 @@ export default function ServiceList() {
   if (isLoading)
     return (
       <div className="flex items-center justify-center h-[100dvh]">
-        <LoadingLottie />
+        <LoadingState />
       </div>
     );
 
