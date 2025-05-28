@@ -1,3 +1,5 @@
+'use client';
+
 import { Card, CardContent } from '@/components/ui/card';
 import { useServices } from '@/hooks/use-services';
 import { Service } from '@/store/api/service/types';

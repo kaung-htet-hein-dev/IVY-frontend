@@ -1,20 +1,15 @@
-'use client';
-
 import BookingServiceSelection from '@/components/booking/booking-service-selection';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { redirect } from 'next/navigation';
 
-export default function BookingPage() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
+export default async function BookingPage({
+  searchParams,
+}: {
+  searchParams: { service?: string };
+}) {
   // Redirect to service page if service is in URL parameters
-  useEffect(() => {
-    const serviceId = searchParams.get('service');
-    if (serviceId) {
-      router.push(`/booking/${serviceId}`);
-    }
-  }, [searchParams, router]);
+  if (searchParams.service) {
+    redirect(`/booking/${searchParams.service}`);
+  }
 
   return (
     <div className="pt-24 pb-16 bg-gray-50">
