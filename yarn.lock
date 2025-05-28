@@ -127,6 +127,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@greatsumini/react-facebook-login@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@greatsumini/react-facebook-login@npm:3.4.0"
+  peerDependencies:
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0
+  checksum: 559311aa90c532b64bd5d326af1e128813fa2b7f5daab33b216b0bfda8e79f79a079207bb54cea6ab2162ca4d39b5ff4d7fbdff70610ccbe5a6647e9202ac6a5
+  languageName: node
+  linkType: hard
+
 "@hookform/resolvers@npm:^3.9.0":
   version: 3.10.0
   resolution: "@hookform/resolvers@npm:3.10.0"
@@ -1736,6 +1745,16 @@ __metadata:
   version: 1.1.1
   resolution: "@radix-ui/rect@npm:1.1.1"
   checksum: c1c111edeab70b14a735bca43601de6468c792482864b766ac8940b43321492e5c0ae62f92b156cecdc9265ec3c680c32b3fa0c8a90b5e796923a9af13c5dc20
+  languageName: node
+  linkType: hard
+
+"@react-oauth/google@npm:^0.12.2":
+  version: 0.12.2
+  resolution: "@react-oauth/google@npm:0.12.2"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 0ee3394fcf2acc68c75c64a3abfb71f15fe52a1d7a446b1bed6197101ee5d63025c2e4334d8525abebe3da1f69ba808b660bf27e13ba08a646fb193f968d53d6
   languageName: node
   linkType: hard
 
@@ -5054,6 +5073,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nextjs@workspace:."
   dependencies:
+    "@greatsumini/react-facebook-login": ^3.4.0
     "@hookform/resolvers": ^3.9.0
     "@next/swc-wasm-nodejs": 13.5.1
     "@radix-ui/react-accordion": ^1.2.0
@@ -5083,6 +5103,7 @@ __metadata:
     "@radix-ui/react-toggle": ^1.1.0
     "@radix-ui/react-toggle-group": ^1.1.0
     "@radix-ui/react-tooltip": ^1.1.2
+    "@react-oauth/google": ^0.12.2
     "@reduxjs/toolkit": ^2.8.2
     "@types/node": 20.6.2
     "@types/react": 19.1.4
@@ -5110,6 +5131,7 @@ __metadata:
     react: 19.1.0
     react-day-picker: ^8.10.1
     react-dom: 19.1.0
+    react-facebook-login: ^4.1.1
     react-hook-form: ^7.53.0
     react-i18next: ^14.1.0
     react-redux: ^9.2.0
@@ -5633,6 +5655,15 @@ __metadata:
   peerDependencies:
     react: ^19.1.0
   checksum: 1d154b6543467095ac269e61ca59db546f34ef76bcdeb90f2dad41d682cd210aae492e70c85010ed5d0a2caea225e9a55139ebc1a615ee85bf197d7f99678cdf
+  languageName: node
+  linkType: hard
+
+"react-facebook-login@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "react-facebook-login@npm:4.1.1"
+  peerDependencies:
+    react: ^16.0.0
+  checksum: e644da474c6bf308e9a862c55397d61fd876a088345f3e9d234ec457eb3c205d1deb1263c5000005adfc1899bf6774cf761ee670c33bd6b0887f0dfd3bdff957
   languageName: node
   linkType: hard
 

@@ -6,13 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useState } from 'react';
-import { Chrome, Facebook } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { cn } from '@/utils/helpers';
 import { useDispatch } from 'react-redux';
 import { login } from '@/store/auth';
+import FacebookLogin from '@greatsumini/react-facebook-login';
+import { useGoogleLogin } from '@react-oauth/google';
+import { FacebookIcon, GoogleIcon } from '@/components/ui/brand-icons';
 
 const signInSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -37,6 +39,20 @@ export default function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
   const [activeTab, setActiveTab] = useState('signin');
   const dispatch = useDispatch();
 
+  const googleLogin = useGoogleLogin({
+    onSuccess: async response => {
+      console.log('Google Login Success:', response);
+      // TODO: Send access token to your backend
+      // const userInfo = await axios.get(
+      //   'https://www.googleapis.com/oauth2/v3/userinfo',
+      //   { headers: { Authorization: `Bearer ${response.access_token}` } }
+      // );
+      // dispatch(login(userInfo.data));
+      // onClose();
+    },
+    onError: error => console.log('Google Login Failed:', error),
+  });
+
   const signInForm = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
   });
@@ -57,8 +73,8 @@ export default function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
 
   const handleSocialAuth = (provider: 'google' | 'facebook') => {
     // TODO: Implement social authentication logic
-    dispatch(login({ id: '1', name: 'John Doe', email: '', token: '' }));
-    onClose();
+    // dispatch(login({ id: '1', name: 'John Doe', email: '', token: '' }));
+    // onClose();
   };
 
   return (
@@ -66,6 +82,9 @@ export default function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
       <DialogContent
         className="sm:max-w-[425px] rounded-xl"
         onOpenAutoFocus={e => e.preventDefault()}
+        onEscapeKeyDown={e => e.preventDefault()}
+        onInteractOutside={e => e.preventDefault()}
+        hideCloseButton={true}
       >
         <DialogHeader>
           <DialogTitle className="text-center">Welcome to IVY</DialogTitle>
@@ -172,23 +191,44 @@ export default function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
             </div>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-3">
             <Button
               type="button"
-              className="w-full bg-[#4285F4] text-white hover:bg-[#357ABD]"
-              onClick={() => handleSocialAuth('google')}
+              variant="outline"
+              className="w-full flex items-center justify-center gap-3 bg-gradient-to-b from-white to-gray-50 text-gray-700 font-medium relative h-11 px-4 shadow-sm active:scale-[0.99] hover:text-gray-700"
+              onClick={() => googleLogin()}
             >
-              <Chrome className="mr-2 h-4 w-4" />
-              Google
+              <span className="absolute left-4">
+                <GoogleIcon />
+              </span>
+              <span className="text-center pl-6">Continue with Google</span>
             </Button>
-            <Button
-              type="button"
-              className="w-full bg-[#1877F2] text-white hover:bg-[#0C63D4]"
-              onClick={() => handleSocialAuth('facebook')}
-            >
-              <Facebook className="mr-2 h-4 w-4" />
-              Facebook
-            </Button>
+
+            <FacebookLogin
+              appId="1088597931155576"
+              onSuccess={response => {
+                console.log('Login Success!', response);
+              }}
+              onFail={error => {
+                console.log('Login Failed!', error);
+              }}
+              onProfileSuccess={response => {
+                console.log('Get Profile Success!', response);
+              }}
+              render={({ onClick }) => (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full flex items-center justify-center gap-3 bg-gradient-to-b from-[#1877F2] to-[#0C63D4] text-white font-medium relative h-11 px-4 shadow-sm border-[#1877F2] active:scale-[0.99] hover:text-white"
+                  onClick={onClick}
+                >
+                  <span className="absolute left-4">
+                    <FacebookIcon />
+                  </span>
+                  <span className="text-center pl-6">Continue with Facebook</span>
+                </Button>
+              )}
+            />
           </div>
         </Tabs>
       </DialogContent>
