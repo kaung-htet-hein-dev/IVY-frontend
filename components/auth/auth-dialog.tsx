@@ -84,7 +84,7 @@ export default function AuthDialog({ isOpen, onClose }: AuthDialogProps) {
         onOpenAutoFocus={e => e.preventDefault()}
         onEscapeKeyDown={e => e.preventDefault()}
         onInteractOutside={e => e.preventDefault()}
-        hideCloseButton={true}
+        // hideCloseButton={true}
       >
         <DialogHeader>
           <DialogTitle className="text-center">Welcome to IVY</DialogTitle>
