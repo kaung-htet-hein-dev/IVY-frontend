@@ -1,19 +1,21 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { useServices } from '@/hooks/use-services';
+import { getServices } from '@/lib/fetch/fetcher';
 import { Clock } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function ServiceHighlight() {
-  const { services } = useServices();
-  const highlightServices = services?.slice(0, 5) ?? [];
+export default async function ServiceHighlight() {
+  const { data: highlightServices, error } = await getServices();
+
+  if (error) {
+    console.error(error);
+    return null;
+  }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {highlightServices.map(service => (
+      {highlightServices?.map(service => (
         <Card
           className="overflow-hidden transition-all duration-300 hover:shadow-lg"
           key={service.id}
@@ -28,7 +30,7 @@ export default function ServiceHighlight() {
               <span className="font-semibold text-rose-600">${service.price}</span>
               <div className="flex items-center text-gray-500 text-sm">
                 <Clock className="h-4 w-4 mr-1" />
-                <span>{service.durationMinute} min</span>
+                <span>{service.duration_minute} min</span>
               </div>
             </div>
             <div className="flex justify-between gap-2">

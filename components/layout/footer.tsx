@@ -1,9 +1,17 @@
+import { getBranches } from '@/lib/fetch/fetcher';
+import { socialLinks } from '@/utils/data';
+import { generateGoogleMapsUrl } from '@/utils/helpers';
+import { Clock, Facebook, Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
-import { MapPin, Clock, Phone, Mail, Instagram, Facebook, Twitter } from 'lucide-react';
-import { locations, socialLinks } from '@/utils/data';
 import LocationCard from './location-card';
 
-export default function Footer() {
+export default async function Footer() {
+  const { data, error } = await getBranches();
+
+  if (error) {
+    return null;
+  }
+
   return (
     <footer className="bg-gray-900 text-white pt-12 pb-6">
       <div className="container mx-auto px-4">
@@ -40,13 +48,13 @@ export default function Footer() {
           </div>
 
           {/* Locations */}
-          {locations.map(location => (
+          {data?.map(location => (
             <div key={location.id}>
               <LocationCard
                 name={location.name}
-                address={location.address}
-                phone={location.phone}
-                mapUrl={location.mapUrl}
+                address={location.location}
+                phone={location.phone_number}
+                mapUrl={generateGoogleMapsUrl(location.latitude, location.longitude)}
               />
             </div>
           ))}

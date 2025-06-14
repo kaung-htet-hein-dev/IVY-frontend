@@ -7,7 +7,7 @@ import { startMockServer } from '@/lib/server/mock-server';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 if (process.env.NODE_ENV === 'development') {
-  startMockServer();
+  // startMockServer();
 }
 
 export function ReduxProvider({ children }: { children: React.ReactNode }) {

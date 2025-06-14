@@ -1,26 +1,20 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { useServices } from '@/hooks/use-services';
+import { getServices } from '@/lib/fetch/fetcher';
 import { ArrowRight, Clock } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { LoadingState } from '../ui/ui-state';
+import { ErrorUI } from '../ui/error-ui';
 
-export default function ServiceList() {
-  const { categorizedServices, isLoading } = useServices();
+export default async function ServiceList() {
+  const { categorizedServices } = await getServices();
 
-  if (isLoading)
-    return (
-      <div className="flex items-center justify-center h-[100dvh]">
-        <LoadingState />
-      </div>
-    );
-
+  if (!categorizedServices) {
+    return <ErrorUI />;
+  }
   return (
     <>
-      {Object.entries(categorizedServices).map(([category, services]) => (
+      {Object.entries(categorizedServices ?? {}).map(([category, services]) => (
         <section key={category} className="mb-16" id={category}>
           <h2 className="text-2xl md:text-3xl font-bold mb-6 border-b pb-2">{category}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -49,7 +43,7 @@ export default function ServiceList() {
                       <span className="text-xl font-bold text-rose-600">${service.price}</span>
                       <div className="flex items-center text-gray-500">
                         <Clock className="h-4 w-4 mr-1" />
-                        <span>{service.durationMinute} min</span>
+                        <span>{service.duration_minute} min</span>
                       </div>
                     </div>
 

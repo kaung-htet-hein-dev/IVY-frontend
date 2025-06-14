@@ -24,3 +24,44 @@ export function scrollToTop(duration = 1000) {
 
   requestAnimationFrame(animate);
 }
+
+/**
+ * Generate a Google Maps URL from latitude and longitude coordinates
+ * @param latitude - The latitude coordinate
+ * @param longitude - The longitude coordinate
+ * @param zoom - Optional zoom level (default: 15)
+ * @returns Google Maps URL
+ */
+export function generateGoogleMapsUrl(
+  latitude: string | number,
+  longitude: string | number,
+  zoom: number = 15
+): string {
+  const lat = typeof latitude === 'string' ? parseFloat(latitude) : latitude;
+  const lng = typeof longitude === 'string' ? parseFloat(longitude) : longitude;
+
+  // Validate coordinates
+  if (isNaN(lat) || isNaN(lng)) {
+    return 'https://www.google.com/maps';
+  }
+
+  if (lat < -90 || lat > 90) {
+    return 'https://www.google.com/maps';
+  }
+
+  if (lng < -180 || lng > 180) {
+    return 'https://www.google.com/maps';
+  }
+
+  return `https://www.google.com/maps?q=${lat},${lng}&z=${zoom}`;
+}
+
+/**
+ * Generate a Google Maps URL with a search query for a specific address
+ * @param address - The address to search for
+ * @returns Google Maps URL
+ */
+export function generateGoogleMapsSearchUrl(address: string): string {
+  const encodedAddress = encodeURIComponent(address);
+  return `https://www.google.com/maps/search/${encodedAddress}`;
+}
