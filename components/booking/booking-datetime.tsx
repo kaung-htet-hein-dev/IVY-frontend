@@ -1,18 +1,18 @@
 'use client';
 
+import { useGetBranches } from '@/app/(app-layout)/booking/hooks/useBooking';
+import { useBooking } from '@/app/(app-layout)/booking/providers/booking-context';
 import { Calendar } from '@/components/ui/calendar';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Clock, CalendarDays, MapPin, Loader2 } from 'lucide-react';
+import { Branch } from '@/types/branch';
 import { cn } from '@/utils/helpers';
 import { addDays, format, isBefore, startOfDay } from 'date-fns';
-import BookingBranchSelection from './booking-branch-selection';
+import { CalendarDays, Clock, Loader2, MapPin } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useTimeSlot } from './hooks/use-time-slot';
-import { useGetBranchesQuery } from '@/store/api/branch';
-import { Branch } from '@/store/api/branch/types';
-import { useBooking } from '@/providers/booking-context';
-import { BookingStepNavigation } from './booking-step-navigation';
 import { Button } from '../ui/button';
+import BookingBranchSelection from './booking-branch-selection';
+import { BookingStepNavigation } from './booking-step-navigation';
+import { useTimeSlot } from './hooks/use-time-slot';
 
 export default function BookingDateTime() {
   const {
@@ -22,17 +22,16 @@ export default function BookingDateTime() {
     selectedBranchId,
     handleDateTimeSelect,
     setSelectedBranchId,
+    serviceID,
   } = useBooking();
   const { date, setDate, time, setTime, availableTimeSlots, isLoading } = useTimeSlot({
-    service,
-    branchId: selectedBranchId,
+    branchID: selectedBranchId,
     initialDate: selectedDate,
     initialTime: selectedTime,
   });
+  const { branches } = useGetBranches(serviceID);
 
   const router = useRouter();
-  const { data: branchesResponse } = useGetBranchesQuery();
-  const branches = branchesResponse?.data || [];
 
   // Disable past dates
   const disableDate = (date: Date): boolean => {
@@ -66,7 +65,7 @@ export default function BookingDateTime() {
             <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
               <Clock className="h-4 w-4 text-gray-400" />
               <span className="text-sm font-medium text-gray-600">
-                {service?.durationMinute} min
+                {service?.duration_minute} min
               </span>
             </div>
             <div className="bg-rose-50 px-3 py-2 rounded-lg">
@@ -125,18 +124,18 @@ export default function BookingDateTime() {
                       <p className="text-sm text-gray-500">Loading available time slots...</p>
                     </div>
                   </div>
-                ) : availableTimeSlots.length > 0 ? (
-                  availableTimeSlots.map(slot => (
+                ) : (availableTimeSlots ?? []).length > 0 ? (
+                  (availableTimeSlots ?? []).map(slot => (
                     <Button
-                      key={slot.id}
+                      key={slot.slot}
                       variant="outline"
-                      disabled={!slot.isAvailable}
+                      disabled={!slot.is_available}
                       className={cn(
                         'h-12 text-base font-medium transition-all duration-200',
                         'hover:bg-rose-50 hover:border-rose-200',
                         time === slot.slot &&
                           'bg-rose-100 border-rose-500 text-rose-700 ring-2 ring-rose-200',
-                        !slot.isAvailable &&
+                        !slot.is_available &&
                           'bg-gray-50 text-gray-400 cursor-not-allowed border-gray-200'
                       )}
                       onClick={() => handleTimeSelect(slot.slot)}
@@ -171,7 +170,7 @@ export default function BookingDateTime() {
               </div>
               {selectedBranchId ? (
                 <p className="text-sm font-medium text-gray-900">
-                  {branches.find((b: Branch) => b.id === selectedBranchId)?.name ||
+                  {branches?.data?.find((b: Branch) => b.id === selectedBranchId)?.name ||
                     'Selected Branch'}
                 </p>
               ) : (

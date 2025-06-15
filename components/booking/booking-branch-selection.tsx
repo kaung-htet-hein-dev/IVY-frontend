@@ -4,22 +4,23 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { Clock, MapPin, Phone } from 'lucide-react';
-import { useGetBranchesQuery } from '@/store/api/branch';
-import { Branch } from '@/store/api/branch/types';
 import { cn } from '@/utils/helpers';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useGetBranches } from '@/app/(app-layout)/booking/hooks/useBooking';
+import { Branch } from '@/types/branch';
+import { useBooking } from '@/app/(app-layout)/booking/providers/booking-context';
 
 interface BookingBranchSelectionProps {
   selectedBranchId: string | undefined;
-  onBranchSelect: (branchId: string) => void;
+  onBranchSelect: (branchID: string) => void;
 }
 
 export default function BookingBranchSelection({
   selectedBranchId,
   onBranchSelect,
 }: BookingBranchSelectionProps) {
-  const { data: branchesResponse, isLoading } = useGetBranchesQuery();
-  const branches = branchesResponse?.data || [];
+  const { serviceID } = useBooking();
+  const { branches, isLoading } = useGetBranches(serviceID);
 
   if (isLoading) {
     return (
@@ -48,7 +49,7 @@ export default function BookingBranchSelection({
         onValueChange={onBranchSelect}
         className="grid gap-4 max-w-3xl mx-auto"
       >
-        {branches.map((branch: Branch) => (
+        {branches?.data?.map((branch: Branch) => (
           <Label
             key={branch.id}
             className={cn(
@@ -66,21 +67,21 @@ export default function BookingBranchSelection({
                   <div
                     className={'px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700'}
                   >
-                    {branch.isActive ? 'Open' : 'Closed'}
+                    {'Open'}
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 text-sm text-gray-600">
                   <div className="flex items-center gap-2">
                     <MapPin className="h-4 w-4 text-rose-500 shrink-0" />
-                    <span className="line-clamp-1">{branch.address}</span>
+                    <span className="line-clamp-1">{branch.location}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Clock className="h-4 w-4 text-rose-500 shrink-0" />
-                    <span>{branch.openingHours}</span>
+                    <span>{'9:00 AM - 5:00 PM'}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Phone className="h-4 w-4 text-rose-500 shrink-0" />
-                    <span className="font-medium">{branch.phone}</span>
+                    <span className="font-medium">{branch.phone_number}</span>
                   </div>
                 </div>
               </div>

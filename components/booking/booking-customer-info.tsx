@@ -1,64 +1,73 @@
 'use client';
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useBooking } from '@/app/(app-layout)/booking/providers/booking-context';
 import { CustomerInfo, customerInfoSchema } from '@/app/(app-layout)/booking/types';
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useBooking } from '@/providers/booking-context';
-import { BookingStepNavigation } from './booking-step-navigation';
+import { useUserInfo, useUserMutation } from '@/hooks/use-user-info';
 import { scrollToTop } from '@/utils/helpers';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { BookingStepNavigation } from './booking-step-navigation';
 
 export default function BookingCustomerInfo() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { customerInfo, handleCustomerInfoSubmit: onSubmit, goBack: onBack } = useBooking();
-
+  const { data: userInfo } = useUserInfo();
+  const { handleCustomerInfoSubmit, goBack: onBack } = useBooking();
+  const { mutate, isPending } = useUserMutation();
   const form = useForm<CustomerInfo>({
+    resolver: zodResolver(customerInfoSchema),
     defaultValues: {
-      name: customerInfo.name || '',
-      email: customerInfo.email || '',
-      phone: customerInfo.phone || '',
-      notes: customerInfo.notes || '',
+      email: userInfo?.email || '',
+      name: userInfo ? `${userInfo.first_name || ''} ${userInfo.last_name || ''}`.trim() : '',
+      phone: userInfo?.phone_number || '',
+      notes: '',
     },
   });
 
-  // Format phone number as user types
-  const formatPhoneNumber = (value: string) => {
-    // Remove all non-digits
-    const numbers = value.replace(/\D/g, '');
-
-    // Format as E.164 (e.g., +1234567890)
-    if (numbers.length > 0) {
-      return `+${numbers}`;
-    }
-    return numbers;
-  };
-
   // Handle form submission
   const handleSubmit = form.handleSubmit(async data => {
-    setIsSubmitting(true);
     try {
-      await onSubmit(data);
-      scrollToTop();
+      const isPhoneUpdated = data.phone !== userInfo?.phone_number;
+      if (isPhoneUpdated) {
+        mutate({
+          phone_number: data.phone,
+          id: userInfo?.id || '',
+        });
+      }
     } finally {
-      setIsSubmitting(false);
+      handleCustomerInfoSubmit(data);
+      scrollToTop();
     }
   });
+
+  useEffect(() => {
+    if (userInfo) {
+      const fullName = `${userInfo.first_name || ''} ${userInfo.last_name || ''}`.trim();
+      form.reset({
+        name: fullName,
+        email: userInfo.email || '',
+        phone: userInfo.phone_number || '',
+        notes: form.getValues('notes') || '', // Preserve existing notes
+      });
+    }
+  }, [userInfo]);
 
   return (
     <div>
       <p className="text-gray-600 mb-6">
-        Please provide your contact information. We'll send your booking confirmation to the email
-        you provide.
+        {
+          "Please provide your contact information. We'll send your booking confirmation to the email you provide."
+        }
       </p>
 
       <Form {...form}>
@@ -66,12 +75,11 @@ export default function BookingCustomerInfo() {
           <FormField
             control={form.control}
             name="name"
-            rules={customerInfoSchema.name}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Full Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="John Doe" {...field} disabled={isSubmitting} />
+                  <Input placeholder="John Doe" {...field} disabled={true} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -81,17 +89,11 @@ export default function BookingCustomerInfo() {
           <FormField
             control={form.control}
             name="email"
-            rules={customerInfoSchema.email}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email Address</FormLabel>
                 <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="john@example.com"
-                    {...field}
-                    disabled={isSubmitting}
-                  />
+                  <Input type="email" placeholder="john@example.com" {...field} disabled={true} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -101,20 +103,20 @@ export default function BookingCustomerInfo() {
           <FormField
             control={form.control}
             name="phone"
-            rules={customerInfoSchema.phone}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Phone Number</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="+1234567890"
+                    placeholder="09xxxxxxxxx"
+                    type="tel"
                     {...field}
-                    onChange={e => field.onChange(formatPhoneNumber(e.target.value))}
-                    disabled={isSubmitting}
+                    onChange={e => field.onChange(e.target.value)}
+                    disabled={isPending}
                   />
                 </FormControl>
                 <FormDescription>
-                  Enter your phone number in international format (e.g., +1234567890)
+                  Enter your phone number in this format (e.g., 09xxxxxxxxx)
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -124,7 +126,6 @@ export default function BookingCustomerInfo() {
           <FormField
             control={form.control}
             name="notes"
-            rules={customerInfoSchema.notes}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Special Requests (Optional)</FormLabel>
@@ -133,7 +134,7 @@ export default function BookingCustomerInfo() {
                     placeholder="Any special requirements or preferences for your appointment..."
                     className="resize-none"
                     {...field}
-                    disabled={isSubmitting}
+                    disabled={isPending}
                   />
                 </FormControl>
                 <FormDescription>Maximum 500 characters</FormDescription>
@@ -145,7 +146,7 @@ export default function BookingCustomerInfo() {
           <BookingStepNavigation
             onBack={onBack}
             nextLabel="Continue to Confirmation"
-            isLoading={isSubmitting}
+            isLoading={isPending}
             submitType
           />
         </form>

@@ -1,14 +1,13 @@
+import { BASE_URL } from '@/api/endpoints';
 import { ApiErrorResponse } from '@/types/api';
 import axios, { AxiosInstance, AxiosError, InternalAxiosRequestConfig } from 'axios';
-
-const baseURL = process.env.NEXT_PUBLIC_API_URL;
 
 export const createAxiosInstance = (
   getToken: () => Promise<string | null>,
   onAuthError: () => void
 ): AxiosInstance => {
   const axiosInstance = axios.create({
-    baseURL,
+    baseURL: BASE_URL,
     headers: {
       'Content-Type': 'application/json',
     },

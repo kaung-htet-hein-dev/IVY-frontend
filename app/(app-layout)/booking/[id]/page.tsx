@@ -4,42 +4,16 @@ import AuthDialog from '@/components/auth/auth-dialog';
 import BookingConfirmation from '@/components/booking/booking-confirmation';
 import BookingCustomerInfo from '@/components/booking/booking-customer-info';
 import BookingDateTime from '@/components/booking/booking-datetime';
-import { LoadingState, NotFoundState } from '@/components/ui/ui-state';
 import { StepCounter } from '@/components/ui/step-counter';
-import { useToast } from '@/hooks/use-toast';
-import { BookingProvider, useBooking } from '@/providers/booking-context';
-import { useGetServiceByIdQuery } from '@/store/api/service';
-import { useAuth } from '@/store/auth/use-auth';
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { LoadingState, NotFoundState } from '@/components/ui/ui-state';
+import { useState } from 'react';
+import { BookingProvider, useBooking } from '../providers/booking-context';
 import { BookingStep } from '../types';
-import { SignInButton } from '@clerk/nextjs';
 
 function BookingPageContent() {
-  const params = useParams();
-  const { isLoggedIn } = useAuth();
-  const { toast } = useToast();
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
 
-  const { data: serviceResponse, isLoading: isLoadingService } = useGetServiceByIdQuery(
-    params.id as string
-  );
-
-  const { step, selectedDate, selectedTime, service, setService } = useBooking();
-
-  // Show auth dialog for non-logged in users
-  useEffect(() => {
-    if (!isLoggedIn) {
-      setIsAuthDialogOpen(true);
-    }
-  }, [isLoggedIn]);
-
-  // Set service when data is loaded
-  useEffect(() => {
-    if (serviceResponse?.data) {
-      setService(serviceResponse.data);
-    }
-  }, [serviceResponse?.data, setService]);
+  const { step, selectedDate, selectedTime, service, isLoading } = useBooking();
 
   const getStepTitle = () => {
     switch (step) {
@@ -54,7 +28,7 @@ function BookingPageContent() {
     }
   };
 
-  if (isLoadingService) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-[100dvh]">
         <LoadingState />
@@ -62,7 +36,7 @@ function BookingPageContent() {
     );
   }
 
-  if (!serviceResponse?.data) {
+  if (!service) {
     return (
       <div className="flex items-center justify-center h-[100dvh]">
         <NotFoundState />

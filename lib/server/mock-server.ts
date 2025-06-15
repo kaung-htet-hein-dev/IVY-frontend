@@ -130,7 +130,7 @@ export function startMockServer() {
 
       // Get available time slots
       this.post('/services/availiable-time-slot', (schema, request) => {
-        const { date, serviceId, branchId } = JSON.parse(request.requestBody);
+        const { date, serviceId, branchID } = JSON.parse(request.requestBody);
         // For mock purposes, return different time slots for different branches
         const mockTimeSlots = [
           { slot: '9:00', isAvailable: true },

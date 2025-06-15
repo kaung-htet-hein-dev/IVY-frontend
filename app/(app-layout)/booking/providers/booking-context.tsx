@@ -3,8 +3,9 @@ import { BookingStep, CustomerInfo, BookingForm } from '@/app/(app-layout)/booki
 import { BookingStatus } from '@/store/api/booking/types';
 import { useCreateBookingMutation } from '@/store/api/booking';
 import { useToast } from '@/hooks/use-toast';
-import { Service } from '@/store/api/service/types';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { useGetServiceByID } from '../hooks/useBooking';
+import { Service } from '@/types/service';
 
 interface BookingContextType {
   step: BookingStep;
@@ -16,27 +17,29 @@ interface BookingContextType {
   setStep: (step: BookingStep) => void;
   setSelectedDate: (date: Date | undefined) => void;
   setSelectedTime: (time: string | undefined) => void;
-  setSelectedBranchId: (branchId: string | undefined) => void;
+  setSelectedBranchId: (branchID: string | undefined) => void;
   setCustomerInfo: (info: CustomerInfo) => void;
-  setService: (service: Service) => void;
   handleDateTimeSelect: (date: Date | undefined, time: string | undefined) => void;
   handleCustomerInfoSubmit: (info: CustomerInfo) => void;
   handleConfirmBooking: () => Promise<void>;
   goBack: () => void;
+  isLoading: boolean;
+  serviceID: string;
 }
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
 
 export function BookingProvider({ children }: { children: ReactNode }) {
+  const params = useParams<{ id: string }>();
   const router = useRouter();
   const { toast } = useToast();
   const [createBooking] = useCreateBookingMutation();
+  const { isLoading, service } = useGetServiceByID(params.id);
 
   const [step, setStep] = useState(BookingStep.DATETIME);
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedTime, setSelectedTime] = useState<string>();
   const [selectedBranchId, setSelectedBranchId] = useState<string>();
-  const [service, setService] = useState<Service>();
   const [customerInfo, setCustomerInfo] = useState<CustomerInfo>({
     name: '',
     email: '',
@@ -77,7 +80,7 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     try {
       const bookingData: BookingForm = {
         service: { id: service.id },
-        branchId: selectedBranchId!,
+        branchID: selectedBranchId!,
         date: `${selectedDate.toISOString().split('T')[0]}T${selectedTime}:00.000Z`,
         status: BookingStatus.PENDING,
         customerInfo,
@@ -115,11 +118,12 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     setSelectedTime,
     setSelectedBranchId,
     setCustomerInfo,
-    setService,
     handleDateTimeSelect,
     handleCustomerInfoSubmit,
     handleConfirmBooking,
     goBack,
+    isLoading,
+    serviceID: params.id,
   };
 
   return <BookingContext.Provider value={value}>{children}</BookingContext.Provider>;

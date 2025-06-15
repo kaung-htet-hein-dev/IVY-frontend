@@ -22,3 +22,14 @@ export type BookingResponse = ApiResponse<{
   message: string;
   pagination: Pagination;
 }>;
+
+export type TimeSlot = {
+  slot: string;
+  is_available: boolean;
+};
+
+export type TimeSlotResponse = ApiResponse<{
+  code: number;
+  data: TimeSlot[];
+  message: string;
+}>;

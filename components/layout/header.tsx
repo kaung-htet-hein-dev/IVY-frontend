@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/utils/helpers';
+import { SignInButton, useClerk, UserButton } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
 import { Menu, Scissors, X } from 'lucide-react';
 import Link from 'next/link';
@@ -17,6 +18,7 @@ const navLinks = [
 ];
 
 export default function Header() {
+  const { isSignedIn } = useClerk();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -76,6 +78,13 @@ export default function Header() {
             </Link>
           ))}
           <LanguageSwitcher isScrolled={isScrolled || isMobileMenuOpen || !isHome} />
+          {isSignedIn ? (
+            <UserButton />
+          ) : (
+            <SignInButton>
+              <Button variant="destructive">Sign In</Button>
+            </SignInButton>
+          )}
         </nav>
 
         {/* Mobile Menu Button */}

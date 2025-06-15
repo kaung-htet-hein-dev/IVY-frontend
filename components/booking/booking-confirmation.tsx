@@ -2,10 +2,10 @@
 
 import { Calendar, Clock, User, Mail, Phone, FileText } from 'lucide-react';
 import { format } from 'date-fns';
-import { useBooking } from '@/providers/booking-context';
 import { useState } from 'react';
 import { BookingStepNavigation } from './booking-step-navigation';
 import { BookingStep } from '@/app/(app-layout)/booking/types';
+import { useBooking } from '@/app/(app-layout)/booking/providers/booking-context';
 
 export default function BookingConfirmation() {
   const {
@@ -55,7 +55,7 @@ export default function BookingConfirmation() {
             </div>
             <div>
               <p className="text-sm text-gray-500">Duration:</p>
-              <p className="font-medium">{service.durationMinute} minutes</p>
+              <p className="font-medium">{service.duration_minute} minutes</p>
             </div>
           </div>
         </div>
