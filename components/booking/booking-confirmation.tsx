@@ -15,6 +15,7 @@ export default function BookingConfirmation() {
     customerInfo,
     handleConfirmBooking: onConfirm,
     goBack: onBack,
+    isCreating,
   } = useBooking();
 
   // If any required data is missing, we shouldn't show the confirmation screen
@@ -115,7 +116,7 @@ export default function BookingConfirmation() {
           onBack={onBack}
           onNext={handleConfirm}
           nextLabel="Confirm Booking"
-          isLoading={isSubmitting}
+          isLoading={isSubmitting || isCreating}
           loadingLabel="Confirming..."
           stepCount={BookingStep.CONFIRMATION}
         />

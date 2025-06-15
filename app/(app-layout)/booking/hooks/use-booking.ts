@@ -1,5 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
-import useBookingService from './useBookingService';
+import { useToast } from '@/hooks/use-toast';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import useBookingService from './use-booking-service';
+import { useRouter } from 'next/navigation';
+import { BookingRequest } from '@/types/booking';
+import { ApiErrorResponse } from '@/types/api';
 
 export const useGetServiceByID = (serviceId: string) => {
   const bookingService = useBookingService();
@@ -49,4 +53,30 @@ export const useGetAvailableTimeSlots = ({
     isLoading,
     error,
   };
+};
+
+export const useCreateBooking = () => {
+  const bookingService = useBookingService();
+  const { toast } = useToast();
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: (bookingData: BookingRequest) => bookingService.createBooking(bookingData),
+    onSuccess: data => {
+      toast({
+        title: 'Success',
+        description: 'Your booking has been confirmed!',
+      });
+
+      router.replace('/booking/success');
+    },
+    onError: (error: ApiErrorResponse) => {
+      toast({
+        title: 'Error',
+        description:
+          error?.response?.data?.message || 'Failed to create booking. Please try again.',
+        variant: 'destructive',
+      });
+    },
+  });
 };

@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetBranches } from '@/app/(app-layout)/booking/hooks/useBooking';
+import { useGetBranches } from '@/app/(app-layout)/booking/hooks/use-booking';
 import { useBooking } from '@/app/(app-layout)/booking/providers/booking-context';
 import { Calendar } from '@/components/ui/calendar';
 import { ScrollArea } from '@/components/ui/scroll-area';

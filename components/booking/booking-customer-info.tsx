@@ -137,7 +137,7 @@ export default function BookingCustomerInfo() {
                     disabled={isPending}
                   />
                 </FormControl>
-                <FormDescription>Maximum 500 characters</FormDescription>
+                <FormDescription>Maximum 100 characters</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

@@ -15,7 +15,7 @@ export const customerInfoSchema = z.object({
     .string()
     .regex(/^(09\d{9})$/, 'Phone number must start with 09 and be 11 digits long')
     .min(9, 'Phone number is required'),
-  notes: z.string().max(500, 'Notes cannot exceed 500 characters').optional(),
+  notes: z.string().max(100, 'Notes cannot exceed 100 characters').optional(),
 });
 
 export type CustomerInfo = z.infer<typeof customerInfoSchema>;

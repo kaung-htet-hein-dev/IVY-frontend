@@ -33,3 +33,10 @@ export type TimeSlotResponse = ApiResponse<{
   data: TimeSlot[];
   message: string;
 }>;
+
+export type BookingRequest = {
+  service_id: string;
+  branch_id: string;
+  booked_date: string;
+  booked_time: string;
+};

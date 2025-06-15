@@ -1,6 +1,6 @@
 import { endpoints } from '@/api/endpoints';
 import useAxios from '@/hooks/use-axios';
-import { Booking, BookingResponse, TimeSlot } from '@/types/booking';
+import { Booking, BookingRequest, BookingResponse, TimeSlot } from '@/types/booking';
 import { Branch } from '@/types/branch';
 import { Service } from '@/types/service';
 import { AxiosRequestConfig } from 'axios';
@@ -67,15 +67,8 @@ export const useBookingService = () => {
       return response.data.data;
     },
 
-    createBooking: async (booking: any): Promise<Booking> => {
-      const formattedBooking = {
-        ...booking,
-        booked_date: format(booking.booked_date, 'dd/MM/yyyy'),
-      };
-      const response = await axiosInstance.post<{ data: Booking }>(
-        endpoints.bookings,
-        formattedBooking
-      );
+    createBooking: async (booking: BookingRequest): Promise<Booking> => {
+      const response = await axiosInstance.post<{ data: Booking }>(endpoints.bookings, booking);
       return response.data.data;
     },
 

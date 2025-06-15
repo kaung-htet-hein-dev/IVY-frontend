@@ -1,11 +1,11 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
-import { BookingStep, CustomerInfo, BookingForm } from '@/app/(app-layout)/booking/types';
-import { BookingStatus } from '@/store/api/booking/types';
-import { useCreateBookingMutation } from '@/store/api/booking';
+import { BookingStep, CustomerInfo } from '@/app/(app-layout)/booking/types';
 import { useToast } from '@/hooks/use-toast';
-import { useParams, useRouter } from 'next/navigation';
-import { useGetServiceByID } from '../hooks/useBooking';
+import { BookingRequest } from '@/types/booking';
 import { Service } from '@/types/service';
+import { useParams, useRouter } from 'next/navigation';
+import { createContext, ReactNode, useContext, useState } from 'react';
+import { useCreateBooking, useGetServiceByID } from '../hooks/use-booking';
+import { format } from 'date-fns';
 
 interface BookingContextType {
   step: BookingStep;
@@ -25,6 +25,7 @@ interface BookingContextType {
   goBack: () => void;
   isLoading: boolean;
   serviceID: string;
+  isCreating: boolean;
 }
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
@@ -33,7 +34,6 @@ export function BookingProvider({ children }: { children: ReactNode }) {
   const params = useParams<{ id: string }>();
   const router = useRouter();
   const { toast } = useToast();
-  const [createBooking] = useCreateBookingMutation();
   const { isLoading, service } = useGetServiceByID(params.id);
 
   const [step, setStep] = useState(BookingStep.DATETIME);
@@ -46,6 +46,7 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     phone: '',
     notes: '',
   });
+  const { mutate: createBooking, isPending } = useCreateBooking();
 
   const handleDateTimeSelect = (date: Date | undefined, time: string | undefined) => {
     if (!date || !time || !selectedBranchId) {
@@ -77,31 +78,14 @@ export function BookingProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    try {
-      const bookingData: BookingForm = {
-        service: { id: service.id },
-        branchID: selectedBranchId!,
-        date: `${selectedDate.toISOString().split('T')[0]}T${selectedTime}:00.000Z`,
-        status: BookingStatus.PENDING,
-        customerInfo,
-      };
+    const bookingData: BookingRequest = {
+      booked_date: format(selectedDate, 'dd/MM/yyyy'),
+      booked_time: selectedTime,
+      branch_id: selectedBranchId!,
+      service_id: service.id,
+    };
 
-      await createBooking(bookingData).unwrap();
-
-      toast({
-        title: 'Success',
-        description: 'Your booking has been confirmed!',
-      });
-
-      router.push('/booking/success');
-    } catch (error) {
-      console.error('Failed to create booking:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to create booking. Please try again.',
-        variant: 'destructive',
-      });
-    }
+    createBooking(bookingData);
   };
 
   const goBack = () => setStep(prev => prev - 1);
@@ -124,6 +108,7 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     goBack,
     isLoading,
     serviceID: params.id,
+    isCreating: isPending,
   };
 
   return <BookingContext.Provider value={value}>{children}</BookingContext.Provider>;
