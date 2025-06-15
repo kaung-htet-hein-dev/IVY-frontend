@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { CustomerInfo, customerInfoSchema } from '@/app/booking/types';
+import { CustomerInfo, customerInfoSchema } from '@/app/(app-layout)/booking/types';
 import {
   Form,
   FormControl,

@@ -1923,6 +1923,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.80.7":
+  version: 5.80.7
+  resolution: "@tanstack/query-core@npm:5.80.7"
+  checksum: be921ef8353b78a8a04a20832bb8e2d7833f2ff849b48b9ab445de3bb09b61e1df1516e6a4980f623401852727ba33f0c4e3d1250b3438322b2604ca60574303
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.80.7":
+  version: 5.80.7
+  resolution: "@tanstack/react-query@npm:5.80.7"
+  dependencies:
+    "@tanstack/query-core": 5.80.7
+  peerDependencies:
+    react: ^18 || ^19
+  checksum: 40b4a4c9d6fd75d634b8306e695fb486f33cd7d8efec14c1338422132eadfe907ef320d1829fc6576a403e5911e1cbb3ebc40046179538490f4a308262be349d
+  languageName: node
+  linkType: hard
+
 "@tybys/wasm-util@npm:^0.9.0":
   version: 0.9.0
   resolution: "@tybys/wasm-util@npm:0.9.0"
@@ -5301,6 +5319,7 @@ __metadata:
     "@radix-ui/react-tooltip": ^1.1.2
     "@react-oauth/google": ^0.12.2
     "@reduxjs/toolkit": ^2.8.2
+    "@tanstack/react-query": ^5.80.7
     "@types/node": 20.6.2
     "@types/react": 19.1.4
     "@types/react-dom": 19.1.5

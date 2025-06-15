@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { BookingStep, CustomerInfo, BookingForm } from '@/app/booking/types';
+import { BookingStep, CustomerInfo, BookingForm } from '@/app/(app-layout)/booking/types';
 import { BookingStatus } from '@/store/api/booking/types';
 import { useCreateBookingMutation } from '@/store/api/booking';
 import { useToast } from '@/hooks/use-toast';

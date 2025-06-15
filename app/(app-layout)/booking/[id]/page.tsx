@@ -13,6 +13,7 @@ import { useAuth } from '@/store/auth/use-auth';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { BookingStep } from '../types';
+import { SignInButton } from '@clerk/nextjs';
 
 function BookingPageContent() {
   const params = useParams();

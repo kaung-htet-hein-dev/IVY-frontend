@@ -5,7 +5,7 @@ import { format } from 'date-fns';
 import { useBooking } from '@/providers/booking-context';
 import { useState } from 'react';
 import { BookingStepNavigation } from './booking-step-navigation';
-import { BookingStep } from '@/app/booking/types';
+import { BookingStep } from '@/app/(app-layout)/booking/types';
 
 export default function BookingConfirmation() {
   const {
