@@ -1,4 +1,5 @@
 import { BASE_URL, endpoints } from '@/api/endpoints';
+import { Booking } from '@/types/booking';
 import { Branch } from '@/types/branch';
 import { Service } from '@/types/service';
 
@@ -89,14 +90,23 @@ export async function getBranches(): Promise<ApiResponse<Branch[]>> {
   return { data: result.data.data, error: null };
 }
 
-export async function getServiceById(id: string): Promise<ApiResponse<any>> {
-  return fetcher<any>(`${endpoints.services}/${id}`);
-}
-
-// You can add more specific fetchers as needed
-export async function createService(serviceData: any): Promise<ApiResponse<any>> {
-  return fetcher<any>(endpoints.services, {
-    method: 'POST',
-    body: JSON.stringify(serviceData),
+export async function getMyBookings(
+  params: Record<string, string>
+): Promise<ApiResponse<Booking[]>> {
+  const result = await fetcher<{ data: Booking[] }>(endpoints.bookings, {
+    body: new URLSearchParams(params),
   });
+
+  if (result.error) {
+    return { data: null, error: result.error };
+  }
+
+  if (!result.data?.data || !Array.isArray(result.data.data)) {
+    return {
+      data: null,
+      error: new Error('Invalid response format: expected array in data field'),
+    };
+  }
+
+  return { data: result.data.data, error: null };
 }

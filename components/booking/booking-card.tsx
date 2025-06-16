@@ -1,8 +1,3 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { format } from 'date-fns';
-import { Calendar, Clock } from 'lucide-react';
-import Link from 'next/link';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,22 +9,28 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { useUpdateBooking } from '@/hooks/use-booking';
 import { Service } from '@/store/api/service/types';
-import { Booking, BookingStatus } from '@/store/api/booking/types';
+import { Booking, BookingStatus } from '@/types/booking';
+import { format } from 'date-fns';
+import { Calendar, Clock } from 'lucide-react';
+import Link from 'next/link';
 
 interface BookingCardProps {
   booking: Booking;
   service: Service | undefined;
   isPast?: boolean;
-  onCancelBooking?: (bookingId: string) => void;
 }
 
-export function BookingCard({
-  booking,
-  service,
-  isPast = false,
-  onCancelBooking,
-}: BookingCardProps) {
+export function BookingCard({ booking, service, isPast = false }: BookingCardProps) {
+  const { mutate } = useUpdateBooking();
+
+  const onCancelBooking = (ID: string) => {
+    mutate(ID);
+  };
+
   const bgColor = isPast ? 'bg-gray-700' : 'bg-rose-500';
 
   return (
@@ -41,11 +42,13 @@ export function BookingCard({
           >
             <div className="flex items-center md:mb-4">
               <Calendar className="h-5 w-5 mr-2" />
-              <span className="font-semibold">{format(new Date(booking.date), 'MMM d, yyyy')}</span>
+              <span className="font-semibold">
+                {format(new Date(booking.created_at), 'MMM d, yyyy')}
+              </span>
             </div>
             <div className="flex items-center">
               <Clock className="h-5 w-5 mr-2" />
-              <span>{booking.date}</span>
+              <span>{booking.booked_time}</span>
             </div>
           </div>
           <div className="p-4 md:p-6 md:flex-1">

@@ -1,11 +1,13 @@
-'use client';
-
 import { BookingsTab } from '@/components/booking/bookings-tab';
 import { PageHeader } from '@/components/ui/page-header';
-import { useBookings } from './hooks/use-bookings';
+import { getMyBookings } from '@/lib/fetch/fetcher';
+import { BookingStatus } from '@/types/booking';
 
-export default function MyBookingsPage() {
-  const { upcomingBookings, pastBookings, handleCancelBooking } = useBookings();
+export default async function MyBookingsPage() {
+  const [{ data: upcomingBookings }, { data: pastBookings }] = await Promise.all([
+    getMyBookings({ status: `${BookingStatus.CONFIRMED},${BookingStatus.PENDING}` }),
+    getMyBookings({ status: `${BookingStatus.CANCELLED},${BookingStatus.COMPLETED}` }),
+  ]);
 
   return (
     <div className="pt-24 pb-16 min-h-screen bg-gray-50">
@@ -16,11 +18,7 @@ export default function MyBookingsPage() {
             description="View and manage your upcoming and past appointments"
           />
 
-          <BookingsTab
-            upcomingBookings={upcomingBookings}
-            pastBookings={pastBookings}
-            onCancelBooking={handleCancelBooking}
-          />
+          <BookingsTab upcomingBookings={upcomingBookings} pastBookings={pastBookings} />
         </div>
       </div>
     </div>

@@ -2,15 +2,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BookingCard } from './booking-card';
 import { EmptyBookingState } from './empty-booking-state';
 import { getServiceById } from '@/utils/data';
-import { Booking } from '@/store/api/booking/types';
+import { Booking } from '@/types/booking';
 
 interface BookingsTabProps {
-  upcomingBookings: Booking[];
-  pastBookings: Booking[];
-  onCancelBooking: (bookingId: string) => void;
+  upcomingBookings: Booking[] | null;
+  pastBookings: Booking[] | null;
 }
 
-export function BookingsTab({ upcomingBookings, pastBookings, onCancelBooking }: BookingsTabProps) {
+export function BookingsTab({ upcomingBookings = [], pastBookings = [] }: BookingsTabProps) {
   return (
     <Tabs defaultValue="upcoming" className="mb-8">
       <TabsList className="grid w-full grid-cols-2 mb-6">
@@ -19,14 +18,13 @@ export function BookingsTab({ upcomingBookings, pastBookings, onCancelBooking }:
       </TabsList>
 
       <TabsContent value="upcoming">
-        {upcomingBookings.length > 0 ? (
+        {upcomingBookings && upcomingBookings.length > 0 ? (
           <div className="space-y-4">
             {upcomingBookings.map(booking => (
               <BookingCard
                 key={booking.id}
                 booking={booking}
                 service={getServiceById(booking.service.id!)}
-                onCancelBooking={onCancelBooking}
               />
             ))}
           </div>
@@ -36,7 +34,7 @@ export function BookingsTab({ upcomingBookings, pastBookings, onCancelBooking }:
       </TabsContent>
 
       <TabsContent value="past">
-        {pastBookings.length > 0 ? (
+        {pastBookings && pastBookings.length > 0 ? (
           <div className="space-y-4">
             {pastBookings.map(booking => (
               <BookingCard

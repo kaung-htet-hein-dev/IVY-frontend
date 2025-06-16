@@ -39,4 +39,12 @@ export type BookingRequest = {
   branch_id: string;
   booked_date: string;
   booked_time: string;
+  status?: string;
 };
+
+export enum BookingStatus {
+  PENDING = 'PENDING',
+  CONFIRMED = 'CONFIRMED',
+  CANCELLED = 'CANCELLED',
+  COMPLETED = 'COMPLETED',
+}

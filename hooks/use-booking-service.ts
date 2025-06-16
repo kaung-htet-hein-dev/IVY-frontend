@@ -63,6 +63,11 @@ export const useBookingService = () => {
       const response = await axiosInstance.post<{ data: Booking }>(endpoints.bookings, booking);
       return response.data.data;
     },
+
+    updateBooking: async (id: string, booking: Partial<BookingRequest>): Promise<Booking> => {
+      const response = await axiosInstance.put<{ data: Booking }>(endpoints.booking(id), booking);
+      return response.data.data;
+    },
   };
 };
 
