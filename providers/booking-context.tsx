@@ -82,6 +82,7 @@ export function BookingProvider({ children }: { children: ReactNode }) {
       booked_time: selectedTime,
       branch_id: selectedBranchId!,
       service_id: service.id,
+      note: customerInfo.notes,
     };
 
     createBooking(bookingData);

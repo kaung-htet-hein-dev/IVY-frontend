@@ -14,6 +14,7 @@ export interface Booking {
   updated_at: string;
   service: Service;
   branch: Branch;
+  note: string;
 }
 
 export type BookingResponse = ApiResponse<{
@@ -39,6 +40,7 @@ export type BookingRequest = {
   branch_id: string;
   booked_date: string;
   booked_time: string;
+  note?: string;
   status?: string;
 };
 
