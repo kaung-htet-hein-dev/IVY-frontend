@@ -93,8 +93,10 @@ export async function getBranches(): Promise<ApiResponse<Branch[]>> {
 export async function getMyBookings(
   params: Record<string, string>
 ): Promise<ApiResponse<Booking[]>> {
-  const result = await fetcher<{ data: Booking[] }>(endpoints.bookings, {
-    body: new URLSearchParams(params),
+  const requestParams = new URLSearchParams(params).toString();
+  const result = await fetcher<{ data: Booking[] }>(endpoints.bookings + '?' + requestParams, {
+    method: 'GET',
+    cache: 'no-cache',
   });
 
   if (result.error) {

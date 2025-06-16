@@ -1,3 +1,5 @@
+'use client';
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BookingCard } from './booking-card';
 import { EmptyBookingState } from './empty-booking-state';
@@ -21,11 +23,7 @@ export function BookingsTab({ upcomingBookings = [], pastBookings = [] }: Bookin
         {upcomingBookings && upcomingBookings.length > 0 ? (
           <div className="space-y-4">
             {upcomingBookings.map(booking => (
-              <BookingCard
-                key={booking.id}
-                booking={booking}
-                service={getServiceById(booking.service.id!)}
-              />
+              <BookingCard key={booking.id} booking={booking} service={booking.service} />
             ))}
           </div>
         ) : (
@@ -40,7 +38,7 @@ export function BookingsTab({ upcomingBookings = [], pastBookings = [] }: Bookin
               <BookingCard
                 key={booking.id}
                 booking={booking}
-                service={getServiceById(booking.service.id!)}
+                service={booking.service}
                 isPast={true}
               />
             ))}

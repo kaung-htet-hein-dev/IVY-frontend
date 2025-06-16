@@ -9,7 +9,7 @@ export interface Booking {
   branch_id: string;
   booked_date: string;
   booked_time: string;
-  status: string;
+  status: BookingStatus;
   created_at: string;
   updated_at: string;
   service: Service;
