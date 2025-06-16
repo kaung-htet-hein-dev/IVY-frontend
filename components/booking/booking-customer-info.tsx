@@ -1,6 +1,6 @@
 'use client';
 
-import { useBooking } from '@/app/(app-layout)/booking/providers/booking-context';
+import { useBooking } from '@/providers/booking-context';
 import { CustomerInfo, customerInfoSchema } from '@/app/(app-layout)/booking/types';
 import {
   Form,

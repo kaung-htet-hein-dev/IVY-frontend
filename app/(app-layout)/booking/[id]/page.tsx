@@ -1,18 +1,14 @@
 'use client';
 
-import AuthDialog from '@/components/auth/auth-dialog';
 import BookingConfirmation from '@/components/booking/booking-confirmation';
 import BookingCustomerInfo from '@/components/booking/booking-customer-info';
 import BookingDateTime from '@/components/booking/booking-datetime';
 import { StepCounter } from '@/components/ui/step-counter';
 import { LoadingState, NotFoundState } from '@/components/ui/ui-state';
-import { useState } from 'react';
-import { BookingProvider, useBooking } from '../providers/booking-context';
+import { BookingProvider, useBooking } from '@/providers/booking-context';
 import { BookingStep } from '../types';
 
 function BookingPageContent() {
-  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
-
   const { step, selectedDate, selectedTime, service, isLoading } = useBooking();
 
   const getStepTitle = () => {
@@ -81,8 +77,6 @@ function BookingPageContent() {
           </div>
         </div>
       </div>
-
-      <AuthDialog isOpen={isAuthDialogOpen} onClose={() => setIsAuthDialogOpen(false)} />
     </div>
   );
 }

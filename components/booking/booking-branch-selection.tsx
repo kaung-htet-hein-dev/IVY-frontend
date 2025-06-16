@@ -6,9 +6,9 @@ import { Card } from '@/components/ui/card';
 import { Clock, MapPin, Phone } from 'lucide-react';
 import { cn } from '@/utils/helpers';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useGetBranches } from '@/app/(app-layout)/booking/hooks/use-booking';
+import { useGetBranches } from '@/hooks/use-booking';
 import { Branch } from '@/types/branch';
-import { useBooking } from '@/app/(app-layout)/booking/providers/booking-context';
+import { useBooking } from '@/providers/booking-context';
 
 interface BookingBranchSelectionProps {
   selectedBranchId: string | undefined;

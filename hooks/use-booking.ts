@@ -1,9 +1,9 @@
 import { useToast } from '@/hooks/use-toast';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import useBookingService from './use-booking-service';
 import { useRouter } from 'next/navigation';
 import { BookingRequest } from '@/types/booking';
 import { ApiErrorResponse } from '@/types/api';
+import useBookingService from '@/hooks/use-booking-service';
 
 export const useGetServiceByID = (serviceId: string) => {
   const bookingService = useBookingService();

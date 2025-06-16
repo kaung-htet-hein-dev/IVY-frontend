@@ -1,4 +1,4 @@
-import { useGetAvailableTimeSlots } from '@/app/(app-layout)/booking/hooks/use-booking';
+import { useGetAvailableTimeSlots } from '@/hooks/use-booking';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 

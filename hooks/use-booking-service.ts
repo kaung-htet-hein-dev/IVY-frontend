@@ -4,7 +4,6 @@ import { Booking, BookingRequest, BookingResponse, TimeSlot } from '@/types/book
 import { Branch } from '@/types/branch';
 import { Service } from '@/types/service';
 import { AxiosRequestConfig } from 'axios';
-import { format } from 'date-fns';
 
 interface GetBookingsFilters {
   status?: string;
@@ -60,22 +59,8 @@ export const useBookingService = () => {
       return response.data.data;
     },
 
-    getAvailableSlots: async (date: string, branchID: string): Promise<TimeSlot[]> => {
-      const response = await axiosInstance.get<{ data: TimeSlot[] }>(
-        `${endpoints.bookings}/slots?booked_date=${date}&branch_id=${branchID}`
-      );
-      return response.data.data;
-    },
-
     createBooking: async (booking: BookingRequest): Promise<Booking> => {
       const response = await axiosInstance.post<{ data: Booking }>(endpoints.bookings, booking);
-      return response.data.data;
-    },
-
-    updateBookingStatus: async (id: string, status: string): Promise<Booking> => {
-      const response = await axiosInstance.put<{ data: Booking }>(endpoints.booking(id), {
-        status,
-      });
       return response.data.data;
     },
   };

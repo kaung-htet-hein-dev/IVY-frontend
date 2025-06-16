@@ -2,7 +2,7 @@ import { BookingStep, CustomerInfo } from '@/app/(app-layout)/booking/types';
 import { useToast } from '@/hooks/use-toast';
 import { BookingRequest } from '@/types/booking';
 import { Service } from '@/types/service';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { useCreateBooking, useGetServiceByID } from '../hooks/use-booking';
 import { format } from 'date-fns';
@@ -32,7 +32,6 @@ const BookingContext = createContext<BookingContextType | undefined>(undefined);
 
 export function BookingProvider({ children }: { children: ReactNode }) {
   const params = useParams<{ id: string }>();
-  const router = useRouter();
   const { toast } = useToast();
   const { isLoading, service } = useGetServiceByID(params.id);
 
