@@ -19,24 +19,24 @@ export default function BookingBranchSelection({
   selectedBranchId,
   onBranchSelect,
 }: BookingBranchSelectionProps) {
-  const { serviceID } = useBooking();
-  const { branches, isLoading } = useGetBranches(serviceID);
+  const { service } = useBooking();
+  // const { branches, isLoading } = useGetBranches(serviceID);
 
-  if (isLoading) {
-    return (
-      <div className="space-y-6">
-        <div className="text-center md:text-left space-y-2">
-          <Skeleton className="h-8 w-64 mx-auto md:mx-0" />
-          <Skeleton className="h-5 w-48 mx-auto md:mx-0" />
-        </div>
-        <div className="grid gap-4 max-w-3xl mx-auto">
-          {[1, 2].map(i => (
-            <Skeleton key={i} className="h-36 rounded-lg" />
-          ))}
-        </div>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="space-y-6">
+  //       <div className="text-center md:text-left space-y-2">
+  //         <Skeleton className="h-8 w-64 mx-auto md:mx-0" />
+  //         <Skeleton className="h-5 w-48 mx-auto md:mx-0" />
+  //       </div>
+  //       <div className="grid gap-4 max-w-3xl mx-auto">
+  //         {[1, 2].map(i => (
+  //           <Skeleton key={i} className="h-36 rounded-lg" />
+  //         ))}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="space-y-6">
@@ -49,45 +49,50 @@ export default function BookingBranchSelection({
         onValueChange={onBranchSelect}
         className="grid gap-4 max-w-3xl mx-auto"
       >
-        {branches?.data?.map((branch: Branch) => (
-          <Label
-            key={branch.id}
-            className={cn(
-              'cursor-pointer rounded-lg border transition-all duration-200 hover:border-rose-200 hover:shadow-md',
-              selectedBranchId === branch.id
-                ? 'border-rose-500 bg-rose-50 shadow-md ring-2 ring-rose-200'
-                : 'border-gray-200'
-            )}
-          >
-            <RadioGroupItem value={branch.id} className="sr-only" />
-            <Card className="border-0 shadow-none">
-              <div className="p-4 space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="font-medium text-lg text-gray-900">{branch.name}</div>
-                  <div
-                    className={'px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700'}
-                  >
-                    {'Open'}
+        {service?.branches?.map((branch: Branch) => {
+          if (!branch.is_active) return null;
+          return (
+            <Label
+              key={branch.id}
+              className={cn(
+                'cursor-pointer rounded-lg border transition-all duration-200 hover:border-rose-200 hover:shadow-md',
+                selectedBranchId === branch.id
+                  ? 'border-rose-500 bg-rose-50 shadow-md ring-2 ring-rose-200'
+                  : 'border-gray-200'
+              )}
+            >
+              <RadioGroupItem value={branch.id} className="sr-only" />
+              <Card className="border-0 shadow-none">
+                <div className="p-4 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="font-medium text-lg text-gray-900">{branch.name}</div>
+                    <div
+                      className={
+                        'px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700'
+                      }
+                    >
+                      {'Open'}
+                    </div>
+                  </div>
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 text-sm text-gray-600">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4 text-rose-500 shrink-0" />
+                      <span className="line-clamp-1">{branch.location}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-4 w-4 text-rose-500 shrink-0" />
+                      <span>{'9:00 AM - 5:00 PM'}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-rose-500 shrink-0" />
+                      <span className="font-medium">{branch.phone_number}</span>
+                    </div>
                   </div>
                 </div>
-                <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-rose-500 shrink-0" />
-                    <span className="line-clamp-1">{branch.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-rose-500 shrink-0" />
-                    <span>{'9:00 AM - 5:00 PM'}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 text-rose-500 shrink-0" />
-                    <span className="font-medium">{branch.phone_number}</span>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </Label>
-        ))}
+              </Card>
+            </Label>
+          );
+        })}
       </RadioGroup>
     </div>
   );
