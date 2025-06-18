@@ -45,7 +45,10 @@ export async function fetcher<T>(endpoint: string, options?: RequestInit): Promi
 
 // Specific service fetchers
 export async function getServices(): Promise<ServicesApiResponse> {
-  const result = await fetcher<{ data: Service[] }>(endpoints.services);
+  const result = await fetcher<{ data: Service[] }>(endpoints.services, {
+    cache: 'force-cache',
+    next: { revalidate: 3600 }, // 1 hour
+  });
 
   if (result.error) {
     return { data: null, error: result.error };

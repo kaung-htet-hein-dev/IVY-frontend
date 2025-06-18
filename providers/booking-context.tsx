@@ -1,10 +1,10 @@
 import { BookingStep, CustomerInfo } from '@/app/(app-layout)/booking/types';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/util/use-toast';
 import { BookingRequest } from '@/types/booking';
 import { Service } from '@/types/service';
 import { useParams } from 'next/navigation';
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { useCreateBooking, useGetServiceByID } from '../hooks/use-booking';
+import { useCreateBooking, useGetServiceByID } from '../hooks/booking/use-booking';
 import { format } from 'date-fns';
 
 interface BookingContextType {

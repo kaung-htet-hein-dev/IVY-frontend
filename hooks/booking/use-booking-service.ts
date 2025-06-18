@@ -1,14 +1,9 @@
 import { endpoints } from '@/api/endpoints';
-import useAxios from '@/hooks/use-axios';
+import useAxios from '@/hooks/api/use-axios';
 import { Booking, BookingRequest, BookingResponse, TimeSlot } from '@/types/booking';
 import { Branch } from '@/types/branch';
 import { Service } from '@/types/service';
 import { AxiosRequestConfig } from 'axios';
-
-interface GetBookingsFilters {
-  status?: string;
-  booked_date?: string;
-}
 
 export const useBookingService = () => {
   const { axiosInstance } = useAxios();

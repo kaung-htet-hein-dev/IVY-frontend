@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { useUpdateBooking } from '@/hooks/use-booking';
+import { useUpdateBooking } from '@/hooks/booking/use-booking';
 import { Booking } from '@/types/booking';
 import { Service } from '@/types/service';
 import { Calendar, Clock, MapPin, Phone } from 'lucide-react';

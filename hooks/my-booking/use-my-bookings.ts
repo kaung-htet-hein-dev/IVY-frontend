@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import useBookingService from './use-booking-service';
+import useBookingService from './booking/use-booking-service';
 import { BookingStatus } from '@/types/booking';
 
 export const useUpcomingBooking = () => {
