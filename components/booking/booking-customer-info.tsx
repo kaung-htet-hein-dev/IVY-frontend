@@ -13,12 +13,12 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useUserInfo, useUserMutation } from '@/hooks/use-user-info';
 import { scrollToTop } from '@/utils/helpers';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { BookingStepNavigation } from './booking-step-navigation';
+import { useUserInfo, useUserMutation } from '@/hooks/user/use-user-info';
 
 export default function BookingCustomerInfo() {
   const { data: userInfo } = useUserInfo();

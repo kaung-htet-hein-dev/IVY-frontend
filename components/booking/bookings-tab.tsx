@@ -1,9 +1,9 @@
 'use client';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { usePastBooking, useUpcomingBooking } from '@/hooks/use-my-bookings';
 import { BookingCard } from './booking-card';
 import { EmptyBookingState } from './empty-booking-state';
+import { usePastBooking, useUpcomingBooking } from '@/hooks/my-booking/use-my-bookings';
 
 export function BookingsTab() {
   const { data: upcomingBookings = [] } = useUpcomingBooking();

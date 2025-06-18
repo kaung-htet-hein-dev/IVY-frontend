@@ -1,9 +1,14 @@
 import { getBranches } from '@/lib/fetch/fetcher';
-import { socialLinks } from '@/utils/data';
 import { generateGoogleMapsUrl } from '@/utils/helpers';
 import { Clock, Facebook, Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
 import LocationCard from './location-card';
+
+export const socialLinks = {
+  facebook: 'https://www.facebook.com/ivyhairstudiomm',
+  email: 'ivyhairstudioygn@gmail.com',
+  phone: '+95 9 785 948657',
+};
 
 export default async function Footer() {
   const { data, error } = await getBranches();

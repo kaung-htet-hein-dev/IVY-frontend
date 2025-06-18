@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { cn, scrollToTop } from '@/utils/helpers';
-import { BookingStatus } from '@/store/api/booking/types';
 import { BookingStep } from '@/app/(app-layout)/booking/types';
 
 interface BookingStepNavigationProps {

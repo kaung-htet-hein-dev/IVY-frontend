@@ -1,4 +1,4 @@
-import { BookingStatus } from '@/store/api/booking/types';
+import { BookingStatus } from '@/types/booking';
 import { z } from 'zod';
 
 export enum BookingStep {

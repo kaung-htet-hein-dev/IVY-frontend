@@ -30,12 +30,12 @@ export const useBookingService = () => {
       return response.data.data;
     },
 
-    getBookings: async (params: AxiosRequestConfig['params']): Promise<BookingResponse> => {
-      const response = await axiosInstance.get<BookingResponse>(`${endpoints.bookings}`, {
+    getBookings: async (params: AxiosRequestConfig['params']): Promise<Booking[]> => {
+      const response = await axiosInstance.get<{ data: Booking[] }>(`${endpoints.bookings}`, {
         params,
       });
 
-      return response.data;
+      return response.data.data || [];
     },
 
     getBooking: async (id: string): Promise<Booking> => {

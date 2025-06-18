@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, CheckCircle, Calendar, Clock, User } from 'lucide-react';
-import { getServiceById } from '@/utils/data';
+import { useGetServiceByID } from '@/hooks/booking/use-booking';
 
 export default function BookingSuccessPage() {
   const searchParams = useSearchParams();
@@ -32,9 +32,9 @@ export default function BookingSuccessPage() {
   // Look up service details
   useEffect(() => {
     if (serviceId) {
-      const service = getServiceById(serviceId);
+      const service = useGetServiceByID(serviceId);
       if (service) {
-        setServiceName(service.name);
+        setServiceName(service.service?.name || 'Unknown Service');
       }
     }
   }, [serviceId]);

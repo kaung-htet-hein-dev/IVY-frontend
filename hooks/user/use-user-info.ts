@@ -1,7 +1,7 @@
 import { endpoints } from '@/api/endpoints';
 import { User } from '@/types/user';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import useAxios from './use-axios';
+import useAxios from '../api/use-axios';
 
 export const useUserInfo = () => {
   const { axiosInstance } = useAxios();

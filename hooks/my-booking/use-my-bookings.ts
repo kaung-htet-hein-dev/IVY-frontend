@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import useBookingService from './booking/use-booking-service';
 import { BookingStatus } from '@/types/booking';
+import useBookingService from '../booking/use-booking-service';
 
 export const useUpcomingBooking = () => {
   const bookingService = useBookingService();
@@ -8,10 +8,11 @@ export const useUpcomingBooking = () => {
   return useQuery({
     queryKey: ['upcomingBookings'],
     queryFn: async () => {
-      const { data } = await bookingService.getBookings({
+      const data = await bookingService.getBookings({
         status: `${BookingStatus.PENDING},${BookingStatus.CONFIRMED}`,
       });
-      return data?.data || [];
+      console.log('Upcoming bookings:', data);
+      return data || [];
     },
   });
 };
@@ -22,10 +23,10 @@ export const usePastBooking = () => {
   return useQuery({
     queryKey: ['pastBookings'],
     queryFn: async () => {
-      const { data } = await bookingService.getBookings({
+      const data = await bookingService.getBookings({
         status: `${BookingStatus.CANCELLED},${BookingStatus.COMPLETED}`,
       });
-      return data?.data || [];
+      return data || [];
     },
   });
 };
