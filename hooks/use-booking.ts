@@ -1,5 +1,5 @@
 import { useToast } from '@/hooks/use-toast';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { BookingRequest, BookingStatus } from '@/types/booking';
 import { ApiErrorResponse } from '@/types/api';
@@ -84,11 +84,13 @@ export const useCreateBooking = () => {
 export const useUpdateBooking = () => {
   const { toast } = useToast();
   const bookingService = useBookingService();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (id: string) =>
       bookingService.updateBooking(id, { status: BookingStatus.CANCELLED }),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['upcomingBookings'] });
       toast({
         title: 'Success',
         description: 'Your booking has been cancelled successfully.',

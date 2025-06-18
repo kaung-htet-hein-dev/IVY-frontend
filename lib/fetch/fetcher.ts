@@ -1,5 +1,4 @@
 import { BASE_URL, endpoints } from '@/api/endpoints';
-import { Booking } from '@/types/booking';
 import { Branch } from '@/types/branch';
 import { Service } from '@/types/service';
 
@@ -75,29 +74,6 @@ export async function getServices(): Promise<ServicesApiResponse> {
 
 export async function getBranches(): Promise<ApiResponse<Branch[]>> {
   const result = await fetcher<{ data: Branch[] }>(endpoints.branches);
-
-  if (result.error) {
-    return { data: null, error: result.error };
-  }
-
-  if (!result.data?.data || !Array.isArray(result.data.data)) {
-    return {
-      data: null,
-      error: new Error('Invalid response format: expected array in data field'),
-    };
-  }
-
-  return { data: result.data.data, error: null };
-}
-
-export async function getMyBookings(
-  params: Record<string, string>
-): Promise<ApiResponse<Booking[]>> {
-  const requestParams = new URLSearchParams(params).toString();
-  const result = await fetcher<{ data: Booking[] }>(endpoints.bookings + '?' + requestParams, {
-    method: 'GET',
-    cache: 'no-cache',
-  });
 
   if (result.error) {
     return { data: null, error: result.error };

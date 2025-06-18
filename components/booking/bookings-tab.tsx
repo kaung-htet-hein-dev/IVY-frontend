@@ -1,17 +1,14 @@
 'use client';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { usePastBooking, useUpcomingBooking } from '@/hooks/use-my-bookings';
 import { BookingCard } from './booking-card';
 import { EmptyBookingState } from './empty-booking-state';
-import { getServiceById } from '@/utils/data';
-import { Booking } from '@/types/booking';
 
-interface BookingsTabProps {
-  upcomingBookings: Booking[] | null;
-  pastBookings: Booking[] | null;
-}
+export function BookingsTab() {
+  const { data: upcomingBookings = [] } = useUpcomingBooking();
+  const { data: pastBookings = [] } = usePastBooking();
 
-export function BookingsTab({ upcomingBookings = [], pastBookings = [] }: BookingsTabProps) {
   return (
     <Tabs defaultValue="upcoming" className="mb-8">
       <TabsList className="grid w-full grid-cols-2 mb-6">
@@ -20,7 +17,7 @@ export function BookingsTab({ upcomingBookings = [], pastBookings = [] }: Bookin
       </TabsList>
 
       <TabsContent value="upcoming">
-        {upcomingBookings && upcomingBookings.length > 0 ? (
+        {upcomingBookings.length > 0 ? (
           <div className="space-y-4">
             {upcomingBookings.map(booking => (
               <BookingCard key={booking.id} booking={booking} service={booking.service} />
@@ -32,7 +29,7 @@ export function BookingsTab({ upcomingBookings = [], pastBookings = [] }: Bookin
       </TabsContent>
 
       <TabsContent value="past">
-        {pastBookings && pastBookings.length > 0 ? (
+        {pastBookings.length > 0 ? (
           <div className="space-y-4">
             {pastBookings.map(booking => (
               <BookingCard

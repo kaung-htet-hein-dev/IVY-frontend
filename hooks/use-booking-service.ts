@@ -35,20 +35,9 @@ export const useBookingService = () => {
       return response.data.data;
     },
 
-    getBookings: async (
-      options: {
-        pageIndex: number;
-        pageSize: number;
-      } = { pageIndex: 0, pageSize: 10 },
-      filters?: GetBookingsFilters
-    ): Promise<BookingResponse> => {
+    getBookings: async (params: AxiosRequestConfig['params']): Promise<BookingResponse> => {
       const response = await axiosInstance.get<BookingResponse>(`${endpoints.bookings}`, {
-        params: {
-          offset: options.pageIndex * options.pageSize,
-          limit: options.pageSize,
-          status: filters?.status,
-          booked_date: filters?.booked_date,
-        },
+        params,
       });
 
       return response.data;

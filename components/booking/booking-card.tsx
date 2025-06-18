@@ -14,7 +14,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useUpdateBooking } from '@/hooks/use-booking';
 import { Booking } from '@/types/booking';
 import { Service } from '@/types/service';
-import { format } from 'date-fns';
 import { Calendar, Clock, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
 
