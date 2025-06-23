@@ -7,9 +7,10 @@ import { StepCounter } from '@/components/ui/step-counter';
 import { LoadingState, NotFoundState } from '@/components/ui/ui-state';
 import { BookingProvider, useBooking } from '@/providers/booking-context';
 import { BookingStep } from '../types';
+import BookingSuccess from '@/components/booking/booking-success';
 
 function BookingPageContent() {
-  const { step, selectedDate, selectedTime, service, isLoading } = useBooking();
+  const { step, selectedDate, selectedTime, service, isLoading, isBookingSuccess } = useBooking();
 
   const getStepTitle = () => {
     switch (step) {
@@ -23,6 +24,10 @@ function BookingPageContent() {
         return 'Book Your Appointment';
     }
   };
+
+  if (isBookingSuccess) {
+    <BookingSuccess />;
+  }
 
   if (isLoading) {
     return (

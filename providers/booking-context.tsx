@@ -26,6 +26,7 @@ interface BookingContextType {
   isLoading: boolean;
   serviceID: string;
   isCreating: boolean;
+  isBookingSuccess: boolean;
 }
 
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
@@ -45,7 +46,7 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     phone: '',
     notes: '',
   });
-  const { mutate: createBooking, isPending } = useCreateBooking();
+  const { mutate: createBooking, isPending, isSuccess: isBookingSuccess } = useCreateBooking();
 
   const handleDateTimeSelect = (date: Date | undefined, time: string | undefined) => {
     if (!date || !time || !selectedBranchId) {
@@ -109,6 +110,7 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     isLoading,
     serviceID: params.id,
     isCreating: isPending,
+    isBookingSuccess,
   };
 
   return <BookingContext.Provider value={value}>{children}</BookingContext.Provider>;
