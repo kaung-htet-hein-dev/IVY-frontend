@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, CheckCircle, Calendar, Clock, User } from 'lucide-react';
 import { useBooking } from '@/providers/booking-context';
+import { formatBookingDate } from '@/utils/date';
 
 export default function BookingSuccess() {
   const { selectedDate, selectedTime, isBookingSuccess, service } = useBooking();
@@ -32,7 +33,7 @@ export default function BookingSuccess() {
                     <Calendar className="h-5 w-5 text-rose-500 mt-0.5 mr-3" />
                     <div>
                       <p className="text-sm text-gray-500">Date</p>
-                      <p className="font-medium">{selectedDate?.getDate()}</p>
+                      <p className="font-medium">{formatBookingDate(selectedDate)}</p>
                     </div>
                   </div>
 

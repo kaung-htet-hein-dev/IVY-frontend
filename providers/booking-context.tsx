@@ -48,6 +48,8 @@ export function BookingProvider({ children }: { children: ReactNode }) {
   });
   const { mutate: createBooking, isPending, isSuccess: isBookingSuccess } = useCreateBooking();
 
+  console.log('isBookingSuccess', isBookingSuccess);
+
   const handleDateTimeSelect = (date: Date | undefined, time: string | undefined) => {
     if (!date || !time || !selectedBranchId) {
       toast({

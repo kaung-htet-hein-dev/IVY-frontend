@@ -68,7 +68,7 @@ export const useCreateBooking = () => {
         description: 'Your booking has been confirmed!',
       });
 
-      router.replace('/booking/success');
+      // router.replace('/booking/success');
     },
     onError: (error: ApiErrorResponse) => {
       toast({

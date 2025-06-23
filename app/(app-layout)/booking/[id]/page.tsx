@@ -26,7 +26,7 @@ function BookingPageContent() {
   };
 
   if (isBookingSuccess) {
-    <BookingSuccess />;
+    return <BookingSuccess />;
   }
 
   if (isLoading) {
