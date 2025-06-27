@@ -1,5 +1,27 @@
 import ServiceList from '@/components/services/service-list';
 import CTA from '@/components/ui/cta';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Hair Services - Professional Styling, Cuts & Color',
+  description:
+    'Explore our comprehensive range of professional hair services including haircuts, styling, coloring, highlights, and treatments. Book your appointment with our expert stylists.',
+  keywords: [
+    'hair services',
+    'haircuts',
+    'hair styling',
+    'hair coloring',
+    'highlights',
+    'hair treatments',
+    'professional styling',
+  ],
+  openGraph: {
+    title: 'Hair Services - IVY Hair Studio',
+    description:
+      'Explore our comprehensive range of professional hair services including haircuts, styling, coloring, highlights, and treatments.',
+    type: 'website',
+  },
+};
 
 export default function ServicesPage() {
   return (

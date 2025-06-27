@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://ivy-frontend-xi.vercel.app/sitemap.xml
+
+# Disallow admin or private pages if any
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /api/
