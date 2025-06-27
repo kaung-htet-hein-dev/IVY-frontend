@@ -52,7 +52,7 @@ export default function BookingConfirmation() {
             </div>
             <div>
               <p className="text-sm text-gray-500">Price:</p>
-              <p className="font-medium">${service.price}</p>
+              <p className="font-medium">{service.price} MMK</p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Duration:</p>
