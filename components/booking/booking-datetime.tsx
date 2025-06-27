@@ -99,7 +99,7 @@ export default function BookingDateTime() {
               onSelect={setDate}
               disabled={disableDate}
               className="border rounded-lg p-3 bg-white shadow-sm"
-              fromDate={new Date()}
+              fromDate={addDays(new Date(), 1)}
               toDate={addDays(new Date(), 30)}
             />
           </div>
