@@ -55,7 +55,7 @@ export default function BookingDateTime() {
   return (
     <div>
       {/* Service Summary */}
-      <div className="bg-white border rounded-xl p-4 md:p-6 mb-8 shadow-sm">
+      <div className="bg-white border rounded-xl p-4 md:p-6 mb-8 border-rose-500 bg-rose-50 shadow-md ring-2 ring-rose-200">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="space-y-1">
             <h3 className="text-sm font-medium text-gray-500">Selected Service</h3>

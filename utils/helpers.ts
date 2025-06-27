@@ -37,7 +37,11 @@ export function generateGoogleMapsUrl(
   longitude: string | number,
   zoom: number = 15
 ): string {
-  return `https://www.google.com/maps?q=${latitude},${longitude}&z=${zoom}`;
+  // temporary fix
+
+  if (latitude == 16.8680166) return 'https://maps.app.goo.gl/rZdds3EuAdnpK38y9';
+  return 'https://maps.app.goo.gl/17WUWfHFjL9H6Qhv9';
+  // return `https://www.google.com/maps?q=${latitude},${longitude}&z=${zoom}`;
 }
 
 /**

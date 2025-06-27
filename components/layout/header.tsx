@@ -77,7 +77,7 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <LanguageSwitcher isScrolled={isScrolled || isMobileMenuOpen || !isHome} />
+          {/* <LanguageSwitcher isScrolled={isScrolled || isMobileMenuOpen || !isHome} /> */}
           {isSignedIn ? (
             <UserButton />
           ) : (
@@ -89,7 +89,7 @@ export default function Header() {
 
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center gap-2">
-          <LanguageSwitcher isScrolled={isScrolled || isMobileMenuOpen || !isHome} />
+          {/* <LanguageSwitcher isScrolled={isScrolled || isMobileMenuOpen || !isHome} /> */}
           <Button
             variant="ghost"
             size="icon"
