@@ -1,5 +1,5 @@
 import { useGetAvailableTimeSlots } from '@/hooks/booking/use-booking';
-import { format } from 'date-fns';
+import { format, addDays } from 'date-fns';
 import { useEffect, useState, useMemo } from 'react';
 
 // Helper function to convert 12-hour time to 24-hour for sorting
@@ -45,10 +45,10 @@ export function useTimeSlot({
     });
   }, [rawTimeSlots]);
 
-  // Set a default date (today) if none is selected
+  // Set a default date (tomorrow) if none is selected
   useEffect(() => {
     if (!date) {
-      setDate(new Date());
+      setDate(addDays(new Date(), 1)); // Set to tomorrow instead of today
     }
   }, [date]);
 
