@@ -14,6 +14,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useUpdateBooking } from '@/hooks/booking/use-booking';
 import { Booking } from '@/types/booking';
 import { Service } from '@/types/service';
+import { generateGoogleMapsUrl } from '@/utils/helpers';
 import { Calendar, Clock, MapPin, Phone } from 'lucide-react';
 import Link from 'next/link';
 
@@ -78,7 +79,10 @@ export function BookingCard({ booking, service, isPast = false }: BookingCardPro
               <div className="flex items-center mb-2">
                 {booking.branch?.latitude && booking.branch?.longitude ? (
                   <a
-                    href={`https://maps.google.com/?q=${booking.branch.latitude},${booking.branch.longitude}`}
+                    href={generateGoogleMapsUrl(
+                      booking?.branch?.latitude,
+                      booking?.branch?.longitude
+                    )}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center group hover:bg-white/10 rounded-lg px-2 py-1 -mx-2 -my-1 transition-all duration-200"
