@@ -1,6 +1,21 @@
 import { useGetAvailableTimeSlots } from '@/hooks/booking/use-booking';
 import { format } from 'date-fns';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
+
+// Helper function to convert 12-hour time to 24-hour for sorting
+const timeToMinutes = (timeStr: string): number => {
+  const [time, period] = timeStr.split(' ');
+  const [hours, minutes] = time.split(':').map(Number);
+
+  let totalHours = hours;
+  if (period === 'PM' && hours !== 12) {
+    totalHours += 12;
+  } else if (period === 'AM' && hours === 12) {
+    totalHours = 0;
+  }
+
+  return totalHours * 60 + minutes;
+};
 
 export function useTimeSlot({
   initialDate,
@@ -14,10 +29,21 @@ export function useTimeSlot({
   const [date, setDate] = useState<Date | undefined>(initialDate);
   const [time, setTime] = useState<string | undefined>(initialTime);
 
-  const { availableTimeSlots, isLoading } = useGetAvailableTimeSlots({
+  const { availableTimeSlots: rawTimeSlots, isLoading } = useGetAvailableTimeSlots({
     bookedDate: date ? format(date, 'dd/MM/yyyy') : '',
     branchID,
   });
+
+  // Sort time slots from 09:00 AM to 05:00 PM
+  const availableTimeSlots = useMemo(() => {
+    if (!rawTimeSlots || !Array.isArray(rawTimeSlots)) {
+      return [];
+    }
+
+    return [...rawTimeSlots].sort((a, b) => {
+      return timeToMinutes(a.slot) - timeToMinutes(b.slot);
+    });
+  }, [rawTimeSlots]);
 
   // Set a default date (today) if none is selected
   useEffect(() => {

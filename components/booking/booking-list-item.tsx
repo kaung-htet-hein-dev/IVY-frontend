@@ -27,7 +27,7 @@ export const BookingListItem = ({ service }: { service: Service }) => {
             <p className="text-gray-600 text-sm mb-4">{service.description}</p>
           </div>
           <div className="flex justify-between items-center">
-            <span className="font-bold text-rose-600">${service.price}</span>
+            <span className="font-bold text-rose-600">{service.price} MMK</span>
             <div className="flex items-center text-gray-500 text-sm">
               <Clock className="h-4 w-4 mr-1" />
               <span>{service.duration_minute} min</span>

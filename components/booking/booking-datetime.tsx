@@ -69,7 +69,7 @@ export default function BookingDateTime() {
               </span>
             </div>
             <div className="bg-rose-50 px-3 py-2 rounded-lg">
-              <div className="font-semibold text-rose-600">${service?.price}</div>
+              <div className="font-semibold text-rose-600">{service?.price} MMK</div>
             </div>
           </div>
         </div>
