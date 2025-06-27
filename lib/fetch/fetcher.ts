@@ -18,6 +18,7 @@ export async function fetcher<T>(endpoint: string, options?: RequestInit): Promi
   try {
     const res = await fetch(BASE_URL + endpoint, {
       cache: 'force-cache',
+      next: { revalidate: 1200 },
       headers: {
         'Content-Type': 'application/json',
         ...options?.headers,
@@ -45,10 +46,7 @@ export async function fetcher<T>(endpoint: string, options?: RequestInit): Promi
 
 // Specific service fetchers
 export async function getServices(): Promise<ServicesApiResponse> {
-  const result = await fetcher<{ data: Service[] }>(endpoints.services, {
-    cache: 'force-cache',
-    next: { revalidate: 1200 }, // 20 minutes
-  });
+  const result = await fetcher<{ data: Service[] }>(endpoints.services);
 
   if (result.error) {
     return { data: null, error: result.error };
