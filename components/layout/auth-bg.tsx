@@ -3,10 +3,9 @@ import React, { ReactNode } from 'react';
 export const AuthBg = ({ children }: { children: ReactNode }) => {
   return (
     <section
-      className="hero-section min-h-screen flex items-center justify-center pt-16"
+      className="hero-section min-h-screen flex items-center justify-center pt-16 bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage:
-          'url("https://images.pexels.com/photos/3992874/pexels-photo-3992874.jpeg?auto=compress&cs=tinysrgb&w=1920")',
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/hero-background.jpg")`,
       }}
     >
       {children}
