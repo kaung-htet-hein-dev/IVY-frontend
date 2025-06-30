@@ -1,6 +1,6 @@
-import { AuthBg } from '@/components/layout/auth-bg';
+import { HeroBg } from '@/components/ui/hero-bg';
 import { ReactNode } from 'react';
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
-  return <AuthBg>{children}</AuthBg>;
+  return <HeroBg>{children}</HeroBg>;
 }

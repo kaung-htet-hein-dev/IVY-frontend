@@ -90,6 +90,7 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center gap-2">
           {/* <LanguageSwitcher isScrolled={isScrolled || isMobileMenuOpen || !isHome} /> */}
+          {isSignedIn && <UserButton />}
           <Button
             variant="ghost"
             size="icon"
@@ -126,6 +127,16 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+
+            {!isSignedIn && (
+              <div className="pt-2 border-t flex items-center justify-between">
+                <SignInButton>
+                  <Button variant="destructive" className="w-full">
+                    Sign In
+                  </Button>
+                </SignInButton>
+              </div>
+            )}
           </div>
         </motion.nav>
       )}
