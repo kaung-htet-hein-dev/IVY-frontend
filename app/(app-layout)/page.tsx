@@ -26,63 +26,10 @@ export const metadata: Metadata = {
   },
 };
 
-// Structured data for search engines
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'HairSalon',
-  name: 'IVY Hair Studio',
-  description:
-    'Professional hair salon offering premium haircuts, styling, coloring, and beauty services',
-  url: 'https://ivy-frontend-xi.vercel.app',
-  telephone: '+1-555-IVY-HAIR',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '123 Beauty Street',
-    addressLocality: 'Your City',
-    addressRegion: 'Your State',
-    postalCode: '12345',
-    addressCountry: 'US',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: '40.7128',
-    longitude: '-74.0060',
-  },
-  openingHours: ['Mo-Fr 09:00-18:00', 'Sa 09:00-17:00'],
-  priceRange: '$$',
-  image: 'https://ivy-frontend-xi.vercel.app/opengraph-image.png',
-  sameAs: ['https://www.facebook.com/ivyhairstudiomm'],
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Hair Services',
-    itemListElement: [
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Haircut & Styling',
-          description: 'Professional haircut and styling services',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Hair Coloring',
-          description: 'Expert hair coloring and highlighting services',
-        },
-      },
-    ],
-  },
-};
-
 export default function Home() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+      <script type="application/ld+json" />
       <div className="flex flex-col">
         <Hero />
         <About />
