@@ -1,16 +1,21 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section
-      className="hero-section min-h-screen flex items-center justify-center pt-16 bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/images/hero-background.jpg")`,
-      }}
-    >
-      <div className="container mx-auto px-4 text-center relative z-10">
+    <section className="hero-section min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
+      <Image
+        src="/images/hero-background.jpg"
+        alt="Hair salon background"
+        fill
+        className="object-cover object-center"
+        priority
+        sizes="100vw"
+      />
+      <div className="absolute inset-0 bg-black/50 z-10"></div>
+      <div className="container mx-auto px-4 text-center relative z-20">
         <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 animate-fade-in">
           IVY Hair Studio
         </h1>
