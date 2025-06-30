@@ -27,7 +27,7 @@ export default async function ServiceHighlight() {
             <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
             <p className="text-gray-600 mb-4 line-clamp-2">{service.description}</p>
             <div className="flex justify-between items-center mb-4">
-              <span className="font-semibold text-rose-600">${service.price}</span>
+              <span className="font-semibold text-rose-600">{service.price} MMK</span>
               <div className="flex items-center text-gray-500 text-sm">
                 <Clock className="h-4 w-4 mr-1" />
                 <span>{service.duration_minute} min</span>
